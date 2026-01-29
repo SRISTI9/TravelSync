@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>TravelSync</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="stylesheet" href="css/style.css" />
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { margin: 0; font-family: "Segoe UI", sans-serif; background:#fff; }
+
+    /* NAVBAR */
+    header{
+      position: fixed;
+      top:0; left:0;
+      width:100%;
+      background:#000;
+      color:#fff;
+      z-index:1000;
+      padding:18px 60px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+    nav a{
+      color:#fff;
+      margin-left:30px;
+      text-decoration:none;
+      font-weight:500;
+    }
+
+    section{ padding:100px 70px; }
+
+    h2{ text-align:center; font-size:36px; margin-bottom:20px; }
+
+    /* HERO */
+    .hero{
+      height:100vh;
+      position:relative;
+      overflow:hidden;
+    }
+    .hero video{
+      position:absolute;
+      top:50%; left:50%;
+      transform:translate(-50%,-50%);
+      min-width:100%;
+      min-height:100%;
+      object-fit:cover;
+      filter:brightness(0.5);
+    }
+    .hero-content{
+      position:absolute;
+      top:50%; left:50%;
+      transform:translate(-50%,-50%);
+      color:#fff;
+      text-align:center;
+      animation:fadeUp 1.5s ease;
+    }
+    .hero-content h1{ font-size:52px; letter-spacing:2px; }
+    .hero-content p{ font-size:18px; margin:10px 0 30px; }
+    .btn{
+      background:#FFC928;
+      padding:14px 32px;
+      border-radius:30px;
+      text-decoration:none;
+      color:#000;
+      font-weight:600;
+      display:inline-block;
+    }
+
+    @keyframes fadeUp{
+      from{ opacity:0; transform:translate(-50%,-40%); }
+      to{ opacity:1; transform:translate(-50%,-50%); }
+    }
+
+    /* TRIP GRID */
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+      gap:30px;
+      margin-top:40px;
+    }
+    .card{
+      background:#fff;
+      border-radius:18px;
+      overflow:hidden;
+      box-shadow:0 15px 40px rgba(0,0,0,0.1);
+      transition:0.3s;
+    }
+    .card:hover{ transform:translateY(-10px); }
+    .card img{ width:100%; height:200px; object-fit:cover; }
+    .card h4{ text-align:center; margin:15px 0 10px; }
+    .card .btn{ margin:10px auto 20px; display:block; width:fit-content; }
+
+    /* WHY TRAVEL */
+    .why-grid, .confidence-grid, .reviews-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      gap:40px;
+      margin-top:50px;
+    }
+    .dark-card{
+      background:#000;
+      color:#fff;
+      border-radius:20px;
+      padding:30px;
+      text-align:center;
+    }
+    .dark-card img{
+      width:100%;
+      border-radius:15px;
+      margin-bottom:20px;
+    }
+
+    /* REVIEWS */
+    .reviews{ background:#000; color:#fff; }
+    .review img{
+      width:90px;
+      height:90px;
+      border-radius:50%;
+      object-fit:cover;
+      margin-bottom:10px;
+    }
+    .stars{ color:#FFC928; }
+
+    /* CONTACT */
+    .contact{
+      background:linear-gradient(to right,#00c6ff,#0072ff);
+      color:#fff;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+    }
+    .contact-box{
+      background:#fff;
+      color:#000;
+      padding:40px;
+      border-radius:20px;
+      width:420px;
+      box-shadow:0 30px 60px rgba(0,0,0,0.2);
+    }
+    .contact-box input,.contact-box textarea{
+      width:100%;
+      padding:12px;
+      margin:10px 0;
+      border-radius:8px;
+      border:1px solid #ccc;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <strong>TravelSync</strong>
+  <nav>
+    <a href="#top">Home</a>
+    <a href="#trips">Trips</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <video autoplay muted loop>
+    <source src="assets/videos/hero.mp4" type="video/mp4">
+  </video>
+  <div class="hero-content">
+    <h1>REAL EXPERIENCES</h1>
+    <p>Small Groups. Big Adventures.</p>
+    <a href="#trips" class="btn">Explore Trips</a>
+  </div>
+</section>
+
+<!-- FRESH PERSPECTIVE -->
+<section>
+  <h2>A Fresh Perspective On Travel</h2>
+  <p style="max-width:900px;margin:auto;text-align:center;line-height:1.8;">
+    At TravelSync, we're all about reimagining the way you see the world. Whether you're solo, with friends, or your better half, our expert-led tours promise unforgettable experiences.
+    <br><br>
+    Our group tours aren't just about ticking off destinations – they're about diving into vibrant cultures, savoring delicious flavors, and giving back to communities around the globe.
+    We've been curating epic adventures tailored for the young and the young at heart, aged 18–35.
+    <br><br>
+    TravelSync is all about group travel with a twist! It's about making lifelong friends and embarking on thrilling adventures that will make you feel alive!
+  </p>
+</section>
+
+<!-- UPCOMING TRIPS -->
+<section id="trips">
+ <h2>Upcoming Trips!!</h2>
+
+  <h3>International Trips</h3>
+  <div class="grid">
+    <div class="card"><img src="assets/images/bali.jpeg"><h4>Bali</h4><a href="bali.html" class="btn">View Trip</a></div>
+    <div class="card"><img src="assets/images/paris.jpeg"><h4>Paris</h4><a href="paris.html" class="btn">View Trip</a></div>
+    <div class="card"><img src="assets/images/dubai.jpeg"><h4>Dubai</h4><a href="trip-details.html" class="btn">View Trip</a></div>
+    <div class="card"><img src="assets/images/japan.jpeg"><h4>Japan</h4><a href="trip-details.html" class="btn">View Trip</a></div>
+    <div class="card"><img src="assets/images/london.jpeg"><h4>London</h4><a href="trip-details.html" class="btn">View Trip</a></div>
+    <div class="card"><img src="assets/images/newyork.jpeg"><h4>New York</h4><a href="trip-details.html" class="btn">View Trip</a></div>
+    <div class="card"><img src="assets/images/maldives.jpeg"><h4>Maldives</h4><a href="trip-details.html" class="btn">View Trip</a></div>
+    <div class="card"><img src="assets/images/switzerland.jpeg"><h4>Switzerland</h4><a href="trip-details.html" class="btn">View Trip</a></div>
+    <div class="card"><img src="assets/images/rome.jpeg"><h4>Rome</h4><a href="trip-details.html" class="btn">View Trip</a></div>
+    <div class="card"><img src="assets/images/thailand.jpeg"><h4>Thailand</h4><a href="trip-details.html" class="btn">View Trip</a></div>
+  </div>
+
+  <h3 style="margin-top:70px;">Domestic Trips</h3>
+  <div class="grid">
+    <div class="card"><img src="assets/images/goa.jpeg"><h4>Goa</h4><a href="goa.html" class="btn">View Trip</a></div>
+    <div class="card"><img src="assets/images/andaman.jpeg"><h4>Andaman</h4><a href="trip-details.html" class="btn">View Trip</a></div>
+    <div class="card"><img src="assets/images/kerala.jpeg"><h4>Kerala</h4><a href="trip-details.html" class="btn">View Trip</a></div>
+    <div class="card"><img src="assets/images/jaipur.jpeg"><h4>Jaipur</h4><a href="trip-details.html" class="btn">View Trip</a></div>
+    <div class="card"><img src="assets/images/ladakh.jpeg"><h4>Ladakh</h4><a href="trip-details.html" class="btn">View Trip</a></div>
+    <div class="card"><img src="assets/images/manali.jpeg"><h4>Manali</h4><a href="trip-details.html" class="btn">View Trip</a></div>
+    <div class="card"><img src="assets/images/ooty.jpeg"><h4>Ooty</h4><a href="trip-details.html" class="btn">View Trip</a></div>
+    <div class="card"><img src="assets/images/rishikesh.jpeg"><h4>Rishikesh</h4><a href="trip-details.html" class="btn">View Trip</a></div>
+    <div class="card"><img src="assets/images/udaipur.jpeg"><h4>Udaipur</h4><a href="trip-details.html" class="btn">View Trip</a></div>
+    <div class="card"><img src="assets/images/varanasi.jpeg"><h4>Varanasi</h4><a href="trip-details.html" class="btn">View Trip</a></div>
+  </div>
+</section>
+
+<!-- WHY TRAVEL -->
+<section>
+  <h2>Why Travel With TravelSync</h2>
+  <div class="why-grid">
+    <div class="dark-card">
+      <img src="assets/images/travel1.jpg">
+      <h4>We Make Travel Social</h4>
+      <p>Our trips are exclusively for 18–35s, designed so you can share incredible experiences with young travelers just like you.</p>
+    </div>
+    <div class="dark-card">
+      <img src="assets/images/travel2.jpg">
+      <h4>We Make Travel Unique</h4>
+      <p>Travel isn’t just about where you go, it’s about what you do when you get there.</p>
+    </div>
+    <div class="dark-card">
+      <img src="assets/images/travel3.jpg">
+      <h4>We Make Travel Easier</h4>
+      <p>Transport, accommodation and delicious meals — all included.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TRAVEL WITH CONFIDENCE -->
+<section>
+  <h2>Travel With Confidence</h2>
+  <div class="confidence-grid">
+    <div class="dark-card"><img src="assets/images/travel4.jpg"><h4>No Change Fees</h4></div>
+    <div class="dark-card"><img src="assets/images/travel5.jpg"><h4>Secure Your Trip</h4></div>
+    <div class="dark-card"><img src="assets/images/travel6.jpg"><h4>Flexible Payment</h4></div>
+    <div class="dark-card"><img src="assets/images/travel7.jpg"><h4>Flex Deposit</h4></div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews">
+  <h2>Reviews</h2>
+  <div class="reviews-grid">
+    <div class="review dark-card">
+      <img src="assets/images/mounika.jpg">
+      <h4>Mounika</h4>
+      <div class="stars">★★★★★</div>
+      <p>Perfectly planned and memorable experience!</p>
+    </div>
+    <div class="review dark-card">
+      <img src="assets/images/bhavini.jpg">
+      <h4>Bhavini</h4>
+      <div class="stars">★★★★★</div>
+      <p>Meticulously planned and super fun.</p>
+    </div>
+    <div class="review dark-card">
+      <img src="assets/images/shreya.jpg">
+      <h4>Shreya</h4>
+      <div class="stars">★★★★★</div>
+      <p>Best group trip ever!</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-box">
+    <h3>Contact Us</h3>
+    <input placeholder="First Name">
+    <input placeholder="Last Name">
+    <input placeholder="Email">
+    <textarea placeholder="Message"></textarea>
+    <a class="btn">Send</a>
+  </div>
+</section>
+
+</body>
+</html>

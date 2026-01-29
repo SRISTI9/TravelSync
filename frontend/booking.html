@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Book Trip | TravelSync</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #0b0b0b;
+      color: #fff;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 80px auto;
+      padding: 50px;
+      background: #000;
+      border-radius: 24px;
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 40px;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+    }
+
+    h1 {
+      color: #f4c430;
+      margin-bottom: 10px;
+      font-size: 34px;
+    }
+
+    h3 {
+      margin-top: 30px;
+      color: #f4c430;
+    }
+
+    p {
+      opacity: 0.9;
+      line-height: 1.7;
+    }
+
+    label {
+      display: block;
+      margin-top: 18px;
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 14px;
+      border-radius: 12px;
+      border: none;
+      outline: none;
+      font-size: 15px;
+      background: #1a1a1a;
+      color: #fff;
+    }
+
+    hr {
+      border: none;
+      height: 1px;
+      background: rgba(255,255,255,0.15);
+      margin: 35px 0;
+    }
+
+    .price-box {
+      background: #111;
+      padding: 35px;
+      border-radius: 22px;
+      position: sticky;
+      top: 100px;
+      height: fit-content;
+    }
+
+    .price-box h2 {
+      color: #f4c430;
+      margin-bottom: 10px;
+    }
+
+    .total {
+      font-size: 28px;
+      color: #f4c430;
+      margin: 25px 0;
+      font-weight: 800;
+    }
+
+    button {
+      width: 100%;
+      padding: 18px;
+      background: #f4c430;
+      color: #000;
+      border-radius: 50px;
+      font-size: 17px;
+      font-weight: 800;
+      cursor: pointer;
+      border: none;
+      margin-top: 20px;
+    }
+
+    button:hover {
+      background: #ffd966;
+    }
+
+    .note {
+      font-size: 12px;
+      opacity: 0.6;
+      margin-top: 12px;
+      text-align: center;
+    }
+
+    .seat-box {
+      background: #141414;
+      padding: 18px;
+      border-radius: 16px;
+      margin-top: 20px;
+      font-size: 14px;
+    }
+
+    .seat-box span {
+      color: #f4c430;
+      font-weight: 700;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <!-- LEFT SIDE -->
+  <div>
+
+    <h1 id="tripTitle"></h1>
+
+    <p><b>Dates:</b> <span id="tripDates"></span></p>
+    <p><b>Duration:</b> <span id="tripDuration"></span></p>
+    <p><b>Group Size:</b> 18–20 Travellers</p>
+
+    <div class="seat-box">
+      👥 <span>12 / 20</span> seats already filled  
+      <br>🔥 Filling fast — few seats left!
+    </div>
+
+    <hr>
+
+    <label>Number of Travellers *</label>
+    <select id="travellerCount" onchange="renderTravellers()">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+    </select>
+
+    <div id="travellers"></div>
+
+  </div>
+
+  <!-- RIGHT SIDE -->
+  <div class="price-box">
+    <h2>Pricing</h2>
+
+    <label>Select Price Tier</label>
+    <select id="price" onchange="updatePrice()"></select>
+
+    <p style="font-size:13px;margin-top:10px;">+ GST & taxes as applicable</p>
+
+    <div class="total" id="total"></div>
+
+    <button onclick="bookNow()">Proceed to Book</button>
+
+    <p class="note">
+      * Booking request only. Payment will be collected later.
+    </p>
+  </div>
+
+</div>
+
+<!-- jsPDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script>
+/* ================= TRIP CONFIG ================= */
+
+const trips = {
+  bali: {
+    title: "Book Bali & Gili Islands",
+    dates: "14 Mar 2026 – 22 Mar 2026",
+    duration: "9 Days",
+    prices: [
+      { label: "Early Bird – ₹53,000", value: 53000 },
+      { label: "Regular – ₹55,000", value: 55000 },
+      { label: "Last Call – ₹57,000", value: 57000 }
+    ],
+    api: "book-bali",
+    pdf: "TravelSync_Bali_Booking.pdf"
+  },
+
+  paris: {
+    title: "Book Paris",
+    dates: "April 2026",
+    duration: "8 Days",
+    prices: [
+      { label: "Flat Price – ₹79,000", value: 79000 }
+    ],
+    api: "book-paris",
+    pdf: "TravelSync_Paris_Booking.pdf"
+  },
+
+  goa: {
+    title: "Book Goa",
+    dates: "March 2026",
+    duration: "5 Days",
+    prices: [
+      { label: "Early Bird – ₹29,999", value: 29999 },
+      { label: "Regular – ₹32,999", value: 32999 }
+    ],
+    api: "book-goa",
+    pdf: "TravelSync_Goa_Booking.pdf"
+  }
+};
+
+/* ================= INIT ================= */
+
+const params = new URLSearchParams(window.location.search);
+const tripKey = params.get("trip") || "bali";
+const trip = trips[tripKey];
+
+document.getElementById("tripTitle").innerText = trip.title;
+document.getElementById("tripDates").innerText = trip.dates;
+document.getElementById("tripDuration").innerText = trip.duration;
+
+const priceSelect = document.getElementById("price");
+trip.prices.forEach(p => {
+  const opt = document.createElement("option");
+  opt.value = p.value;
+  opt.text = p.label;
+  priceSelect.appendChild(opt);
+});
+
+/* ================= TRAVELLERS ================= */
+
+function renderTravellers() {
+  const count = Number(document.getElementById("travellerCount").value);
+  const container = document.getElementById("travellers");
+  container.innerHTML = "";
+
+  for (let i = 1; i <= count; i++) {
+    container.innerHTML += `
+      <hr>
+      <h3>Traveller ${i}</h3>
+
+      <label>Full Name *</label>
+      <input class="t-name">
+
+      <label>Email *</label>
+      <input class="t-email" type="email">
+
+      <label>Phone *</label>
+      <input class="t-phone">
+
+      <label>Age *</label>
+      <input class="t-age" type="number">
+
+      <label>Room Preference</label>
+      <select class="t-room">
+        <option>Twin Sharing</option>
+        <option>Solo</option>
+      </select>
+    `;
+  }
+
+  updatePrice();
+}
+
+renderTravellers();
+
+/* ================= PRICE ================= */
+
+function updatePrice() {
+  const price = Number(document.getElementById("price").value);
+  const count = Number(document.getElementById("travellerCount").value);
+  document.getElementById("total").innerText = "Total: ₹" + (price * count);
+}
+
+/* ================= BOOK ================= */
+
+async function bookNow() {
+  const count = Number(document.getElementById("travellerCount").value);
+  const pricePerPerson = Number(document.getElementById("price").value);
+
+  const names = document.querySelectorAll(".t-name");
+  const emails = document.querySelectorAll(".t-email");
+  const phones = document.querySelectorAll(".t-phone");
+  const ages = document.querySelectorAll(".t-age");
+  const rooms = document.querySelectorAll(".t-room");
+
+  const travellers = [];
+
+  for (let i = 0; i < count; i++) {
+    if (!names[i].value || !emails[i].value || !phones[i].value || !ages[i].value) {
+      alert("Fill all traveller details");
+      return;
+    }
+
+    travellers.push({
+      name: names[i].value,
+      email: emails[i].value,
+      phone: phones[i].value,
+      age: ages[i].value,
+      room: rooms[i].value
+    });
+  }
+
+  const totalPrice = pricePerPerson * count;
+
+  /* -------- PDF -------- */
+  const { jsPDF } = window.jspdf;
+  const pdf = new jsPDF();
+
+  pdf.setFontSize(20);
+  pdf.text("TravelSync – Booking Confirmation", 20, 25);
+  pdf.setFontSize(14);
+
+  pdf.text(`Trip: ${trip.title}`, 20, 45);
+  pdf.text(`Dates: ${trip.dates}`, 20, 55);
+  pdf.text(`Duration: ${trip.duration}`, 20, 65);
+  pdf.text(`Total Travellers: ${count}`, 20, 75);
+  pdf.text(`Total Price: ₹${totalPrice}`, 20, 85);
+
+  let y = 105;
+  travellers.forEach((t, i) => {
+    pdf.text(`Traveller ${i+1}:`, 20, y);
+    pdf.text(`Name: ${t.name}`, 30, y + 8);
+    pdf.text(`Email: ${t.email}`, 30, y + 16);
+    pdf.text(`Phone: ${t.phone}`, 30, y + 24);
+    pdf.text(`Age: ${t.age}`, 30, y + 32);
+    y += 50;
+  });
+
+  pdf.save(trip.pdf);
+
+  /* -------- BACKEND -------- */
+  try {
+    const res = await fetch(`http://localhost:5000/${trip.api}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        trip: tripKey,
+        travellers,
+        totalPrice
+      })
+    });
+
+    const result = await res.json();
+    if (result.success) {
+      alert("Booking confirmed! PDF downloaded & email sent 📧");
+    } else {
+      alert("Saved but email failed");
+    }
+  } catch (err) {
+    alert("Backend not running");
+  }
+}
+</script>
+
+</body>
+</html>

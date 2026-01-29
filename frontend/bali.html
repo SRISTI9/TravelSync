@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Bali & Gili Islands | TravelSync</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: #fff;
+      color: #222;
+    }
+
+    /* ---------- NAVBAR ---------- */
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: #000;
+      padding: 18px 60px;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      color: #fff;
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    header nav a {
+      color: #fff;
+      text-decoration: none;
+      margin-left: 30px;
+      font-size: 15px;
+      opacity: 0.85;
+    }
+
+    header nav a:hover {
+      opacity: 1;
+    }
+
+    /* ---------- HERO ---------- */
+    .hero {
+      height: 100vh;
+      background: linear-gradient(
+        rgba(0,0,0,0.45),
+        rgba(0,0,0,0.45)
+      ),
+      url("assets/images/bali.jpeg") center/cover no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 0 20px;
+    }
+
+    .hero-content {
+      animation: fadeUp 1.2s ease;
+    }
+
+    .hero h2 {
+      color: #fbc531;
+      font-size: 52px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      color: #fff;
+      font-size: 18px;
+      margin-bottom: 25px;
+    }
+
+    .hero a {
+      display: inline-block;
+      background: #25d366;
+      color: #000;
+      padding: 14px 28px;
+      border-radius: 40px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: transform 0.3s ease;
+    }
+
+    .hero a:hover {
+      transform: scale(1.05);
+    }
+
+    /* ---------- SECTIONS ---------- */
+    section {
+      padding: 100px 12%;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 34px;
+      margin-bottom: 40px;
+      font-weight: 700;
+    }
+
+    /* ---------- ABOUT ---------- */
+    .about p {
+      font-size: 16px;
+      line-height: 1.9;
+      max-width: 900px;
+      margin: auto;
+      text-align: center;
+      opacity: 0.9;
+    }
+
+    /* ---------- INFO CARD ---------- */
+    .info-wrapper {
+      display: flex;
+      justify-content: center;
+      margin-top: 40px;
+    }
+
+    .info-card {
+      background: #000;
+      color: #fff;
+      border-radius: 20px;
+      padding: 50px 60px;
+      width: 100%;
+      max-width: 900px;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.3);
+      animation: fadeUp 1.2s ease;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 30px;
+    }
+
+    .info-item h4 {
+      color: #fbc531;
+      margin-bottom: 6px;
+      font-size: 18px;
+    }
+
+    .info-item p {
+      font-size: 15px;
+      opacity: 0.9;
+    }
+
+    /* ---------- ANIMATIONS ---------- */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 768px) {
+      header {
+        padding: 15px 30px;
+      }
+
+      .hero h2 {
+        font-size: 36px;
+      }
+
+      section {
+        padding: 80px 8%;
+      }
+
+      .info-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <header>
+    <h1>TravelSync</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="#about">About</a>
+      <a href="#details">Details</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <h2>BALI & GILI ISLANDS</h2>
+      <p>Kuta · Ubud · Nusa Penida · Gili Trawangan</p>
+      <a href="#about">WhatsApp Us</a>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="about">
+    <h3 class="section-title">About the Trip</h3>
+    <p>
+      Embark on a thrilling adventure through Bali and the breathtaking Gili Islands,
+      where tropical landscapes, vibrant culture, and unforgettable experiences come together.
+      This journey takes you from the lively beaches of Kuta to the serene rice terraces of Ubud,
+      the dramatic cliffs of Nusa Penida, and the laid-back island vibes of Gili Trawangan.
+      <br><br>
+      You’ll witness the iconic Kecak and Fire Dance at Uluwatu Temple, explore the lush Tegallalang
+      Rice Terraces, and marvel at stunning waterfalls hidden within Bali’s jungles. Indulge in
+      unique local experiences, from tasting the world-famous Kopi Luwak to cycling through
+      picturesque villages.
+      <br><br>
+      As the journey continues, crystal-clear waters, beach sunsets, snorkeling adventures,
+      and vibrant nightlife await you on the Gili Islands. Designed for young explorers aged 18–35,
+      this trip perfectly balances adventure, relaxation, and social connections.
+      <br><br>
+      Whether you’re traveling solo or with friends, expect unforgettable memories,
+      lifelong friendships, and stories you’ll cherish forever.
+    </p>
+  </section>
+
+  <!-- DETAILS CARD -->
+  <section id="details">
+    <h3 class="section-title">Trip Details</h3>
+
+    <div class="info-wrapper">
+      <div class="info-card">
+        <div class="info-grid">
+          <div class="info-item">
+            <h4>Accommodations</h4>
+            <p>8 nights of accommodation in 3-star hotels at prime locations.</p>
+          </div>
+
+          <div class="info-item">
+            <h4>Group Size</h4>
+            <p>18–20 members per group.</p>
+          </div>
+
+          <div class="info-item">
+            <h4>Meals</h4>
+            <p>8 breakfasts (veg & non-veg).</p>
+          </div>
+
+          <div class="info-item">
+            <h4>Transport</h4>
+            <p>
+              To & fro ferry from Bali to Nusa Penida.
+              High-speed boat transfers between Bali, Gili Islands & Ubud.
+            </p>
+          </div>
+
+          <div class="info-item">
+            <h4>Duration</h4>
+            <p>9 days of adventure and exploration.</p>
+          </div>
+
+          <div class="info-item">
+            <h4>Team</h4>
+            <p>Led by an experienced Trip Leader.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+ 
+ <!-- TOP EXPERIENCES -->
+<section style="padding:80px 6%; background:#fff;">
+
+  <h2 style="
+    text-align:center;
+    font-size:36px;
+    font-weight:700;
+    margin-bottom:50px;
+  ">
+    Top Experiences
+  </h2>
+
+  <div style="
+    display:grid;
+    grid-template-columns:repeat(5, 1fr);
+    gap:22px;
+  ">
+
+    <!-- CARD 1 -->
+    <div style="
+      position:relative;
+      height:360px;
+      border-radius:14px;
+      overflow:hidden;
+      box-shadow:0 10px 30px rgba(0,0,0,0.12);
+      cursor:pointer;
+    ">
+      <img src="assets/images/kutabeach.jpg" style="
+        width:100%;
+        height:100%;
+        object-fit:cover;
+      ">
+      <div style="
+        position:absolute;
+        inset:0;
+        background:linear-gradient(to top, rgba(0,0,0,0.75), transparent 60%);
+      "></div>
+      <div style="
+        position:absolute;
+        bottom:20px;
+        left:20px;
+        right:20px;
+        color:#fff;
+      ">
+        <h3 style="margin:0 0 6px; font-size:18px;">Surfing at Kuta Beach</h3>
+        <p style="margin:0; font-size:14px;">
+          Surf Kuta beach, then enjoy authentic local lunch.
+        </p>
+      </div>
+    </div>
+
+    <!-- CARD 2 -->
+    <div style="position:relative;height:360px;border-radius:14px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.12);">
+      <img src="assets/images/uluwatu.jpg" style="width:100%;height:100%;object-fit:cover;">
+      <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(0,0,0,0.75), transparent 60%);"></div>
+      <div style="position:absolute;bottom:20px;left:20px;right:20px;color:#fff;">
+        <h3 style="margin:0 0 6px;font-size:18px;">Uluwatu Temple</h3>
+        <p style="margin:0;font-size:14px;">
+          Visit Uluwatu temple, witness Kecak & Fire Dance.
+        </p>
+      </div>
+    </div>
+
+    <!-- CARD 3 -->
+    <div style="position:relative;height:360px;border-radius:14px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.12);">
+      <img src="assets/images/nightlife.jpg" style="width:100%;height:100%;object-fit:cover;">
+      <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(0,0,0,0.75), transparent 60%);"></div>
+      <div style="position:absolute;bottom:20px;left:20px;right:20px;color:#fff;">
+        <h3 style="margin:0 0 6px;font-size:18px;">Nightlife</h3>
+        <p style="margin:0;font-size:14px;">
+          Experience vibrant beach parties and lively bars.
+        </p>
+      </div>
+    </div>
+
+    <!-- CARD 4 -->
+    <div style="position:relative;height:360px;border-radius:14px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.12);">
+      <img src="assets/images/nusapenida.jpg" style="width:100%;height:100%;object-fit:cover;">
+      <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(0,0,0,0.75), transparent 60%);"></div>
+      <div style="position:absolute;bottom:20px;left:20px;right:20px;color:#fff;">
+        <h3 style="margin:0 0 6px;font-size:18px;">Nusa Penida Island</h3>
+        <p style="margin:0;font-size:14px;">
+          Explore Broken and Kelingking beaches.
+        </p>
+      </div>
+    </div>
+
+    <!-- CARD 5 -->
+    <div style="position:relative;height:360px;border-radius:14px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.12);">
+      <img src="assets/images/kecak.jpg" style="width:100%;height:100%;object-fit:cover;">
+      <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(0,0,0,0.75), transparent 60%);"></div>
+      <div style="position:absolute;bottom:20px;left:20px;right:20px;color:#fff;">
+        <h3 style="margin:0 0 6px;font-size:18px;">Kecak Dance</h3>
+        <p style="margin:0;font-size:14px;">
+          Witness Bali’s famous monkey chant dance performance.
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ITINERARY -->
+<section style="background:#000; color:#fff; padding:90px 6%;">
+
+  <h2 style="text-align:center;font-size:36px;margin-bottom:60px;">
+    The Game Plan
+  </h2>
+
+  <div style="
+    display:grid;
+    grid-template-columns:45% 55%;
+    gap:50px;
+    align-items:flex-start;
+  ">
+
+    <!-- LEFT IMAGE -->
+    <div>
+      <img id="dayImage" src="assets/images/uluwatu.jpg" style="
+        width:100%;
+        border-radius:16px;
+        box-shadow:0 20px 40px rgba(0,0,0,0.5);
+      ">
+    </div>
+
+    <!-- RIGHT ACCORDION -->
+    <div>
+
+      <!-- DAY 1 -->
+      <div class="day-block">
+        <button class="day-btn active" onclick="openDay(1,'assets/images/kutabeach.jpg')">
+          Day 1
+        </button>
+        <div class="day-content show">
+          <p>Arrival in Bali, airport pickup and transfer to hotel.</p>
+          <ul>
+            <li> Meet Trip Leader and co-travelers</li>
+            <li> Explore Seminyak's boutique shops and cafes</li>
+            <li>Experience Bali's nightlife at a top nightclub</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- DAY 2 -->
+      <div class="day-block">
+        <button class="day-btn" onclick="openDay(2,'assets/images/uluwatu.jpg')">
+          Day 2
+        </button>
+        <div class="day-content">
+          <p><strong>Surfing & Uluwatu Temple Adventure</strong></p>
+          <ul>
+            <li>Surfing lessons at Kuta Beach</li>
+            <li>Visit Uluwatu Temple</li>
+            <li>Kecak & Fire Dance at sunset</li>
+            <li>Explore Kuta night market</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- DAY 3 -->
+      <div class="day-block">
+        <button class="day-btn" onclick="openDay(3,'assets/images/nusapenida.jpg')">
+          Day 3
+        </button>
+        <div class="day-content">
+          <ul>
+            <li>Ferry to Nusa Penida</li>
+            <li>Broken Beach & Kelingking Cliff</li>
+            <li>Crystal Bay sunset</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- DAY 4 -->
+      <div class="day-block">
+        <button class="day-btn" onclick="openDay(4,'assets/images/nightlife.jpg')">
+          Day 4
+        </button>
+        <div class="day-content">
+          <ul>
+            <li>Transfer to Gili Islands</li>
+            <li>Snorkeling</li>
+            <li>Beach party night</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- DAY 5 -->
+      <div class="day-block">
+        <button class="day-btn" onclick="openDay(5,'assets/images/kecak.jpg')">
+          Day 5
+        </button>
+        <div class="day-content">
+          <ul>
+            <li>Free day at leisure</li>
+            <li>Local shopping</li>
+            <li>Farewell dinner</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+.day-btn{
+  width:100%;
+  background:none;
+  border:none;
+  color:#fff;
+  font-size:20px;
+  text-align:left;
+  padding:18px 0;
+  cursor:pointer;
+  border-bottom:1px solid #f4c430;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.day-btn::after{
+  content:"⌄";
+  font-size:22px;
+}
+.day-btn.active::after{
+  content:"⌃";
+}
+.day-content{
+  max-height:0;
+  overflow:hidden;
+  transition:all 0.4s ease;
+  opacity:0;
+}
+.day-content.show{
+  max-height:500px;
+  opacity:1;
+  padding:15px 0 25px;
+}
+.day-content ul{
+  margin:10px 0 0 20px;
+}
+.day-content li{
+  margin-bottom:8px;
+}
+</style>
+
+<script>
+function openDay(day,image){
+  document.querySelectorAll('.day-btn').forEach(btn=>btn.classList.remove('active'));
+  document.querySelectorAll('.day-content').forEach(c=>{
+    c.classList.remove('show');
+  });
+
+  document.querySelectorAll('.day-btn')[day-1].classList.add('active');
+  document.querySelectorAll('.day-content')[day-1].classList.add('show');
+
+  document.getElementById('dayImage').src = image;
+}
+</script>
+
+<div style="text-align:center;margin-bottom:30px;">
+  <button onclick="downloadPDF()" style="
+    padding:24px 28px;
+    background:#f4c430;
+    border:none;
+    border-radius:40px;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+  ">
+    Download Itinerary (PDF)
+  </button>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+function downloadPDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+
+  let y = 20;
+
+  doc.setFont("helvetica","bold");
+  doc.setFontSize(18);
+  doc.text("Bali & Gili Islands - Itinerary", 14, y);
+
+  y += 12;
+  doc.setFontSize(12);
+  doc.setFont("helvetica","normal");
+  doc.text("TravelSync | 5 Days Itinerary", 14, y);
+
+  y += 15;
+
+  const itinerary = [
+    {
+      day: "Day 1 - Arrival in Bali",
+      details: [
+        "Airport pickup and hotel transfer",
+        "Welcome briefing",
+        "Relax at Kuta Beach"
+      ]
+    },
+    {
+      day: "Day 2 - Surfing & Uluwatu",
+      details: [
+        "Surfing lessons at Kuta Beach",
+        "Visit Uluwatu Temple",
+        "Kecak & Fire Dance"
+      ]
+    },
+    {
+      day: "Day 3 - Nusa Penida",
+      details: [
+        "Ferry transfer",
+        "Visit Broken Beach & Kelingking",
+        "Crystal Bay sunset"
+      ]
+    },
+    {
+      day: "Day 4 - Gili Islands",
+      details: [
+        "Speed boat transfer",
+        "Snorkeling",
+        "Beach party night"
+      ]
+    },
+    {
+      day: "Day 5 - Departure",
+      details: [
+        "Free time",
+        "Shopping",
+        "Return journey"
+      ]
+    }
+  ];
+
+  itinerary.forEach(item => {
+    doc.setFont("helvetica","bold");
+    doc.text(item.day, 14, y);
+    y += 8;
+
+    doc.setFont("helvetica","normal");
+    item.details.forEach(point => {
+      doc.text("- " + point, 18, y);
+      y += 7;
+    });
+
+    y += 5;
+    if (y > 270) {
+      doc.addPage();
+      y = 20;
+    }
+  });
+
+  doc.save("Bali_Gili_Itinerary.pdf");
+}
+</script>
+
+<!-- Inclusions and exclusions -->
+<section style="padding:80px 6%; background:#fff;">
+
+  <!-- Heading -->
+  <h2 style="
+    text-align:center;
+    font-size:42px;
+    font-weight:700;
+    margin-bottom:50px;
+  ">
+    Inclusions & Exclusions
+  </h2>
+
+  <!-- Toggle Pills -->
+  <div style="
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    margin-bottom:40px;
+  ">
+    <button id="incBtn" onclick="showInclusions()" style="
+      padding:14px 50px;
+      border-radius:40px;
+      border:none;
+      font-size:16px;
+      font-weight:600;
+      cursor:pointer;
+      background:#000;
+      color:#fff;
+    ">Inclusion</button>
+
+    <button id="excBtn" onclick="showExclusions()" style="
+      padding:14px 50px;
+      border-radius:40px;
+      border:none;
+      font-size:16px;
+      font-weight:600;
+      cursor:pointer;
+      background:#eee;
+      color:#000;
+    ">Exclusion</button>
+  </div>
+
+  <!-- Card -->
+  <div style="
+    max-width:1200px;
+    margin:auto;
+    background:#000;
+    color:#fff;
+    border-radius:26px;
+    padding:50px;
+    display:grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap:40px;
+    box-shadow:0 30px 60px rgba(0,0,0,0.25);
+  ">
+
+    <!-- TEXT CONTENT -->
+    <div id="inclusionContent">
+
+      <h3 style="color:#f4c430;">Accommodation</h3>
+      <p>
+        8 nights of accommodation on twin-sharing basis in 3 / 4 star hotels
+        located in the prime locations across the places.
+      </p>
+
+      <h3 style="color:#f4c430;margin-top:24px;">Meals</h3>
+      <p>8 Breakfasts.</p>
+
+      <h3 style="color:#f4c430;margin-top:24px;">Activities</h3>
+      <p>Experience our No Regrets Inclusions, featuring must-see sights and activities such as:</p>
+      <ul style="line-height:1.9;">
+        <li>Surfing Lessons</li>
+        <li>Visit to Finns Beach Club</li>
+        <li>Visit to Uluwatu Temple</li>
+        <li>Kecak Dance</li>
+        <li>Entry with Pool Access in Cretya, Ubud</li>
+        <li>Visit to Rice Terrace</li>
+        <li>Visit to Telangana Waterfalls</li>
+        <li>Few Beers on Day 1</li>
+        <li>Mount Batur Hike</li>
+        <li>Cycling in Gili T</li>
+        <li>Snorkelling in Gili T</li>
+        <li>ATV Ride in Ubud</li>
+      </ul>
+
+      <h3 style="color:#f4c430;margin-top:24px;">Taxes and Fee</h3>
+      <p>
+        Per Day City Tax and local taxes are all included. No hidden charges.
+      </p>
+
+      <h3 style="color:#f4c430;margin-top:24px;">Transportation</h3>
+      <p>
+        All intercity travel along with High-speed ferry from Bali to Gili Island
+        and Gili Island to Bali are included. Horse carriage transfers in Gili
+        Island are also included.
+      </p>
+    </div>
+
+    <!-- IMAGE -->
+    <div>
+      <img src="assets/images/bali.jpeg" alt="Inclusions"
+        style="
+          width:100%;
+          height:100%;
+          object-fit:cover;
+          border-radius:20px;
+        ">
+    </div>
+
+  </div>
+</section>
+
+<script>
+const content = document.getElementById("inclusionContent");
+const incBtn = document.getElementById("incBtn");
+const excBtn = document.getElementById("excBtn");
+const img = document.getElementById("incExcImg");
+
+function showInclusions() {
+  content.innerHTML = `
+    <h3 style="color:#f4c430;">Accommodation</h3>
+    <p>8 nights of accommodation on twin-sharing basis in 3 / 4 star hotels located in prime locations.</p>
+
+    <h3 style="color:#f4c430;margin-top:20px;">Meals</h3>
+    <p>8 Breakfasts.</p>
+
+    <h3 style="color:#f4c430;margin-top:20px;">Activities</h3>
+    <ul style="line-height:1.9;">
+      <li>Surfing Lessons</li>
+      <li>Visit to Finns Beach Club</li>
+      <li>Visit to Uluwatu Temple</li>
+      <li>Kecak Dance</li>
+      <li>Cretya Pool Access, Ubud</li>
+      <li>Rice Terrace</li>
+      <li>Waterfalls</li>
+      <li>Mount Batur Hike</li>
+      <li>Snorkelling & Cycling in Gili</li>
+      <li>ATV Ride</li>
+    </ul>
+
+    <h3 style="color:#f4c430;margin-top:20px;">Transportation</h3>
+    <p>
+      All intercity travel including high-speed ferries between Bali & Gili.
+      Horse carriage transfers in Gili included.
+    </p>
+  `;
+
+  incBtn.style.background = "#000";
+  incBtn.style.color = "#fff";
+  excBtn.style.background = "#eee";
+  excBtn.style.color = "#000";
+
+  img.src = "assets/images/bali.jpeg";
+}
+
+function showExclusions() {
+  content.innerHTML = `
+    <ul style="line-height:2;">
+      <li>International Flights</li>
+      <li>Visa Costs</li>
+      <li>Nusa Penida Day Trip</li>
+      <li>TCS as per Government Rules</li>
+      <li>Scuba Diving</li>
+      <li>Dinners</li>
+      <li>Personal Expenses</li>
+      <li>Anything not mentioned in inclusions</li>
+    </ul>
+  `;
+
+  excBtn.style.background = "#000";
+  excBtn.style.color = "#fff";
+  incBtn.style.background = "#eee";
+  incBtn.style.color = "#000";
+
+  img.src = "assets/images/bali.jpeg";
+}
+</script>
+
+<section style="padding:80px 10%;">
+
+  <h2 style="
+    text-align:center;
+    font-size:42px;
+    font-weight:700;
+    margin-bottom:40px;
+  ">
+    Dates & Pricing
+  </h2>
+
+  <!-- Month Pill -->
+  <div style="
+    max-width:900px;
+    margin:0 auto 30px;
+    background:#000;
+    color:#fff;
+    padding:14px 0;
+    border-radius:40px;
+    text-align:center;
+    font-size:16px;
+    font-weight:500;
+  ">
+    March 2026
+  </div>
+
+  <!-- Main Card -->
+  <div style="
+    max-width:1100px;
+    margin:0 auto;
+    background:#000;
+    color:#fff;
+    border-radius:30px;
+    padding:50px;
+    display:grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap:50px;
+    align-items:center;
+  ">
+
+    <!-- LEFT CONTENT -->
+    <div>
+
+      <h3 style="font-size:28px;font-weight:700;margin-bottom:20px;">
+        14th Mar 2026 – 22nd Mar 2026
+      </h3>
+
+      <p style="font-size:16px;line-height:1.7;">
+        INR <b>53,000</b> + 5% GST & TCS before<br>
+        <span style="color:#f4c430;">30th Jan 2026 – Early Bird Price</span>
+      </p>
+
+      <hr style="border:0;border-top:1px solid #333;margin:22px 0;">
+
+      <p style="font-size:16px;line-height:1.7;">
+        INR <b>55,000</b> + 5% GST & TCS before<br>
+        10th Feb 2026
+      </p>
+
+      <hr style="border:0;border-top:1px solid #333;margin:22px 0;">
+
+      <p style="font-size:16px;line-height:1.7;">
+        INR <b>57,000</b> + 5% GST & TCS<br>
+        until spots available
+      </p>
+
+    </div>
+
+    <!-- RIGHT IMAGE -->
+    <div style="text-align:center;">
+      <img src="assets/images/sunset.jpg"
+           alt="Sunset Bali"
+           style="
+             width:100%;
+             max-width:360px;
+             border-radius:22px;
+             object-fit:cover;
+           ">
+    </div>
+
+  </div>
+
+</section>
+
+
+<section style="padding:80px 10%;">
+
+  <h2 style="
+    text-align:center;
+    font-size:42px;
+    font-weight:700;
+    margin-bottom:50px;
+  ">
+    FAQs
+  </h2>
+
+  <div style="max-width:900px;margin:auto;">
+
+    <!-- FAQ ITEM -->
+    <div class="faq-item">
+      <div class="faq-question">
+        How many travelers can join the adventure on this Bali trip?
+        <span>+</span>
+      </div>
+      <div class="faq-answer">
+        We keep it tight, usually rolling with a crew of 18–20 awesome individuals.
+        Smaller groups mean better bonding and exclusive experiences.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        What kind of food can we expect during the trip?
+        <span>+</span>
+      </div>
+      <div class="faq-answer">
+        Daily breakfasts are included. You’ll get to try local Balinese cuisine,
+        international options, and plenty of café hopping.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        What’s the physical hustle level on this trip?
+        <span>+</span>
+      </div>
+      <div class="faq-answer">
+        Moderate. Activities like surfing, hikes, and cycling are included,
+        but everything is beginner-friendly.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        What luggage works best for Bali?
+        <span>+</span>
+      </div>
+      <div class="faq-answer">
+        A backpack or medium-sized trolley works best.
+        Bali involves ferries, bikes, and walking.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        Can I rely on cards or should I carry cash?
+        <span>+</span>
+      </div>
+      <div class="faq-answer">
+        Cards work in most places, but carrying some cash is recommended
+        for local markets and small cafés.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        What are the accommodations like?
+        <span>+</span>
+      </div>
+      <div class="faq-answer">
+        Comfortable 3/4-star hotels in prime locations on a twin-sharing basis.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        Can I request a roommate?
+        <span>+</span>
+      </div>
+      <div class="faq-answer">
+        Absolutely! If you’re traveling solo, we’ll match you with a same-gender traveler.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        Is travel insurance mandatory?
+        <span>+</span>
+      </div>
+      <div class="faq-answer">
+        Travel insurance is highly recommended for medical and baggage safety.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        Are flights included in the package?
+        <span>+</span>
+      </div>
+      <div class="faq-answer">
+        No, international flights are not included.
+        You’re free to book from any city.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        What happens if I need to cancel?
+        <span>+</span>
+      </div>
+      <div class="faq-answer">
+        Cancellation policies depend on how close the departure date is.
+        Full details will be shared at booking.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<style>
+.faq-item{
+  border-bottom:1px solid #f4c430;
+  padding:22px 0;
+}
+
+.faq-question{
+  font-size:18px;
+  font-weight:600;
+  cursor:pointer;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.faq-question span{
+  font-size:22px;
+  transition:transform 0.3s;
+}
+
+.faq-answer{
+  max-height:0;
+  overflow:hidden;
+  transition:max-height 0.4s ease;
+  font-size:16px;
+  line-height:1.6;
+  margin-top:0;
+}
+</style>
+
+<script>
+const faqItems = document.querySelectorAll(".faq-item");
+
+faqItems.forEach(item => {
+  const question = item.querySelector(".faq-question");
+  const answer = item.querySelector(".faq-answer");
+  const icon = question.querySelector("span");
+
+  question.addEventListener("click", () => {
+
+    faqItems.forEach(i => {
+      if (i !== item) {
+        i.querySelector(".faq-answer").style.maxHeight = null;
+        i.querySelector(".faq-question span").style.transform = "rotate(0deg)";
+        i.querySelector(".faq-question span").innerText = "+";
+      }
+    });
+
+    if (answer.style.maxHeight) {
+      answer.style.maxHeight = null;
+      icon.innerText = "+";
+      icon.style.transform = "rotate(0deg)";
+    } else {
+      answer.style.maxHeight = answer.scrollHeight + "px";
+      icon.innerText = "−";
+      icon.style.transform = "rotate(180deg)";
+    }
+  });
+});
+</script>
+
+<div style="text-align:center;margin:80px 0;">
+  <a href="booking.html?trip=bali" style="
+    padding:22px 36px;
+    background:#f4c430;
+    color:#000;
+    border-radius:40px;
+    font-size:18px;
+    font-weight:700;
+    text-decoration:none;
+  ">
+    Book This Trip
+  </a>
+</div>
+
+
+</body>
+</html>
+

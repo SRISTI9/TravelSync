@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Goa | TravelSync</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;scroll-behavior:smooth}
+    body{background:#fff;color:#222}
+
+    header{
+      position:fixed;top:0;width:100%;
+      background:#000;padding:18px 60px;
+      z-index:1000;display:flex;
+      justify-content:space-between;align-items:center
+    }
+    header h1{color:#fff;font-size:24px;font-weight:700}
+    header nav a{color:#fff;text-decoration:none;margin-left:30px;font-size:15px;opacity:.85}
+    header nav a:hover{opacity:1}
+
+    .hero{
+      height:100vh;
+      background:linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.45)),
+      url("assets/images/goa.jpeg") center/cover no-repeat;
+      display:flex;align-items:center;justify-content:center;
+      text-align:center;padding:0 20px
+    }
+    .hero h2{color:#fbc531;font-size:52px;font-weight:700;margin-bottom:10px}
+    .hero p{color:#fff;font-size:18px;margin-bottom:25px}
+    .hero a{
+      background:#25d366;color:#000;
+      padding:14px 28px;border-radius:40px;
+      text-decoration:none;font-weight:600
+    }
+
+    section{padding:100px 12%}
+    .section-title{text-align:center;font-size:34px;margin-bottom:40px;font-weight:700}
+
+    .about p{
+      font-size:16px;line-height:1.9;
+      max-width:900px;margin:auto;
+      text-align:center;opacity:.9
+    }
+
+    .info-wrapper{display:flex;justify-content:center;margin-top:40px}
+    .info-card{
+      background:#000;color:#fff;border-radius:20px;
+      padding:50px 60px;max-width:900px;width:100%;
+      box-shadow:0 30px 80px rgba(0,0,0,.3)
+    }
+    .info-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:30px}
+    .info-item h4{color:#fbc531;margin-bottom:6px;font-size:18px}
+    .info-item p{font-size:15px;opacity:.9}
+
+    .day-btn{
+      width:100%;background:none;border:none;color:#fff;
+      font-size:20px;text-align:left;padding:18px 0;
+      cursor:pointer;border-bottom:1px solid #f4c430;
+      display:flex;justify-content:space-between
+    }
+    .day-btn::after{content:"⌄"}
+    .day-btn.active::after{content:"⌃"}
+    .day-content{max-height:0;overflow:hidden;transition:.4s;opacity:0}
+    .day-content.show{max-height:500px;opacity:1;padding:15px 0 25px}
+
+    .faq-item{border-bottom:1px solid #f4c430;padding:22px 0}
+    .faq-question{font-size:18px;font-weight:600;cursor:pointer;display:flex;justify-content:space-between}
+    .faq-answer{max-height:0;overflow:hidden;transition:.4s;font-size:16px}
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>TravelSync</h1>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="#about">About</a>
+    <a href="#details">Details</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div>
+    <h2>GOA</h2>
+    <p>Beaches · Nightlife · Sunsets · Freedom</p>
+    <a href="#about">WhatsApp Us</a>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="about">
+  <h3 class="section-title">About the Trip</h3>
+  <p>
+    Goa is the ultimate beach escape where sun, sand, music, and freedom come together.
+    From iconic beach shacks to thrilling water sports and legendary nightlife,
+    this trip is designed for pure fun and relaxation.
+    <br><br>
+    Cruise along the Mandovi River, spot dolphins in the wild,
+    party till sunrise, and unwind with golden sunsets by the sea.
+    <br><br>
+    Perfect for travelers aged 18–35 who want a mix of adventure,
+    social vibes, and unforgettable memories.
+  </p>
+</section>
+
+<!-- DETAILS -->
+<section id="details">
+  <h3 class="section-title">Trip Details</h3>
+  <div class="info-wrapper">
+    <div class="info-card">
+      <div class="info-grid">
+        <div class="info-item"><h4>Accommodation</h4><p>4 nights in beachside hotels.</p></div>
+        <div class="info-item"><h4>Group Size</h4><p>18–20 travelers.</p></div>
+        <div class="info-item"><h4>Meals</h4><p>4 breakfasts.</p></div>
+        <div class="info-item"><h4>Transport</h4><p>All local transfers.</p></div>
+        <div class="info-item"><h4>Duration</h4><p>5 Days / 4 Nights.</p></div>
+        <div class="info-item"><h4>Team</h4><p>Experienced Trip Leader.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TOP EXPERIENCES -->
+<section>
+  <h2 class="section-title">Top Experiences</h2>
+  <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:22px">
+
+    <div><img src="assets/images/beachgoa.jpg" style="width:100%;height:360px;object-fit:cover;border-radius:14px"><p>Beach Shacks</p></div>
+    <div><img src="assets/images/WaterSportsgoa.jpg" style="width:100%;height:360px;object-fit:cover;border-radius:14px"><p>Water Sports</p></div>
+    <div><img src="assets/images/nightlife.jpg" style="width:100%;height:360px;object-fit:cover;border-radius:14px"><p>Nightlife & Clubs</p></div>
+    <div><img src="assets/images/dolphingoa.jpg" style="width:100%;height:360px;object-fit:cover;border-radius:14px"><p>Dolphin Watching</p></div>
+    <div><img src="assets/images/MandoviRivergoa.jpg" style="width:100%;height:360px;object-fit:cover;border-radius:14px"><p>Mandovi River Cruise</p></div>
+
+  </div>
+</section>
+
+<!-- ITINERARY -->
+<section style="background:#000;color:#fff">
+  <h2 class="section-title">The Game Plan</h2>
+  <div style="display:grid;grid-template-columns:45% 55%;gap:50px">
+    <img id="dayImage" src="assets/images/beachgoa.jpg" style="width:100%;border-radius:16px">
+
+    <div>
+      <div>
+        <button class="day-btn active" onclick="openDay(1,'assets/images/beachgoa.jpg')">Day 1</button>
+        <div class="day-content show">
+          <ul><li>Arrival & beach sunset</li><li>Welcome party</li></ul>
+        </div>
+      </div>
+
+      <div>
+        <button class="day-btn" onclick="openDay(2,'assets/images/WaterSportsgoa.jpg')">Day 2</button>
+        <div class="day-content"><ul><li>Water sports</li><li>Beach hopping</li></ul></div>
+      </div>
+
+      <div>
+        <button class="day-btn" onclick="openDay(3,'assets/images/dolphingoa.jpg')">Day 3</button>
+        <div class="day-content"><ul><li>Dolphin cruise</li><li>Free afternoon</li></ul></div>
+      </div>
+
+      <div>
+        <button class="day-btn" onclick="openDay(4,'assets/images/nightlife.jpg')">Day 4</button>
+        <div class="day-content"><ul><li>Club hopping</li><li>Farewell party</li></ul></div>
+      </div>
+
+      <div>
+        <button class="day-btn" onclick="openDay(5,'assets/images/MandoviRivergoa.jpg')">Day 5</button>
+        <div class="day-content"><ul><li>Mandovi cruise</li><li>Departure</li></ul></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PDF -->
+<div style="text-align:center;margin:40px">
+  <button onclick="downloadPDF()" style="padding:20px 28px;background:#f4c430;border:none;border-radius:40px;font-weight:600">
+    Download Itinerary (PDF)
+  </button>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+function openDay(d,i){
+  document.querySelectorAll('.day-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.day-content').forEach(c=>c.classList.remove('show'));
+  document.querySelectorAll('.day-btn')[d-1].classList.add('active');
+  document.querySelectorAll('.day-content')[d-1].classList.add('show');
+  document.getElementById('dayImage').src=i;
+}
+function downloadPDF(){
+  const { jsPDF }=window.jspdf;
+  const doc=new jsPDF();
+  doc.text("Goa Trip Itinerary",20,20);
+  doc.save("Goa_Itinerary.pdf");
+}
+</script>
+<!-- INCLUSIONS & EXCLUSIONS -->
+<section style="padding:80px 6%; background:#fff;">
+
+<h2 style="text-align:center;font-size:42px;font-weight:700;margin-bottom:50px;">
+  Inclusions & Exclusions
+</h2>
+
+<div style="display:flex;justify-content:center;gap:20px;margin-bottom:40px;">
+  <button id="incBtn" onclick="showInclusions()"
+    style="padding:14px 50px;border-radius:40px;border:none;font-size:16px;font-weight:600;background:#000;color:#fff;">
+    Inclusion
+  </button>
+
+  <button id="excBtn" onclick="showExclusions()"
+    style="padding:14px 50px;border-radius:40px;border:none;font-size:16px;font-weight:600;background:#eee;color:#000;">
+    Exclusion
+  </button>
+</div>
+
+<div style="
+  max-width:1200px;
+  margin:auto;
+  background:#000;
+  color:#fff;
+  border-radius:26px;
+  padding:50px;
+  display:grid;
+  grid-template-columns:1.2fr 1fr;
+  gap:40px;
+  box-shadow:0 30px 60px rgba(0,0,0,0.25);
+">
+
+  <div id="inclusionContent">
+
+    <h3 style="color:#f4c430;">Accommodation</h3>
+    <p>4 nights in beachside hotels on twin-sharing basis.</p>
+
+    <h3 style="color:#f4c430;margin-top:24px;">Meals</h3>
+    <p>4 Breakfasts.</p>
+
+    <h3 style="color:#f4c430;margin-top:24px;">Activities</h3>
+    <ul style="line-height:1.9;">
+      <li>Beach hopping</li>
+      <li>Water sports</li>
+      <li>Dolphin watching</li>
+      <li>Mandovi River cruise</li>
+      <li>Nightclub entry</li>
+    </ul>
+
+    <h3 style="color:#f4c430;margin-top:24px;">Transportation</h3>
+    <p>All local transfers included.</p>
+  </div>
+
+  <div>
+    <img src="assets/images/goa.jpeg"
+         style="width:100%;height:100%;object-fit:cover;border-radius:20px;">
+  </div>
+
+</div>
+</section>
+
+<script>
+const content = document.getElementById("inclusionContent");
+const incBtn = document.getElementById("incBtn");
+const excBtn = document.getElementById("excBtn");
+
+function showInclusions(){
+  content.innerHTML = `
+    <h3 style="color:#f4c430;">Accommodation</h3>
+    <p>4 nights in beachside hotels.</p>
+
+    <h3 style="color:#f4c430;margin-top:20px;">Meals</h3>
+    <p>4 Breakfasts.</p>
+
+    <h3 style="color:#f4c430;margin-top:20px;">Activities</h3>
+    <ul>
+      <li>Beach hopping</li>
+      <li>Water sports</li>
+      <li>Dolphin watching</li>
+      <li>Mandovi cruise</li>
+      <li>Nightlife & clubs</li>
+    </ul>
+  `;
+  incBtn.style.background="#000";incBtn.style.color="#fff";
+  excBtn.style.background="#eee";excBtn.style.color="#000";
+}
+
+function showExclusions(){
+  content.innerHTML = `
+    <ul style="line-height:2;">
+      <li>Flights / Trains</li>
+      <li>Lunches & dinners</li>
+      <li>Personal expenses</li>
+      <li>Travel insurance</li>
+      <li>Anything not mentioned in inclusions</li>
+    </ul>
+  `;
+  excBtn.style.background="#000";excBtn.style.color="#fff";
+  incBtn.style.background="#eee";incBtn.style.color="#000";
+}
+</script>
+
+<!-- DATES & PRICING -->
+<section style="padding:80px 10%;">
+
+  <h2 style="text-align:center;font-size:42px;font-weight:700;margin-bottom:40px;">
+    Dates & Pricing
+  </h2>
+
+  <div style="
+    max-width:1100px;
+    margin:0 auto;
+    background:#000;
+    color:#fff;
+    border-radius:30px;
+    padding:50px;
+    display:grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap:50px;
+    align-items:center;
+  ">
+
+    <div>
+      <h3 style="font-size:28px;font-weight:700;margin-bottom:20px;">
+        March 2026
+      </h3>
+
+      <p style="font-size:16px;line-height:1.7;">
+        INR <b>29,999</b> + GST<br>
+        <span style="color:#f4c430;">Early Bird Price</span>
+      </p>
+
+      <hr style="border:0;border-top:1px solid #333;margin:22px 0;">
+
+      <p style="font-size:16px;line-height:1.7;">
+        INR <b>32,999</b> + GST<br>
+        Regular Price
+      </p>
+    </div>
+
+    <div style="text-align:center;">
+      <img src="assets/images/beachgoa.jpg"
+           style="width:100%;max-width:360px;border-radius:22px;object-fit:cover;">
+    </div>
+
+  </div>
+</section>
+
+
+<!-- FAQ -->
+<!-- FAQs -->
+<section style="padding:80px 10%;">
+
+<h2 style="text-align:center;font-size:42px;font-weight:700;margin-bottom:50px;">
+  FAQs
+</h2>
+
+<div style="max-width:900px;margin:auto;">
+
+<div class="faq-item"><div class="faq-question">Group size?<span>+</span></div><div class="faq-answer">18–20 travelers.</div></div>
+<div class="faq-item"><div class="faq-question">Flights included?<span>+</span></div><div class="faq-answer">No.</div></div>
+<div class="faq-item"><div class="faq-question">Meals included?<span>+</span></div><div class="faq-answer">Breakfasts.</div></div>
+<div class="faq-item"><div class="faq-question">Best season to visit Goa?<span>+</span></div><div class="faq-answer">November to March.</div></div>
+<div class="faq-item"><div class="faq-question">Solo travelers allowed?<span>+</span></div><div class="faq-answer">Yes, absolutely.</div></div>
+<div class="faq-item"><div class="faq-question">Water sports included?<span>+</span></div><div class="faq-answer">Some activities included, others optional.</div></div>
+<div class="faq-item"><div class="faq-question">Party scenes included?<span>+</span></div><div class="faq-answer">Yes, club nights planned.</div></div>
+<div class="faq-item"><div class="faq-question">Hotel type?<span>+</span></div><div class="faq-answer">Beachside 3-star hotels.</div></div>
+<div class="faq-item"><div class="faq-question">Free time available?<span>+</span></div><div class="faq-answer">Yes.</div></div>
+<div class="faq-item"><div class="faq-question">Cancellation policy?<span>+</span></div><div class="faq-answer">Shared during booking.</div></div>
+
+</div>
+</section>
+
+<script>
+document.querySelectorAll(".faq-question").forEach(q=>{
+  q.onclick=()=>{
+    const a=q.nextElementSibling;
+    a.style.maxHeight=a.style.maxHeight?null:a.scrollHeight+"px";
+  }
+});
+</script>
+
+<script>
+document.querySelectorAll('.faq-question').forEach(q=>{
+  q.onclick=()=>{const a=q.nextElementSibling;a.style.maxHeight=a.style.maxHeight?null:a.scrollHeight+'px'}
+});
+</script>
+
+<div style="text-align:center;margin:80px 0;">
+  <a href="booking.html?trip=goa" style="padding:22px 36px;background:#f4c430;color:#000;border-radius:40px;font-size:18px;font-weight:700;text-decoration:none;">
+    Book This Trip
+  </a>
+</div>
+
+</body>
+</html>
