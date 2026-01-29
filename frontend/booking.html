@@ -1,365 +1,333 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Book Trip | TravelSync</title>
+<meta charset="UTF-8">
+<title>Book Trip | TravelSync</title>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: #0b0b0b;
-      color: #fff;
-    }
+<style>
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#0b0b0b;
+  color:#fff;
+}
 
-    .container {
-      max-width: 1200px;
-      margin: 80px auto;
-      padding: 50px;
-      background: #000;
-      border-radius: 24px;
-      display: grid;
-      grid-template-columns: 1.3fr 1fr;
-      gap: 40px;
-      box-shadow: 0 30px 80px rgba(0,0,0,0.6);
-    }
+.container{
+  max-width:1200px;
+  margin:80px auto;
+  padding:50px;
+  background:#000;
+  border-radius:24px;
+  display:grid;
+  grid-template-columns:1.4fr 1fr;
+  gap:40px;
+}
 
-    h1 {
-      color: #f4c430;
-      margin-bottom: 10px;
-      font-size: 34px;
-    }
+h1{color:#f4c430;font-size:34px}
+h3{color:#f4c430;margin-top:25px}
+p{opacity:.9}
 
-    h3 {
-      margin-top: 30px;
-      color: #f4c430;
-    }
+label{display:block;margin-top:16px;font-weight:600}
+input,select{
+  width:100%;
+  padding:14px;
+  border-radius:12px;
+  border:none;
+  background:#1a1a1a;
+  color:#fff;
+}
 
-    p {
-      opacity: 0.9;
-      line-height: 1.7;
-    }
+.price-box{
+  background:#111;
+  padding:35px;
+  border-radius:22px;
+  position:sticky;
+  top:90px;
+}
 
-    label {
-      display: block;
-      margin-top: 18px;
-      margin-bottom: 6px;
-      font-weight: 600;
-    }
+.total{
+  font-size:26px;
+  color:#f4c430;
+  margin:25px 0;
+  font-weight:800;
+}
 
-    input, select {
-      width: 100%;
-      padding: 14px;
-      border-radius: 12px;
-      border: none;
-      outline: none;
-      font-size: 15px;
-      background: #1a1a1a;
-      color: #fff;
-    }
+button{
+  width:100%;
+  padding:18px;
+  background:#f4c430;
+  border:none;
+  border-radius:50px;
+  font-size:17px;
+  font-weight:800;
+  cursor:pointer;
+}
 
-    hr {
-      border: none;
-      height: 1px;
-      background: rgba(255,255,255,0.15);
-      margin: 35px 0;
-    }
+button:hover{background:#ffd966}
 
-    .price-box {
-      background: #111;
-      padding: 35px;
-      border-radius: 22px;
-      position: sticky;
-      top: 100px;
-      height: fit-content;
-    }
+/* SEATS */
+.seat-card{
+  background:#141414;
+  padding:20px;
+  border-radius:18px;
+  margin:20px 0;
+}
 
-    .price-box h2 {
-      color: #f4c430;
-      margin-bottom: 10px;
-    }
+.progress{
+  width:100%;
+  height:10px;
+  background:#333;
+  border-radius:20px;
+  overflow:hidden;
+  margin:10px 0;
+}
 
-    .total {
-      font-size: 28px;
-      color: #f4c430;
-      margin: 25px 0;
-      font-weight: 800;
-    }
+.progress-fill{
+  height:100%;
+  background:#f4c430;
+  width:0%;
+  transition:.4s;
+}
 
-    button {
-      width: 100%;
-      padding: 18px;
-      background: #f4c430;
-      color: #000;
-      border-radius: 50px;
-      font-size: 17px;
-      font-weight: 800;
-      cursor: pointer;
-      border: none;
-      margin-top: 20px;
-    }
+.names{font-size:13px;opacity:.85;line-height:1.6}
 
-    button:hover {
-      background: #ffd966;
-    }
-
-    .note {
-      font-size: 12px;
-      opacity: 0.6;
-      margin-top: 12px;
-      text-align: center;
-    }
-
-    .seat-box {
-      background: #141414;
-      padding: 18px;
-      border-radius: 16px;
-      margin-top: 20px;
-      font-size: 14px;
-    }
-
-    .seat-box span {
-      color: #f4c430;
-      font-weight: 700;
-    }
-  </style>
+hr{
+  border:none;
+  height:1px;
+  background:rgba(255,255,255,.15);
+  margin:30px 0;
+}
+</style>
 </head>
 
 <body>
 
 <div class="container">
 
-  <!-- LEFT SIDE -->
-  <div>
+<!-- LEFT -->
+<div>
+<h1 id="tripTitle"></h1>
+<p><b>Dates:</b> <span id="tripDates"></span></p>
+<p><b>Duration:</b> <span id="tripDuration"></span></p>
 
-    <h1 id="tripTitle"></h1>
-
-    <p><b>Dates:</b> <span id="tripDates"></span></p>
-    <p><b>Duration:</b> <span id="tripDuration"></span></p>
-    <p><b>Group Size:</b> 18–20 Travellers</p>
-
-    <div class="seat-box">
-      👥 <span>12 / 20</span> seats already filled  
-      <br>🔥 Filling fast — few seats left!
-    </div>
-
-    <hr>
-
-    <label>Number of Travellers *</label>
-    <select id="travellerCount" onchange="renderTravellers()">
-      <option value="1">1</option>
-      <option value="2">2</option>
-      <option value="3">3</option>
-    </select>
-
-    <div id="travellers"></div>
-
+<div class="seat-card">
+  👥 <b><span id="seatCount"></span> / 20 seats filled</b>
+  <div class="progress">
+    <div class="progress-fill" id="seatBar"></div>
   </div>
+  <div class="names" id="seatNames"></div>
+</div>
 
-  <!-- RIGHT SIDE -->
-  <div class="price-box">
-    <h2>Pricing</h2>
+<hr>
 
-    <label>Select Price Tier</label>
-    <select id="price" onchange="updatePrice()"></select>
+<label>Number of Travellers *</label>
+<select id="travellerCount" onchange="renderTravellers()">
+  <option value="1">1</option>
+  <option value="2">2</option>
+  <option value="3">3</option>
+</select>
 
-    <p style="font-size:13px;margin-top:10px;">+ GST & taxes as applicable</p>
+<div id="travellers"></div>
+</div>
 
-    <div class="total" id="total"></div>
+<!-- RIGHT -->
+<div class="price-box">
+<h2 style="color:#f4c430">Pricing</h2>
 
-    <button onclick="bookNow()">Proceed to Book</button>
+<label>Price (per person)</label>
+<select id="price" onchange="updatePrice()"></select>
 
-    <p class="note">
-      * Booking request only. Payment will be collected later.
-    </p>
-  </div>
+<p style="font-size:13px;margin-top:10px;">+ GST & taxes as applicable</p>
+<div class="total" id="total"></div>
+
+<button onclick="bookNow()">Proceed to Book</button>
+
+<p style="font-size:12px;opacity:.6;text-align:center;margin-top:12px">
+* Booking request only. Payment will be collected later.
+</p>
+</div>
 
 </div>
 
-<!-- jsPDF -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <script>
-/* ================= TRIP CONFIG ================= */
+/* ================= TRIP DATA ================= */
 
-const trips = {
-  bali: {
-    title: "Book Bali & Gili Islands",
-    dates: "14 Mar 2026 – 22 Mar 2026",
-    duration: "9 Days",
-    prices: [
-      { label: "Early Bird – ₹53,000", value: 53000 },
-      { label: "Regular – ₹55,000", value: 55000 },
-      { label: "Last Call – ₹57,000", value: 57000 }
-    ],
-    api: "book-bali",
-    pdf: "TravelSync_Bali_Booking.pdf"
+const trips={
+  bali:{
+    title:"Bali & Gili Islands",
+    dates:"14 Mar 2026 – 22 Mar 2026",
+    duration:"9 Days",
+    price:53000,
+    api:"book-bali",
+    pdf:"TravelSync_Bali_Booking.pdf",
+    itinerary:[
+      "Day 1: Arrival, welcome dinner & nightlife",
+      "Day 2: Uluwatu Temple & Kecak Dance",
+      "Day 3: Nusa Penida island tour",
+      "Day 4: Gili Islands – snorkeling & beach clubs",
+      "Day 5: Leisure & farewell dinner"
+    ]
   },
-
-  paris: {
-    title: "Book Paris",
-    dates: "April 2026",
-    duration: "8 Days",
-    prices: [
-      { label: "Flat Price – ₹79,000", value: 79000 }
-    ],
-    api: "book-paris",
-    pdf: "TravelSync_Paris_Booking.pdf"
+  paris:{
+    title:"Paris",
+    dates:"April 2026",
+    duration:"8 Days",
+    price:79000,
+    api:"book-paris",
+    pdf:"TravelSync_Paris_Booking.pdf",
+    itinerary:[
+      "Arrival & Eiffel Tower walk",
+      "Louvre Museum & city tour",
+      "Montmartre & art walk",
+      "Seine River Cruise",
+      "Free exploration & departure"
+    ]
   },
-
-  goa: {
-    title: "Book Goa",
-    dates: "March 2026",
-    duration: "5 Days",
-    prices: [
-      { label: "Early Bird – ₹29,999", value: 29999 },
-      { label: "Regular – ₹32,999", value: 32999 }
-    ],
-    api: "book-goa",
-    pdf: "TravelSync_Goa_Booking.pdf"
+  goa:{
+    title:"Goa",
+    dates:"March 2026",
+    duration:"5 Days",
+    price:29999,
+    api:"book-goa",
+    pdf:"TravelSync_Goa_Booking.pdf",
+    itinerary:[
+      "Arrival & beach shacks",
+      "Water sports",
+      "Nightlife & clubs",
+      "Dolphin watching & Mandovi cruise",
+      "Leisure & departure"
+    ]
   }
 };
 
+const params=new URLSearchParams(location.search);
+const tripKey=params.get("trip")||"bali";
+const trip=trips[tripKey];
+
+/* ================= SEATS (STATIC DEMO) ================= */
+
+let maxSeats=20;
+let filledSeats=12;
+let bookedNames=[
+  "Aarav","Isha","Rohan","Meera","Karan","Ananya",
+  "Siddharth","Pooja","Nikhil","Sneha","Rahul","Tanya"
+];
+
+function renderSeats(){
+  seatCount.innerText=filledSeats;
+  seatBar.style.width=(filledSeats/maxSeats*100)+"%";
+  seatNames.innerText=bookedNames.join(", ");
+}
+
 /* ================= INIT ================= */
 
-const params = new URLSearchParams(window.location.search);
-const tripKey = params.get("trip") || "bali";
-const trip = trips[tripKey];
+tripTitle.innerText="Book "+trip.title;
+tripDates.innerText=trip.dates;
+tripDuration.innerText=trip.duration;
+price.innerHTML=`<option value="${trip.price}">₹${trip.price} per person</option>`;
 
-document.getElementById("tripTitle").innerText = trip.title;
-document.getElementById("tripDates").innerText = trip.dates;
-document.getElementById("tripDuration").innerText = trip.duration;
-
-const priceSelect = document.getElementById("price");
-trip.prices.forEach(p => {
-  const opt = document.createElement("option");
-  opt.value = p.value;
-  opt.text = p.label;
-  priceSelect.appendChild(opt);
-});
+renderSeats();
+renderTravellers();
+updatePrice();
 
 /* ================= TRAVELLERS ================= */
 
-function renderTravellers() {
-  const count = Number(document.getElementById("travellerCount").value);
-  const container = document.getElementById("travellers");
-  container.innerHTML = "";
-
-  for (let i = 1; i <= count; i++) {
-    container.innerHTML += `
+function renderTravellers(){
+  travellers.innerHTML="";
+  for(let i=1;i<=travellerCount.value;i++){
+    travellers.innerHTML+=`
       <hr>
       <h3>Traveller ${i}</h3>
-
-      <label>Full Name *</label>
-      <input class="t-name">
-
-      <label>Email *</label>
-      <input class="t-email" type="email">
-
-      <label>Phone *</label>
-      <input class="t-phone">
-
-      <label>Age *</label>
-      <input class="t-age" type="number">
-
-      <label>Room Preference</label>
-      <select class="t-room">
-        <option>Twin Sharing</option>
-        <option>Solo</option>
-      </select>
+      <label>Full Name *</label><input class="t-name">
+      <label>Email *</label><input class="t-email">
+      <label>Phone *</label><input class="t-phone">
+      <label>Age *</label><input class="t-age" type="number">
     `;
   }
-
-  updatePrice();
 }
 
-renderTravellers();
-
-/* ================= PRICE ================= */
-
-function updatePrice() {
-  const price = Number(document.getElementById("price").value);
-  const count = Number(document.getElementById("travellerCount").value);
-  document.getElementById("total").innerText = "Total: ₹" + (price * count);
+function updatePrice(){
+  total.innerText="Total: ₹"+(trip.price*travellerCount.value);
 }
 
 /* ================= BOOK ================= */
 
-async function bookNow() {
-  const count = Number(document.getElementById("travellerCount").value);
-  const pricePerPerson = Number(document.getElementById("price").value);
+async function bookNow(){
+  const names=[...document.querySelectorAll(".t-name")];
+  const emails=[...document.querySelectorAll(".t-email")];
+  const phones=[...document.querySelectorAll(".t-phone")];
+  const ages=[...document.querySelectorAll(".t-age")];
 
-  const names = document.querySelectorAll(".t-name");
-  const emails = document.querySelectorAll(".t-email");
-  const phones = document.querySelectorAll(".t-phone");
-  const ages = document.querySelectorAll(".t-age");
-  const rooms = document.querySelectorAll(".t-room");
+  let travellersArr=[];
 
-  const travellers = [];
-
-  for (let i = 0; i < count; i++) {
-    if (!names[i].value || !emails[i].value || !phones[i].value || !ages[i].value) {
+  for(let i=0;i<names.length;i++){
+    if(!names[i].value||!emails[i].value||!phones[i].value||!ages[i].value){
       alert("Fill all traveller details");
       return;
     }
-
-    travellers.push({
-      name: names[i].value,
-      email: emails[i].value,
-      phone: phones[i].value,
-      age: ages[i].value,
-      room: rooms[i].value
+    travellersArr.push({
+      name:names[i].value,
+      email:emails[i].value,
+      phone:phones[i].value,
+      age:ages[i].value
     });
   }
 
-  const totalPrice = pricePerPerson * count;
+  travellersArr.forEach(t=>bookedNames.push(t.name));
+  filledSeats+=travellersArr.length;
+  renderSeats();
 
-  /* -------- PDF -------- */
-  const { jsPDF } = window.jspdf;
-  const pdf = new jsPDF();
+  /* PDF */
+  const {jsPDF}=window.jspdf;
+  const pdf=new jsPDF();
 
-  pdf.setFontSize(20);
-  pdf.text("TravelSync – Booking Confirmation", 20, 25);
-  pdf.setFontSize(14);
+  pdf.text("TravelSync – Booking Confirmation",20,20);
+  pdf.text(`Trip: ${trip.title}`,20,35);
+  pdf.text(`Dates: ${trip.dates}`,20,45);
+  pdf.text(`Total Travellers: ${travellersArr.length}`,20,55);
+  pdf.text(`Total Price: ₹${trip.price*travellersArr.length}`,20,65);
 
-  pdf.text(`Trip: ${trip.title}`, 20, 45);
-  pdf.text(`Dates: ${trip.dates}`, 20, 55);
-  pdf.text(`Duration: ${trip.duration}`, 20, 65);
-  pdf.text(`Total Travellers: ${count}`, 20, 75);
-  pdf.text(`Total Price: ₹${totalPrice}`, 20, 85);
+  let y=85;
+  pdf.text("Traveller Details:",20,y); y+=10;
+  travellersArr.forEach((t,i)=>{
+    pdf.text(`${i+1}. ${t.name} | ${t.age} | ${t.email}`,20,y);
+    y+=8;
+  });
 
-  let y = 105;
-  travellers.forEach((t, i) => {
-    pdf.text(`Traveller ${i+1}:`, 20, y);
-    pdf.text(`Name: ${t.name}`, 30, y + 8);
-    pdf.text(`Email: ${t.email}`, 30, y + 16);
-    pdf.text(`Phone: ${t.phone}`, 30, y + 24);
-    pdf.text(`Age: ${t.age}`, 30, y + 32);
-    y += 50;
+  y+=10;
+  pdf.text("Itinerary:",20,y); y+=10;
+  trip.itinerary.forEach(d=>{
+    pdf.text("- "+d,20,y);
+    y+=8;
   });
 
   pdf.save(trip.pdf);
 
-  /* -------- BACKEND -------- */
-  try {
-    const res = await fetch(`http://localhost:5000/${trip.api}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        trip: tripKey,
-        travellers,
-        totalPrice
+  /* BACKEND */
+  try{
+    const res=await fetch(`http://localhost:5000/${trip.api}`,{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        trip:trip.title,
+        travellers:travellersArr,
+        itinerary:trip.itinerary,
+        totalPrice:trip.price*travellersArr.length
       })
     });
 
-    const result = await res.json();
-    if (result.success) {
-      alert("Booking confirmed! PDF downloaded & email sent 📧");
-    } else {
-      alert("Saved but email failed");
+    const result=await res.json();
+
+    if(result.success){
+      alert("✅ Booking confirmed! PDF downloaded & email sent 📧");
+    }else{
+      alert("Saved, but email failed.");
     }
-  } catch (err) {
-    alert("Backend not running");
+
+  }catch(err){
+    alert("❌ Backend not running");
   }
 }
 </script>

@@ -1,159 +1,170 @@
 const express = require("express");
 const cors = require("cors");
 const nodemailer = require("nodemailer");
-const dotenv = require("dotenv");
 const PDFDocument = require("pdfkit");
-const fs = require("fs");
-
-dotenv.config();
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+require("dotenv").config();
 
 const app = express();
+
 app.use(cors());
 app.use(express.json());
 
-/* ================= MAIL ================= */
+/* ================= EMAIL TRANSPORT ================= */
+
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS
   },
-  tls: { rejectUnauthorized: false }
+  tls: {
+    rejectUnauthorized: false
+  }
 });
 
-/* ================= TRIP MASTER ================= */
-const trips = {
-  bali: {
-    name: "Bali & Gili Islands",
-    dates: "14 Mar 2026 – 22 Mar 2026",
-    duration: "9 Days",
-    itinerary: [
-      "Arrival in Bali, welcome dinner & nightlife",
-      "Uluwatu Temple & Kecak Dance",
-      "Nusa Penida island tour",
-      "Transfer to Gili Islands – snorkeling & beach clubs",
-      "Leisure day & farewell dinner"
-    ]
-  },
-  paris: {
-    name: "Paris",
-    dates: "April 2026",
-    duration: "8 Days",
-    itinerary: [
-      "Arrival & Eiffel Tower walk",
-      "Louvre Museum & city tour",
-      "Montmartre & Sacré-Cœur",
-      "Seine River Cruise",
-      "Parisian food experience & departure"
-    ]
-  },
-  goa: {
-    name: "Goa",
-    dates: "March 2026",
-    duration: "5 Days",
-    itinerary: [
-      "Arrival & beach shacks",
-      "Water sports & nightlife",
-      "Dolphin watching",
-      "Mandovi river cruise",
-      "Leisure & departure"
-    ]
-  }
-};
+/* ================= HEALTH CHECK ================= */
 
-/* ================= PDF BUILDER ================= */
-function createPDF(tripKey, travellers, totalPrice) {
-  const trip = trips[tripKey];
-  const file = `./TravelSync_${tripKey}_${Date.now()}.pdf`;
+app.get("/", (req, res) => {
+  res.send("TravelSync backend running ✅");
+});
 
-  const doc = new PDFDocument({ margin: 50 });
-  doc.pipe(fs.createWriteStream(file));
+/* ================= GENERIC BOOKING HANDLER ================= */
 
-  // HEADER
-  doc.fontSize(26).text("TravelSync Booking Confirmation", { align: "center" });
-  doc.moveDown();
-  doc.fontSize(18).text(trip.name, { align: "center" });
-  doc.moveDown(1.5);
-
-  // TRIP INFO
-  doc.fontSize(14).text(`Dates: ${trip.dates}`);
-  doc.text(`Duration: ${trip.duration}`);
-  doc.text(`Travellers: ${travellers.length}`);
-  doc.moveDown();
-
-  // TRAVELLERS
-  doc.fontSize(18).text("Traveller Details");
-  doc.moveDown(0.5);
-
-  travellers.forEach((t, i) => {
-    doc.fontSize(12).text(
-      `${i + 1}. ${t.name} | Age: ${t.age} | ${t.email} | ${t.phone} | Room: ${t.room}`
-    );
-  });
-
-  doc.moveDown(1.5);
-
-  // ITINERARY
-  doc.fontSize(18).text("Detailed Itinerary");
-  doc.moveDown(0.5);
-
-  trip.itinerary.forEach((day, i) => {
-    doc.fontSize(12).text(`Day ${i + 1}: ${day}`);
-  });
-
-  doc.moveDown(1.5);
-
-  // PRICE
-  doc.fontSize(18).text("Payment Summary");
-  doc.fontSize(14).text(`Total Amount: ₹${totalPrice}`);
-  doc.text("GST & taxes as applicable");
-
-  doc.moveDown(2);
-  doc.fontSize(12).text(
-    "This is a booking request confirmation. Payment & further instructions will be shared by TravelSync.",
-    { align: "center" }
-  );
-
-  doc.end();
-  return file;
-}
-
-/* ================= API ================= */
-app.post("/book-:trip", async (req, res) => {
+async function handleBooking(req, res) {
   try {
-    const { trip } = req.params;
-    const { travellers, totalPrice } = req.body;
+    const { trip, travellers, itinerary, totalPrice } = req.body;
 
-    const pdfPath = createPDF(trip, travellers, totalPrice);
+    console.log(`📩 New Booking → ${trip} | ${travellers[0].name}`);
 
-    await transporter.sendMail({
-      from: `"TravelSync" <${process.env.EMAIL_USER}>`,
-      to: travellers[0].email,
-      subject: `Your ${trips[trip].name} Trip – TravelSync`,
-      html: `
-        <h2>🎉 Booking Confirmed!</h2>
-        <p>Your booking request for <b>${trips[trip].name}</b> has been received.</p>
-        <p><b>Dates:</b> ${trips[trip].dates}</p>
-        <p><b>Travellers:</b> ${travellers.length}</p>
-        <p>Please find your <b>complete itinerary & booking details</b> attached.</p>
-        <br>
-        <p>We’ll contact you shortly for payment & next steps.</p>
-        <br>
-        <b>– Team TravelSync ❤️</b>
-      `,
-      attachments: [{ path: pdfPath }]
+    /* ---------- CREATE PDF ---------- */
+    const doc = new PDFDocument({ margin: 40 });
+    const buffers = [];
+
+    doc.on("data", buffers.push.bind(buffers));
+
+    doc.on("end", async () => {
+      const pdfBuffer = Buffer.concat(buffers);
+
+      /* ---------- SEND EMAIL ---------- */
+      await transporter.sendMail({
+        from: `"TravelSync ✈️" <${process.env.EMAIL_USER}>`,
+        to: travellers.map(t => t.email).join(","),
+        subject: `🌍 TravelSync Booking Confirmed – ${trip}`,
+        html: `
+        <div style="background:#0b0b0b;padding:40px;font-family:Arial,sans-serif">
+          <div style="max-width:600px;margin:auto;background:#000;border-radius:16px;overflow:hidden">
+
+            <div style="background:#f4c430;padding:20px;text-align:center">
+              <h1 style="margin:0;color:#000">TravelSync</h1>
+              <p style="margin:6px 0 0;font-weight:bold">Booking Confirmation</p>
+            </div>
+
+            <div style="padding:30px;color:#fff">
+
+              <h2 style="color:#f4c430;margin-top:0">${trip}</h2>
+
+              <p style="opacity:.9">
+                Your trip has been successfully booked! 🎉  
+                Below are your complete booking details.
+              </p>
+
+              <div style="background:#111;padding:15px;border-radius:12px;margin:20px 0">
+                <p><b>👥 Travellers:</b> ${travellers.length}</p>
+                <p><b>💰 Total Price:</b> ₹${totalPrice}</p>
+              </div>
+
+              <h3 style="color:#f4c430">Traveller Details</h3>
+              <table width="100%" cellpadding="8" cellspacing="0" style="border-collapse:collapse;font-size:14px">
+                ${travellers.map((t,i)=>`
+                  <tr style="background:#141414">
+                    <td>${i+1}</td>
+                    <td>${t.name}</td>
+                    <td>${t.age}</td>
+                    <td>${t.email}</td>
+                    <td>${t.phone}</td>
+                  </tr>
+                `).join("")}
+              </table>
+
+              <h3 style="color:#f4c430;margin-top:30px">🗺️ Detailed Itinerary</h3>
+              <ul style="padding-left:18px;opacity:.9">
+                ${itinerary.map(day=>`<li style="margin-bottom:6px">${day}</li>`).join("")}
+              </ul>
+
+              <div style="background:#111;padding:15px;border-radius:12px;margin-top:20px">
+                <b>Total Amount:</b> ₹${totalPrice}<br>
+                <small style="opacity:.7">GST & taxes as applicable</small>
+              </div>
+
+              <p style="margin-top:30px;opacity:.8">
+                This is a booking request confirmation.  
+                Our team will contact you with further details.
+              </p>
+
+              <p style="margin-top:20px">
+                ❤️ Thank you for choosing <b>TravelSync</b><br>
+                <small style="opacity:.7">Need help? Reply to this email.</small>
+              </p>
+
+            </div>
+          </div>
+        </div>
+        `,
+        attachments: [
+          {
+            filename: `${trip.replace(/\s+/g, "_")}_Booking.pdf`,
+            content: pdfBuffer
+          }
+        ]
+      });
+
+      console.log("📨 Booking Email Sent →", trip);
+      return res.status(200).json({ success: true });
     });
 
-    console.log(`📩 Booking Email Sent → ${trips[trip].name}`);
-    res.json({ success: true });
-  } catch (err) {
-    console.error("❌ Error:", err);
-    res.status(500).json({ success: false });
-  }
-});
+    /* ---------- PDF CONTENT ---------- */
+    doc.fontSize(22).text("TravelSync – Booking Confirmation", { align: "center" });
+    doc.moveDown();
 
-/* ================= START ================= */
-app.listen(5000, () =>
-  console.log("✅ Backend running on http://localhost:5000")
-);
+    doc.fontSize(14).text(`Trip: ${trip}`);
+    doc.text(`Total Travellers: ${travellers.length}`);
+    doc.text(`Total Price: ₹${totalPrice}`);
+    doc.moveDown();
+
+    doc.fontSize(16).text("Traveller Details:");
+    doc.moveDown(0.5);
+
+    travellers.forEach((t, i) => {
+      doc.fontSize(12).text(
+        `${i + 1}. ${t.name} | Age: ${t.age} | ${t.email} | ${t.phone}`
+      );
+    });
+
+    doc.moveDown();
+    doc.fontSize(16).text("Itinerary:");
+    doc.moveDown(0.5);
+
+    itinerary.forEach(day => {
+      doc.fontSize(12).text(`• ${day}`);
+    });
+
+    doc.end();
+
+  } catch (err) {
+    console.error("❌ Booking error:", err);
+    return res.status(500).json({ success: false });
+  }
+}
+
+/* ================= ROUTES ================= */
+
+app.post("/book-bali", handleBooking);
+app.post("/book-paris", handleBooking);
+app.post("/book-goa", handleBooking);
+
+/* ================= START SERVER ================= */
+
+const PORT = 5000;
+app.listen(PORT, () => {
+  console.log(`✅ Backend running on http://localhost:${PORT}`);
+});
