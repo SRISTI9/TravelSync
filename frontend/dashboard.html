@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Dashboard | TravelSync</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root { --gold: #f4c430; --gold-light: #ffd966; --bg: #0b0b0b; --card: #111; --input-bg: #181818; --muted: rgba(255,255,255,0.5); }
+body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: #fff; min-height: 100vh; }
+
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(11,11,11,0.95); backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(244,196,48,0.1);
+  padding: 0 48px; display: flex; align-items: center;
+  justify-content: space-between; height: 68px;
+}
+.nav-brand { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--gold); }
+.nav-links { display: flex; align-items: center; gap: 8px; }
+.nav-links a { color: rgba(255,255,255,0.7); text-decoration: none; padding: 8px 16px; border-radius: 50px; font-size: 14px; transition: all 0.2s; }
+.nav-links a:hover { color: #fff; background: rgba(255,255,255,0.08); }
+.nav-links a.gold { color: var(--gold); font-weight: 600; }
+
+.page { max-width: 1100px; margin: 0 auto; padding: 48px 24px; }
+.welcome { margin-bottom: 40px; }
+.welcome h1 { font-family: 'Playfair Display', serif; font-size: 36px; margin-bottom: 8px; }
+.welcome h1 span { color: var(--gold); }
+.welcome p { color: var(--muted); }
+
+.tabs { display: flex; gap: 4px; margin-bottom: 32px; background: #111; padding: 6px; border-radius: 16px; width: fit-content; }
+.tab { padding: 10px 24px; border-radius: 12px; border: none; background: transparent; color: var(--muted); font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s; }
+.tab.active { background: var(--gold); color: #000; font-weight: 700; }
+
+.bookings-grid { display: grid; gap: 20px; }
+.booking-card { background: var(--card); border: 1px solid rgba(255,255,255,0.06); border-radius: 20px; padding: 24px; display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: start; transition: border-color 0.2s; }
+.booking-card:hover { border-color: rgba(244,196,48,0.2); }
+.booking-title { font-family: 'Playfair Display', serif; font-size: 20px; margin-bottom: 8px; }
+.booking-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+.tag { font-size: 12px; padding: 4px 12px; border-radius: 50px; background: rgba(255,255,255,0.06); color: var(--muted); }
+.tag.gold { background: rgba(244,196,48,0.1); color: var(--gold); }
+.tag.green { background: rgba(34,197,94,0.1); color: #4ade80; }
+.travellers-list { font-size: 13px; color: var(--muted); }
+
+.split-btn { padding: 10px 20px; background: transparent; border: 1px solid var(--gold); border-radius: 50px; color: var(--gold); font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+.split-btn:hover { background: var(--gold); color: #000; }
+
+/* SPLIT PANEL */
+.split-panel { display: none; margin-top: 4px; background: #0a0a0a; border: 1px solid rgba(244,196,48,0.15); border-radius: 18px; padding: 28px; animation: slideDown 0.3s ease; }
+.split-panel.show { display: block; }
+@keyframes slideDown { from { opacity:0; transform:translateY(-8px); } to { opacity:1; transform:translateY(0); } }
+
+.split-panel-title { color: var(--gold); font-size: 18px; font-weight: 700; margin-bottom: 24px; display: flex; align-items: center; gap: 8px; }
+
+/* Two column layout */
+.split-cols { display: grid; grid-template-columns: 1fr 1.4fr; gap: 24px; margin-bottom: 24px; }
+
+/* Section headers */
+.sec-title { font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 12px; }
+
+/* Members */
+.member-chip { display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: #181818; border-radius: 12px; margin-bottom: 8px; }
+.member-avatar { width: 30px; height: 30px; border-radius: 50%; background: var(--gold); color: #000; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 12px; flex-shrink: 0; }
+.member-name { font-size: 14px; flex: 1; }
+
+.add-row { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+.add-row input { flex: 1; min-width: 100px; padding: 10px 13px; background: #181818; border: 1px solid rgba(255,255,255,0.07); border-radius: 11px; color: #fff; font-family: 'DM Sans', sans-serif; font-size: 13px; outline: none; }
+.add-row input:focus { border-color: rgba(244,196,48,0.4); }
+.add-row button { padding: 10px 16px; background: var(--gold); border: none; border-radius: 11px; color: #000; font-weight: 700; cursor: pointer; font-size: 13px; font-family: 'DM Sans', sans-serif; white-space: nowrap; }
+
+/* Expense form */
+.exp-form { background: #141414; border: 1px solid rgba(255,255,255,0.05); border-radius: 14px; padding: 16px; margin-bottom: 16px; }
+.exp-form-row { display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
+.exp-form-row input, .exp-form-row select { flex: 1; min-width: 100px; padding: 10px 13px; background: #1e1e1e; border: 1px solid rgba(255,255,255,0.07); border-radius: 11px; color: #fff; font-family: 'DM Sans', sans-serif; font-size: 13px; outline: none; }
+.exp-form-row input:focus, .exp-form-row select:focus { border-color: rgba(244,196,48,0.4); }
+.exp-form-row select option { background: #1a1a1a; }
+.split-among-label { font-size: 11px; color: var(--muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
+.checkboxes { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+.cb-chip { display: flex; align-items: center; gap: 6px; padding: 6px 12px; background: #1e1e1e; border: 1px solid rgba(255,255,255,0.08); border-radius: 50px; cursor: pointer; font-size: 13px; transition: all 0.2s; user-select: none; }
+.cb-chip input[type=checkbox] { accent-color: var(--gold); width: 14px; height: 14px; }
+.cb-chip:has(input:checked) { border-color: rgba(244,196,48,0.4); background: rgba(244,196,48,0.08); color: var(--gold); }
+.add-exp-btn { width: 100%; padding: 12px; background: var(--gold); border: none; border-radius: 11px; color: #000; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+.add-exp-btn:hover { background: var(--gold-light); }
+
+/* Expense list */
+.exp-item { padding: 12px 14px; background: #181818; border-radius: 12px; margin-bottom: 8px; }
+.exp-item-top { display: flex; justify-content: space-between; align-items: center; }
+.exp-title { font-size: 14px; font-weight: 600; }
+.exp-amount { color: var(--gold); font-weight: 700; font-size: 15px; }
+.exp-meta { font-size: 12px; color: var(--muted); margin-top: 4px; }
+.exp-del { background: none; border: none; color: rgba(255,100,100,0.5); cursor: pointer; font-size: 15px; margin-left: 10px; transition: color 0.2s; }
+.exp-del:hover { color: #ff6b6b; }
+
+/* Settlement */
+.settlement-box { background: #0f0f0f; border: 1px solid rgba(244,196,48,0.12); border-radius: 16px; padding: 20px; }
+.settlement-box-title { font-size: 15px; font-weight: 700; color: var(--gold); margin-bottom: 16px; }
+
+.stats-row { display: flex; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
+.stat-box { flex: 1; min-width: 100px; padding: 12px 16px; background: rgba(244,196,48,0.06); border: 1px solid rgba(244,196,48,0.12); border-radius: 12px; }
+.stat-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+.stat-value { font-size: 18px; font-weight: 700; color: var(--gold); }
+
+/* Balance table */
+.balance-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 13px; }
+.balance-table th { text-align: left; padding: 8px 12px; color: var(--muted); font-weight: 500; border-bottom: 1px solid rgba(255,255,255,0.06); font-size: 11px; text-transform: uppercase; letter-spacing: 1px; }
+.balance-table td { padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,0.04); }
+.balance-table tr:last-child td { border-bottom: none; }
+.bal-pos { color: #4ade80; font-weight: 700; }
+.bal-neg { color: #f87171; font-weight: 700; }
+.bal-zero { color: var(--muted); }
+
+/* Transaction cards */
+.txn-title { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; font-weight: 600; }
+.txn-card { display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: rgba(255,100,100,0.06); border: 1px solid rgba(255,100,100,0.15); border-radius: 14px; margin-bottom: 8px; }
+.txn-from { font-size: 14px; font-weight: 600; color: #f87171; }
+.txn-arrow { color: var(--muted); font-size: 18px; }
+.txn-to { font-size: 14px; font-weight: 600; color: #4ade80; }
+.txn-amount { margin-left: auto; font-size: 16px; font-weight: 800; color: var(--gold); }
+.all-settled { padding: 16px; background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.2); border-radius: 12px; color: #4ade80; text-align: center; font-weight: 600; }
+
+.empty-state { text-align: center; padding: 60px 20px; color: var(--muted); }
+.empty-state .icon { font-size: 48px; margin-bottom: 16px; }
+.empty-state a { color: var(--gold); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">✈️ TravelSync</div>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="create-trip.html">Create Trip</a>
+    <a href="dashboard.html" class="gold">My Dashboard</a>
+    <a href="#" onclick="logout()">Logout</a>
+  </div>
+</nav>
+
+<div class="page">
+  <div class="welcome">
+    <h1>Welcome back, <span id="userName">Traveller</span> 👋</h1>
+    <p>Manage your bookings and split expenses with your group.</p>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" id="tab-btn-bookings" onclick="showTab('bookings', this)">✈️ My Bookings</button>
+    <button class="tab" id="tab-btn-splits" onclick="showTab('splits', this)">💸 Trip Expenses</button>
+  </div>
+
+  <div id="tab-bookings">
+    <div class="bookings-grid" id="bookingsGrid">
+      <div class="empty-state"><div class="icon">✈️</div><p>Loading your bookings...</p></div>
+    </div>
+  </div>
+
+  <div id="tab-splits" style="display:none">
+    <div id="splitsContent">
+      <div class="empty-state"><div class="icon">💸</div><p>Loading trip expenses...</p></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const token = localStorage.getItem("token");
+const user = JSON.parse(localStorage.getItem("user") || "null");
+if (!token || !user) { alert("Please login first."); window.location.href = "login.html"; }
+document.getElementById("userName").textContent = user?.name || "Traveller";
+
+function logout() {
+  localStorage.removeItem("token");
+  localStorage.removeItem("user");
+  localStorage.removeItem("activeTab");          // ← clear saved tab on logout
+  window.location.href = "login.html";
+}
+
+// ── TAB SWITCHING — saves active tab to localStorage ──────────────────────────
+function showTab(tab, btn) {
+  document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+  btn.classList.add("active");
+  document.getElementById("tab-bookings").style.display = tab === "bookings" ? "block" : "none";
+  document.getElementById("tab-splits").style.display   = tab === "splits"   ? "block" : "none";
+  localStorage.setItem("activeTab", tab);        // ← persist the active tab
+}
+
+// ── RESTORE TAB on page load ──────────────────────────────────────────────────
+function restoreTab() {
+  const saved = localStorage.getItem("activeTab") || "bookings";
+  const btn   = document.getElementById(`tab-btn-${saved}`);
+  if (btn) showTab(saved, btn);
+}
+
+/* ============================================================
+   SPLITWISE ALGORITHM
+   ============================================================ */
+function computeSettlement(members, expenses) {
+  const net = {};
+  members.forEach(m => net[m.name] = 0);
+
+  expenses.forEach(e => {
+    const splitAmong = e.split_among
+      ? e.split_among.split(",").map(s => s.trim()).filter(Boolean)
+      : members.map(m => m.name);
+
+    const share = e.amount / splitAmong.length;
+
+    if (net[e.paid_by] !== undefined) net[e.paid_by] += e.amount;
+    else net[e.paid_by] = e.amount;
+
+    splitAmong.forEach(name => {
+      if (net[name] !== undefined) net[name] -= share;
+      else net[name] = -share;
+    });
+  });
+
+  const creditors = [];
+  const debtors   = [];
+
+  Object.entries(net).forEach(([name, balance]) => {
+    if (balance > 0.01)  creditors.push({ name, amount: balance });
+    else if (balance < -0.01) debtors.push({ name, amount: -balance });
+  });
+
+  creditors.sort((a, b) => b.amount - a.amount);
+  debtors.sort((a, b)   => b.amount - a.amount);
+
+  const transactions = [];
+  let i = 0, j = 0;
+  while (i < debtors.length && j < creditors.length) {
+    const debtor   = debtors[i];
+    const creditor = creditors[j];
+    const amount   = Math.min(debtor.amount, creditor.amount);
+
+    transactions.push({ from: debtor.name, to: creditor.name, amount: parseFloat(amount.toFixed(2)) });
+
+    debtor.amount   -= amount;
+    creditor.amount -= amount;
+
+    if (debtor.amount   < 0.01) i++;
+    if (creditor.amount < 0.01) j++;
+  }
+
+  return { net, transactions };
+}
+
+/* ============================================================
+   RENDER SPLITWISE PANEL
+   ============================================================ */
+function renderSplitPanel(id, title, members, expenses) {
+  const totalAmount = expenses.reduce((s, e) => s + e.amount, 0);
+  const { net, transactions } = computeSettlement(members, expenses);
+
+  const checkboxes = members.length === 0
+    ? `<p style="color:var(--muted);font-size:13px">Add members first to split among them.</p>`
+    : members.map(m => `
+        <label class="cb-chip">
+          <input type="checkbox" value="${m.name}" checked class="split-cb-${id}">
+          ${m.name}
+        </label>`).join("");
+
+  const paidByOptions = members.map(m =>
+    `<option value="${m.name}">${m.name}</option>`).join("");
+
+  const memberList = members.length === 0
+    ? `<p style="color:var(--muted);font-size:13px">No members yet.</p>`
+    : members.map(m => `
+        <div class="member-chip">
+          <div class="member-avatar">${m.name[0].toUpperCase()}</div>
+          <span class="member-name">${m.name}</span>
+          <span style="font-size:12px;color:var(--muted)">${m.email}</span>
+        </div>`).join("");
+
+  const expList = expenses.length === 0
+    ? `<p style="color:var(--muted);font-size:13px;margin-bottom:12px">No expenses yet.</p>`
+    : expenses.map(e => {
+        const among = e.split_among || "all";
+        return `
+        <div class="exp-item">
+          <div class="exp-item-top">
+            <span class="exp-title">${e.title}</span>
+            <div style="display:flex;align-items:center">
+              <span class="exp-amount">₹${e.amount.toLocaleString()}</span>
+              <button class="exp-del" onclick="deleteExpense('${id}','${e.id}')">🗑</button>
+            </div>
+          </div>
+          <div class="exp-meta">
+            Paid by <b>${e.paid_by}</b> · Split among: ${among} · ${e.expense_date}
+          </div>
+        </div>`;
+      }).join("");
+
+  const balanceRows = Object.entries(net).map(([name, bal]) => {
+    const cls   = bal > 0.01 ? "bal-pos" : bal < -0.01 ? "bal-neg" : "bal-zero";
+    const label = bal > 0.01 ? `+₹${bal.toFixed(2)} (receives)` : bal < -0.01 ? `-₹${Math.abs(bal).toFixed(2)} (owes)` : "✅ Settled";
+    const paid  = expenses.filter(e => e.paid_by === name).reduce((s, e) => s + e.amount, 0);
+    return `<tr>
+      <td>${name}</td>
+      <td>₹${paid.toFixed(2)}</td>
+      <td class="${cls}">${label}</td>
+    </tr>`;
+  }).join("");
+
+  const txnHtml = transactions.length === 0
+    ? `<div class="all-settled">🎉 Everyone is settled up!</div>`
+    : transactions.map(t => `
+        <div class="txn-card">
+          <span class="txn-from">${t.from}</span>
+          <span class="txn-arrow">→</span>
+          <span class="txn-to">${t.to}</span>
+          <span class="txn-amount">₹${t.amount.toLocaleString()}</span>
+        </div>`).join("");
+
+  return `
+    <div class="split-panel-title">💸 Expense Splitter — ${title}</div>
+
+    <div class="split-cols">
+      <div>
+        <div class="sec-title">👥 Group Members</div>
+        <div id="memberList-${id}">${memberList}</div>
+        <div class="add-row" style="margin-top:12px">
+          <input id="mname-${id}" placeholder="Name">
+          <input id="memail-${id}" placeholder="Email">
+          <button onclick="addMember('${id}')">+ Add</button>
+        </div>
+      </div>
+
+      <div>
+        <div class="sec-title">💰 Add Expense</div>
+        <div class="exp-form">
+          <div class="exp-form-row">
+            <input id="etitle-${id}" placeholder="Expense title (e.g. Hotel)">
+            <input id="eamount-${id}" type="number" placeholder="Amount ₹">
+          </div>
+          <div class="exp-form-row">
+            <select id="epaidby-${id}">
+              <option value="" disabled selected>Paid by...</option>
+              ${paidByOptions}
+            </select>
+            <input id="edate-${id}" type="date">
+          </div>
+          <div class="split-among-label">Split among (select members):</div>
+          <div class="checkboxes" id="splitAmong-${id}">${checkboxes}</div>
+          <button class="add-exp-btn" onclick="addExpense('${id}')">+ Add Expense</button>
+        </div>
+
+        <div class="sec-title">📋 Expenses</div>
+        <div id="expList-${id}">${expList}</div>
+      </div>
+    </div>
+
+    <div class="settlement-box">
+      <div class="settlement-box-title">📊 Settlement Summary</div>
+
+      <div class="stats-row">
+        <div class="stat-box">
+          <div class="stat-label">Total Spent</div>
+          <div class="stat-value">₹${totalAmount.toLocaleString()}</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">Members</div>
+          <div class="stat-value">${members.length}</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">Transactions</div>
+          <div class="stat-value">${transactions.length}</div>
+        </div>
+      </div>
+
+      ${members.length > 0 && expenses.length > 0 ? `
+        <div class="sec-title" style="margin-bottom:10px">💰 Net Balances</div>
+        <table class="balance-table">
+          <thead><tr><th>Person</th><th>Total Paid</th><th>Net Balance</th></tr></thead>
+          <tbody>${balanceRows}</tbody>
+        </table>
+      ` : ""}
+
+      <div class="txn-title">✅ Who Pays Whom</div>
+      ${txnHtml}
+    </div>
+  `;
+}
+
+/* ============================================================
+   LOAD BOOKINGS
+   ============================================================ */
+async function loadBookings() {
+  try {
+    const res  = await fetch("http://localhost:5000/bookings/mine", {
+      headers: { "Authorization": "Bearer " + token }
+    });
+    const data = await res.json();
+    const grid = document.getElementById("bookingsGrid");
+
+    if (!data.bookings || data.bookings.length === 0) {
+      grid.innerHTML = `<div class="empty-state"><div class="icon">✈️</div><p>No bookings yet! <a href="index.html#trips">Browse trips</a> to get started.</p></div>`;
+      return;
+    }
+
+    grid.innerHTML = data.bookings.map(b => `
+      <div class="booking-card">
+        <div>
+          <div class="booking-title">${b.trip_name}</div>
+          <div class="booking-meta">
+            <span class="tag green">✅ ${b.status}</span>
+            <span class="tag gold">₹${b.total_price.toLocaleString()}</span>
+            <span class="tag">📅 ${new Date(b.created_at).toLocaleDateString('en-IN')}</span>
+            <span class="tag">💳 ${b.payment_id}</span>
+          </div>
+          <div class="travellers-list">👥 ${b.travellers.map(t => t.name).join(", ")}</div>
+        </div>
+        <button class="split-btn" id="splitbtn-${b.id}" onclick="toggleSplit('${b.id}','${b.trip_name}',this)">
+          💸 Split Expenses
+        </button>
+      </div>
+      <div class="split-panel" id="split-${b.id}"></div>
+    `).join("");
+
+  } catch (err) {
+    document.getElementById("bookingsGrid").innerHTML = `<div class="empty-state"><p>❌ Could not load bookings. Is backend running?</p></div>`;
+  }
+}
+
+/* ============================================================
+   LOAD TRIP EXPENSES TAB
+   ============================================================ */
+async function loadTripExpenses() {
+  try {
+    const res  = await fetch("http://localhost:5000/trips/mine", {
+      headers: { "Authorization": "Bearer " + token }
+    });
+    const data = await res.json();
+    const el   = document.getElementById("splitsContent");
+
+    if (!data.trips || data.trips.length === 0) {
+      el.innerHTML = `<div class="empty-state"><div class="icon">🗺️</div><p>No trips created yet. <a href="create-trip.html">Create one!</a></p></div>`;
+      return;
+    }
+
+    el.innerHTML = data.trips.map(t => `
+      <div class="booking-card" style="margin-bottom:8px">
+        <div>
+          <div class="booking-title">${t.destination}</div>
+          <div class="booking-meta">
+            <span class="tag">📅 ${t.start_date} → ${t.end_date}</span>
+            <span class="tag gold">₹${Number(t.budget).toLocaleString()} budget</span>
+          </div>
+        </div>
+        <button class="split-btn" id="splitbtn-${t.id}" onclick="toggleSplit('${t.id}','${t.destination}',this)">
+          💸 Manage Expenses
+        </button>
+      </div>
+      <div class="split-panel" id="split-${t.id}"></div>
+    `).join("");
+
+  } catch (err) {
+    document.getElementById("splitsContent").innerHTML = `<div class="empty-state"><p>❌ Could not load trips.</p></div>`;
+  }
+}
+
+/* ============================================================
+   TOGGLE SPLIT PANEL
+   ============================================================ */
+async function toggleSplit(id, title, btn) {
+  const panel  = document.getElementById(`split-${id}`);
+  const isOpen = panel.classList.contains("show");
+
+  document.querySelectorAll(".split-panel").forEach(p => p.classList.remove("show"));
+  document.querySelectorAll(".split-btn").forEach(b => {
+    if (b.textContent.includes("Close"))
+      b.textContent = b.textContent.includes("Manage") ? "💸 Manage Expenses" : "💸 Split Expenses";
+  });
+
+  if (!isOpen) {
+    const [membersRes, expensesRes] = await Promise.all([
+      fetch(`http://localhost:5000/trips/${id}/members`,  { headers: { "Authorization": "Bearer " + token } }),
+      fetch(`http://localhost:5000/trips/${id}/expenses`, { headers: { "Authorization": "Bearer " + token } })
+    ]);
+
+    const members  = (await membersRes.json()).members   || [];
+    const expenses = (await expensesRes.json()).expenses || [];
+
+    panel.innerHTML = renderSplitPanel(id, title, members, expenses);
+    panel.classList.add("show");
+    btn.textContent = "✕ Close";
+  }
+}
+
+/* ============================================================
+   ADD MEMBER
+   ============================================================ */
+async function addMember(id) {
+  const name  = document.getElementById(`mname-${id}`).value.trim();
+  const email = document.getElementById(`memail-${id}`).value.trim();
+  if (!name || !email) return alert("Enter both name and email");
+
+  await fetch(`http://localhost:5000/trips/${id}/members`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "Authorization": "Bearer " + token },
+    body: JSON.stringify({ name, email })
+  });
+
+  const btn     = document.getElementById(`splitbtn-${id}`);
+  const titleEl = document.querySelector(`#split-${id} .split-panel-title`);
+  const title   = titleEl ? titleEl.textContent.replace("💸 Expense Splitter — ", "") : "";
+  await panel_refresh(id, title, btn);
+}
+
+/* ============================================================
+   ADD EXPENSE
+   ============================================================ */
+async function addExpense(id) {
+  const title        = document.getElementById(`etitle-${id}`).value.trim();
+  const amount       = parseFloat(document.getElementById(`eamount-${id}`).value);
+  const paid_by      = document.getElementById(`epaidby-${id}`).value;
+  const expense_date = document.getElementById(`edate-${id}`).value;
+  const checked      = [...document.querySelectorAll(`.split-cb-${id}:checked`)].map(c => c.value);
+
+  if (!title || !amount || !paid_by || !expense_date) return alert("Please fill all expense fields");
+  if (checked.length === 0) return alert("Select at least one member to split among");
+
+  await fetch(`http://localhost:5000/trips/${id}/expenses`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "Authorization": "Bearer " + token },
+    body: JSON.stringify({ title, amount, paid_by, expense_date, split_among: checked.join(",") })
+  });
+
+  const btn      = document.getElementById(`splitbtn-${id}`);
+  const titleEl  = document.querySelector(`#split-${id} .split-panel-title`);
+  const tripTitle = titleEl ? titleEl.textContent.replace("💸 Expense Splitter — ", "") : "";
+  await panel_refresh(id, tripTitle, btn);
+}
+
+async function panel_refresh(id, title, btn) {
+  const panel = document.getElementById(`split-${id}`);
+  const [membersRes, expensesRes] = await Promise.all([
+    fetch(`http://localhost:5000/trips/${id}/members`,  { headers: { "Authorization": "Bearer " + token } }),
+    fetch(`http://localhost:5000/trips/${id}/expenses`, { headers: { "Authorization": "Bearer " + token } })
+  ]);
+  const members  = (await membersRes.json()).members   || [];
+  const expenses = (await expensesRes.json()).expenses || [];
+  panel.innerHTML = renderSplitPanel(id, title, members, expenses);
+  panel.classList.add("show");
+  if (btn) btn.textContent = "✕ Close";
+}
+
+/* ============================================================
+   DELETE EXPENSE
+   ============================================================ */
+async function deleteExpense(id, expenseId) {
+  await fetch(`http://localhost:5000/trips/${id}/expenses/${expenseId}`, {
+    method: "DELETE",
+    headers: { "Authorization": "Bearer " + token }
+  });
+
+  const btn     = document.getElementById(`splitbtn-${id}`);
+  const titleEl = document.querySelector(`#split-${id} .split-panel-title`);
+  const title   = titleEl ? titleEl.textContent.replace("💸 Expense Splitter — ", "") : "";
+  await panel_refresh(id, title, btn);
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+restoreTab();       // ← restore saved tab BEFORE loading data
+loadBookings();
+loadTripExpenses();
+</script>
+</body>
+</html>

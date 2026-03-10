@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Register - TravelSync</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold: #f4c430;
+    --gold-light: #ffd966;
+    --bg: #0b0b0b;
+    --card: #0f0f0f;
+    --input-bg: #181818;
+    --border: rgba(244,196,48,0.15);
+    --muted: rgba(255,255,255,0.45);
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+  }
+
+  .bg-layer {
+    position: fixed; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 20% 50%, rgba(244,196,48,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 80% at 80% 30%, rgba(244,196,48,0.04) 0%, transparent 60%);
+  }
+
+  .bg-grid {
+    position: fixed; inset: 0; z-index: 0;
+    background-image:
+      linear-gradient(rgba(244,196,48,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(244,196,48,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .orb {
+    position: fixed; border-radius: 50%;
+    filter: blur(80px); opacity: 0.12;
+    animation: float 8s ease-in-out infinite; z-index: 0;
+  }
+  .orb1 { width:400px; height:400px; background:#f4c430; top:-100px; left:-100px; }
+  .orb2 { width:300px; height:300px; background:#ff9500; bottom:-80px; right:-80px; animation-delay:3s; }
+
+  @keyframes float {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-30px); }
+  }
+
+  .card {
+    position: relative; z-index: 1;
+    width: 460px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 28px;
+    padding: 48px 44px;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+    animation: slideUp 0.6s cubic-bezier(0.16,1,0.3,1) both;
+  }
+
+  @keyframes slideUp {
+    from { opacity:0; transform:translateY(40px) scale(0.97); }
+    to   { opacity:1; transform:translateY(0) scale(1); }
+  }
+
+  .brand {
+    display:flex; align-items:center; gap:10px; margin-bottom:32px;
+  }
+  .brand-icon {
+    width:38px; height:38px; background:var(--gold);
+    border-radius:10px; display:flex; align-items:center;
+    justify-content:center; font-size:18px;
+  }
+  .brand-name {
+    font-family:'Playfair Display',serif;
+    font-size:20px; color:var(--gold);
+  }
+
+  h2 {
+    font-family:'Playfair Display',serif;
+    font-size:28px; margin-bottom:6px;
+  }
+  .subtitle {
+    font-size:14px; color:var(--muted);
+    margin-bottom:28px; font-weight:300;
+  }
+
+  .input-group { margin-bottom:16px; }
+
+  .input-group label {
+    display:block; font-size:12px; font-weight:500;
+    color:var(--muted); text-transform:uppercase;
+    letter-spacing:1px; margin-bottom:8px;
+  }
+
+  .input-wrap { position:relative; }
+
+  .input-wrap .icon {
+    position:absolute; left:16px; top:50%;
+    transform:translateY(-50%); font-size:15px;
+    opacity:0.4; pointer-events:none;
+  }
+
+  .input-wrap input {
+    width:100%; padding:13px 16px 13px 44px;
+    background:var(--input-bg);
+    border:1px solid rgba(255,255,255,0.07);
+    border-radius:14px; color:#fff;
+    font-family:'DM Sans',sans-serif;
+    font-size:15px; outline:none;
+    transition:border-color 0.2s, box-shadow 0.2s, background 0.2s;
+  }
+
+  .input-wrap input:focus {
+    border-color:rgba(244,196,48,0.4);
+    background:#1e1e1e;
+    box-shadow:0 0 0 3px rgba(244,196,48,0.08);
+  }
+
+  .input-wrap input::placeholder { color:rgba(255,255,255,0.2); }
+
+  /* Email row with Send OTP button */
+  .email-row { display:flex; gap:10px; }
+  .email-row input { flex:1; }
+
+  .otp-btn {
+    padding: 13px 16px;
+    background: transparent;
+    border: 1px solid var(--gold);
+    border-radius: 14px;
+    color: var(--gold);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s, color 0.2s;
+    flex-shrink: 0;
+  }
+  .otp-btn:hover { background: var(--gold); color: #000; }
+  .otp-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  /* OTP input section */
+  .otp-section {
+    display: none;
+    margin-top: 10px;
+    animation: slideUp 0.3s ease both;
+  }
+  .otp-section.show { display: block; }
+
+  .otp-row { display: flex; gap: 10px; }
+  .otp-row input {
+    flex: 1; text-align: center;
+    letter-spacing: 6px; font-size: 18px;
+    font-weight: 700;
+  }
+
+  .verify-btn {
+    padding: 13px 18px;
+    background: var(--gold);
+    border: none; border-radius: 14px;
+    color: #000; font-family: 'DM Sans', sans-serif;
+    font-size: 13px; font-weight: 700;
+    cursor: pointer; flex-shrink: 0;
+    transition: background 0.2s;
+  }
+  .verify-btn:hover { background: var(--gold-light); }
+
+  /* Verified badge */
+  .verified-badge {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    background: rgba(34,197,94,0.1);
+    border: 1px solid rgba(34,197,94,0.3);
+    border-radius: 12px;
+    padding: 10px 14px;
+    font-size: 13px;
+    color: #4ade80;
+    margin-top: 10px;
+  }
+  .verified-badge.show { display: flex; }
+
+  /* Messages */
+  .msg {
+    display: none;
+    border-radius: 12px;
+    padding: 11px 14px;
+    font-size: 13px;
+    margin-top: 8px;
+    align-items: center;
+    gap: 8px;
+  }
+  .msg.show { display: flex; }
+  .msg.error { background:rgba(255,80,80,0.1); border:1px solid rgba(255,80,80,0.3); color:#ff6b6b; }
+  .msg.success { background:rgba(34,197,94,0.1); border:1px solid rgba(34,197,94,0.3); color:#4ade80; }
+
+  @keyframes shake {
+    0%,100% { transform:translateX(0); }
+    20%,60% { transform:translateX(-6px); }
+    40%,80% { transform:translateX(6px); }
+  }
+
+  /* Timer */
+  .timer { font-size:12px; color:var(--muted); margin-top:6px; }
+  .timer span { color: var(--gold); }
+
+  .btn {
+    width:100%; padding:16px;
+    background:var(--gold); border:none;
+    border-radius:50px;
+    font-family:'DM Sans',sans-serif;
+    font-size:16px; font-weight:700;
+    color:#000; cursor:pointer;
+    margin-top:10px;
+    transition:background 0.2s, transform 0.15s, box-shadow 0.2s;
+  }
+  .btn:hover { background:var(--gold-light); transform:translateY(-2px); box-shadow:0 8px 24px rgba(244,196,48,0.3); }
+  .btn:disabled { opacity:0.5; cursor:not-allowed; transform:none; box-shadow:none; }
+
+  .footer {
+    text-align:center; margin-top:22px;
+    font-size:14px; color:var(--muted);
+  }
+  .footer a { color:var(--gold); text-decoration:none; font-weight:500; }
+  .footer a:hover { color:var(--gold-light); }
+</style>
+</head>
+<body>
+
+<div class="bg-layer"></div>
+<div class="bg-grid"></div>
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+
+<div class="card">
+
+  <div class="brand">
+    <div class="brand-icon">✈️</div>
+    <span class="brand-name">TravelSync</span>
+  </div>
+
+  <h2>Create Account</h2>
+  <p class="subtitle">Join thousands of travellers worldwide</p>
+
+  <!-- Name -->
+  <div class="input-group">
+    <label>Full Name</label>
+    <div class="input-wrap">
+      <input type="text" id="name" placeholder="Your full name">
+      <span class="icon">👤</span>
+    </div>
+  </div>
+
+  <!-- Email + Send OTP -->
+  <div class="input-group">
+    <label>Email Address</label>
+    <div class="email-row">
+      <div class="input-wrap" style="flex:1">
+        <input type="email" id="email" placeholder="you@example.com">
+        <span class="icon">📧</span>
+      </div>
+      <button class="otp-btn" id="sendOtpBtn" onclick="sendOTP()">Send OTP</button>
+    </div>
+
+    <!-- OTP input -->
+    <div class="otp-section" id="otpSection">
+      <div class="otp-row" style="margin-top:10px;">
+        <div class="input-wrap" style="flex:1">
+          <input type="text" id="otpInput" placeholder="Enter 6-digit OTP" maxlength="6">
+          <span class="icon">🔑</span>
+        </div>
+        <button class="verify-btn" onclick="verifyOTP()">Verify</button>
+      </div>
+      <div class="timer" id="timer"></div>
+    </div>
+
+    <!-- Verified badge -->
+    <div class="verified-badge" id="verifiedBadge">
+      ✅ Email verified successfully!
+    </div>
+
+    <!-- Messages -->
+    <div class="msg" id="otpMsg"></div>
+  </div>
+
+  <!-- Password -->
+  <div class="input-group">
+    <label>Password</label>
+    <div class="input-wrap">
+      <input type="password" id="password" placeholder="Create a password">
+      <span class="icon">🔒</span>
+    </div>
+  </div>
+
+  <!-- DOB -->
+  <div class="input-group">
+    <label>Date of Birth</label>
+    <div class="input-wrap">
+      <input type="date" id="dob">
+      <span class="icon">🎂</span>
+    </div>
+  </div>
+
+  <!-- Aadhaar -->
+  <div class="input-group">
+    <label>Aadhaar (Image or PDF)</label>
+    <div class="input-wrap">
+      <input type="file" id="aadhaar" accept="image/*,application/pdf" style="padding-left:16px;">
+    </div>
+  </div>
+
+  <!-- General error -->
+  <div class="msg error" id="formMsg"></div>
+
+  <button class="btn" id="registerBtn" onclick="register()" disabled>Create Account</button>
+
+  <div class="footer">
+    Already have an account? <a href="login.html">Login</a>
+  </div>
+
+</div>
+
+<script>
+let emailVerified = false;
+let timerInterval = null;
+
+/* ===== SEND OTP ===== */
+async function sendOTP() {
+  const email = document.getElementById("email").value.trim();
+  const btn = document.getElementById("sendOtpBtn");
+  const msg = document.getElementById("otpMsg");
+
+  hideMsg();
+
+  if (!email) {
+    showMsg("Please enter your email first.", "error");
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = "Sending...";
+
+  try {
+    const res = await fetch("http://localhost:5000/auth/send-otp", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email })
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+      document.getElementById("otpSection").classList.add("show");
+      showMsg("✅ OTP sent! Check your email.", "success");
+      startTimer(300); // 5 min countdown
+      btn.textContent = "Resend OTP";
+    } else {
+      showMsg(data.message || "Failed to send OTP.", "error");
+      btn.disabled = false;
+      btn.textContent = "Send OTP";
+    }
+
+  } catch (err) {
+    showMsg("❌ Cannot connect to server.", "error");
+    btn.disabled = false;
+    btn.textContent = "Send OTP";
+  }
+}
+
+/* ===== VERIFY OTP ===== */
+async function verifyOTP() {
+  const email = document.getElementById("email").value.trim();
+  const otp = document.getElementById("otpInput").value.trim();
+
+  hideMsg();
+
+  if (!otp || otp.length !== 6) {
+    showMsg("Please enter the 6-digit OTP.", "error");
+    return;
+  }
+
+  try {
+    const res = await fetch("http://localhost:5000/auth/verify-otp", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, otp })
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+      emailVerified = true;
+      clearInterval(timerInterval);
+      document.getElementById("otpSection").classList.remove("show");
+      document.getElementById("verifiedBadge").classList.add("show");
+      document.getElementById("sendOtpBtn").disabled = true;
+      document.getElementById("sendOtpBtn").textContent = "✅ Verified";
+      document.getElementById("email").readOnly = true;
+      document.getElementById("registerBtn").disabled = false;
+      hideMsg();
+    } else {
+      showMsg(data.message || "Invalid OTP.", "error");
+    }
+
+  } catch (err) {
+    showMsg("❌ Cannot connect to server.", "error");
+  }
+}
+
+/* ===== REGISTER ===== */
+async function register() {
+  const name     = document.getElementById("name").value.trim();
+  const email    = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+  const dob      = document.getElementById("dob").value;
+  const aadhaar  = document.getElementById("aadhaar").files[0];
+  const formMsg  = document.getElementById("formMsg");
+
+  formMsg.classList.remove("show");
+
+  if (!name || !email || !password || !dob || !aadhaar) {
+    formMsg.textContent = "⚠️ Please fill in all fields.";
+    formMsg.className = "msg error show";
+    return;
+  }
+
+  if (!emailVerified) {
+    formMsg.textContent = "⚠️ Please verify your email first.";
+    formMsg.className = "msg error show";
+    return;
+  }
+
+  const btn = document.getElementById("registerBtn");
+  btn.disabled = true;
+  btn.textContent = "Creating account...";
+
+  const formData = new FormData();
+  formData.append("name", name);
+  formData.append("email", email);
+  formData.append("password", password);
+  formData.append("dob", dob);
+  formData.append("aadhaar", aadhaar);
+
+  try {
+    const res = await fetch("http://localhost:5000/auth/signup", {
+      method: "POST",
+      body: formData
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+      window.location.href = "verify-email.html";
+    } else {
+      formMsg.textContent = data.message || "Registration failed. Try again.";
+      formMsg.className = "msg error show";
+      btn.disabled = false;
+      btn.textContent = "Create Account";
+    }
+
+  } catch (err) {
+    formMsg.textContent = "❌ Cannot connect to server.";
+    formMsg.className = "msg error show";
+    btn.disabled = false;
+    btn.textContent = "Create Account";
+  }
+}
+
+/* ===== TIMER ===== */
+function startTimer(seconds) {
+  clearInterval(timerInterval);
+  const timerEl = document.getElementById("timer");
+  let remaining = seconds;
+
+  timerInterval = setInterval(() => {
+    const m = Math.floor(remaining / 60);
+    const s = remaining % 60;
+    timerEl.innerHTML = `OTP expires in <span>${m}:${s.toString().padStart(2,"0")}</span>`;
+    remaining--;
+
+    if (remaining < 0) {
+      clearInterval(timerInterval);
+      timerEl.innerHTML = `<span style="color:#ff6b6b">OTP expired.</span> Click Resend OTP.`;
+      document.getElementById("sendOtpBtn").disabled = false;
+    }
+  }, 1000);
+}
+
+/* ===== HELPERS ===== */
+function showMsg(text, type) {
+  const el = document.getElementById("otpMsg");
+  el.textContent = text;
+  el.className = `msg ${type} show`;
+}
+
+function hideMsg() {
+  const el = document.getElementById("otpMsg");
+  el.className = "msg";
+}
+</script>
+
+</body>
+</html>

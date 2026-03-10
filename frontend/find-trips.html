@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Find Trips | TravelSync</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --gold: #f4c430; --gold-light: #ffd966;
+  --bg: #0b0b0b; --card: #111; --muted: rgba(255,255,255,0.5);
+}
+body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: #fff; }
+
+/* NAVBAR */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(11,11,11,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(244,196,48,0.1);
+  padding: 0 48px;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 68px;
+}
+.nav-brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px; color: var(--gold);
+  display: flex; align-items: center; gap: 10px;
+}
+.nav-links { display: flex; align-items: center; gap: 8px; }
+.nav-links a {
+  color: rgba(255,255,255,0.7); text-decoration: none;
+  padding: 8px 16px; border-radius: 50px;
+  font-size: 14px; font-weight: 500;
+  transition: all 0.2s;
+}
+.nav-links a:hover { color: #fff; background: rgba(255,255,255,0.08); }
+.nav-links a.active { color: var(--gold); }
+.nav-links .btn-nav {
+  background: var(--gold); color: #000;
+  font-weight: 700; padding: 8px 20px;
+}
+.nav-links .btn-nav:hover { background: var(--gold-light); }
+.nav-user {
+  font-size: 14px; color: var(--muted);
+  display: flex; align-items: center; gap: 12px;
+}
+.nav-user span { color: var(--gold); font-weight: 600; }
+
+/* HERO */
+.hero {
+  position: relative;
+  height: 420px;
+  background: linear-gradient(135deg, #0b0b0b 0%, #1a1200 100%);
+  display: flex; align-items: center; justify-content: center;
+  text-align: center; overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(244,196,48,0.08) 0%, transparent 70%);
+}
+.hero-content { position: relative; z-index: 1; }
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 52px; margin-bottom: 16px;
+  line-height: 1.1;
+}
+.hero h1 span { color: var(--gold); }
+.hero p { font-size: 18px; color: var(--muted); margin-bottom: 32px; }
+.hero-btns { display: flex; gap: 12px; justify-content: center; }
+.btn-gold {
+  padding: 14px 32px; background: var(--gold);
+  border: none; border-radius: 50px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px; font-weight: 700;
+  color: #000; cursor: pointer;
+  transition: all 0.2s; text-decoration: none;
+  display: inline-block;
+}
+.btn-gold:hover { background: var(--gold-light); transform: translateY(-2px); }
+.btn-outline {
+  padding: 14px 32px;
+  border: 1px solid rgba(244,196,48,0.4);
+  border-radius: 50px; background: transparent;
+  color: var(--gold); font-size: 15px; font-weight: 600;
+  cursor: pointer; transition: all 0.2s;
+  text-decoration: none; display: inline-block;
+  font-family: 'DM Sans', sans-serif;
+}
+.btn-outline:hover { background: rgba(244,196,48,0.08); }
+
+/* FILTERS */
+.filters {
+  padding: 32px 48px 0;
+  display: flex; gap: 12px; flex-wrap: wrap;
+}
+.filter-btn {
+  padding: 8px 20px; border-radius: 50px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: transparent; color: var(--muted);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px; cursor: pointer; transition: all 0.2s;
+}
+.filter-btn:hover, .filter-btn.active {
+  border-color: var(--gold); color: var(--gold);
+  background: rgba(244,196,48,0.06);
+}
+
+/* TRIPS GRID */
+.section { padding: 32px 48px 60px; }
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px; margin-bottom: 28px;
+}
+.trips-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+}
+.trip-card {
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 20px; overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.trip-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+  border-color: rgba(244,196,48,0.2);
+}
+.trip-img {
+  width: 100%; height: 200px; object-fit: cover;
+}
+.trip-info { padding: 20px; }
+.trip-info h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px; margin-bottom: 10px; color: #fff;
+}
+.trip-meta {
+  display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px;
+}
+.tag {
+  font-size: 12px; padding: 4px 12px;
+  border-radius: 50px; background: rgba(255,255,255,0.06);
+  color: var(--muted);
+}
+.tag.gold { background: rgba(244,196,48,0.1); color: var(--gold); }
+.price {
+  font-size: 22px; font-weight: 700;
+  color: var(--gold); margin-bottom: 14px;
+}
+.price span { font-size: 13px; color: var(--muted); font-weight: 400; }
+.seats-bar { margin-bottom: 16px; }
+.seats-bar p { font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+.progress {
+  width: 100%; height: 6px; background: #222;
+  border-radius: 10px; overflow: hidden;
+}
+.progress-fill { height: 100%; background: var(--gold); border-radius: 10px; }
+.book-btn {
+  width: 100%; padding: 13px;
+  background: var(--gold); border: none;
+  border-radius: 50px; font-family: 'DM Sans', sans-serif;
+  font-size: 15px; font-weight: 700;
+  color: #000; cursor: pointer; transition: all 0.2s;
+}
+.book-btn:hover { background: var(--gold-light); }
+
+/* USER CREATED TRIPS SECTION */
+.user-trips-section { padding: 0 48px 60px; }
+
+footer {
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding: 32px 48px; text-align: center;
+  color: var(--muted); font-size: 14px;
+}
+footer a { color: var(--gold); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="nav-brand">✈️ TravelSync</div>
+  <div class="nav-links">
+    <a href="find-trips.html" class="active">Join Trips</a>
+    <a href="create-trip.html">Create Trip</a>
+    <a href="dashboard.html">My Bookings</a>
+    <a href="login.html" class="btn-nav" id="authBtn">Login</a>
+  </div>
+  <div class="nav-user" id="navUser" style="display:none">
+    👋 Welcome, <span id="navName"></span>
+    <a href="#" onclick="logout()" style="color:var(--muted);font-size:13px">Logout</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-content">
+    <h1>Find Your Next<br><span>Adventure</span></h1>
+    <p>Browse curated group trips. No login needed to explore!</p>
+    <div class="hero-btns">
+      <a href="#trips" class="btn-gold">Browse Trips ↓</a>
+      <a href="create-trip.html" class="btn-outline">+ Create a Trip</a>
+    </div>
+  </div>
+</div>
+
+<!-- FILTERS -->
+<div class="filters">
+  <button class="filter-btn active" onclick="filterTrips('all', this)">🌍 All</button>
+  <button class="filter-btn" onclick="filterTrips('bali', this)">🏝️ Bali</button>
+  <button class="filter-btn" onclick="filterTrips('paris', this)">🗼 Paris</button>
+  <button class="filter-btn" onclick="filterTrips('goa', this)">🌊 Goa</button>
+  <button class="filter-btn" onclick="filterTrips('custom', this)">✨ Custom</button>
+</div>
+
+<!-- CURATED TRIPS -->
+<div class="section" id="trips">
+  <h2 class="section-title">✈️ Upcoming Group Trips</h2>
+  <div class="trips-grid" id="tripsGrid">
+
+    <div class="trip-card" data-type="bali">
+      <img class="trip-img" src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=600" alt="Bali">
+      <div class="trip-info">
+        <h3>Bali & Gili Islands</h3>
+        <div class="trip-meta">
+          <span class="tag">📅 14–22 Mar 2026</span>
+          <span class="tag">⏱ 9 Days</span>
+          <span class="tag gold">Group Trip</span>
+        </div>
+        <div class="price">₹53,000 <span>/ person</span></div>
+        <div class="seats-bar">
+          <p>12 / 20 seats filled</p>
+          <div class="progress"><div class="progress-fill" style="width:60%"></div></div>
+        </div>
+        <button class="book-btn" onclick="bookTrip('bali')">Book Now</button>
+      </div>
+    </div>
+
+    <div class="trip-card" data-type="paris">
+      <img class="trip-img" src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=600" alt="Paris">
+      <div class="trip-info">
+        <h3>Paris — City of Light</h3>
+        <div class="trip-meta">
+          <span class="tag">📅 April 2026</span>
+          <span class="tag">⏱ 8 Days</span>
+          <span class="tag gold">Group Trip</span>
+        </div>
+        <div class="price">₹79,000 <span>/ person</span></div>
+        <div class="seats-bar">
+          <p>8 / 20 seats filled</p>
+          <div class="progress"><div class="progress-fill" style="width:40%"></div></div>
+        </div>
+        <button class="book-btn" onclick="bookTrip('paris')">Book Now</button>
+      </div>
+    </div>
+
+    <div class="trip-card" data-type="goa">
+      <img class="trip-img" src="https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=600" alt="Goa">
+      <div class="trip-info">
+        <h3>Goa — Sun, Sand & Vibes</h3>
+        <div class="trip-meta">
+          <span class="tag">📅 March 2026</span>
+          <span class="tag">⏱ 5 Days</span>
+          <span class="tag gold">Group Trip</span>
+        </div>
+        <div class="price">₹29,999 <span>/ person</span></div>
+        <div class="seats-bar">
+          <p>15 / 20 seats filled</p>
+          <div class="progress"><div class="progress-fill" style="width:75%"></div></div>
+        </div>
+        <button class="book-btn" onclick="bookTrip('goa')">Book Now</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- USER CREATED TRIPS -->
+<div class="user-trips-section">
+  <h2 class="section-title">✨ Community Created Trips</h2>
+  <div class="trips-grid" id="communityGrid">
+    <p style="color:var(--muted)">Loading community trips...</p>
+  </div>
+</div>
+
+<footer>
+  © 2026 TravelSync &nbsp;|&nbsp; <a href="terms.html">Terms & Conditions</a> &nbsp;|&nbsp; Bookings are non-refundable
+</footer>
+
+<script>
+// Check login status
+const token = localStorage.getItem("token");
+const user = JSON.parse(localStorage.getItem("user") || "null");
+
+if (token && user) {
+  document.getElementById("authBtn").style.display = "none";
+  document.getElementById("navUser").style.display = "flex";
+  document.getElementById("navName").textContent = user.name;
+}
+
+function logout() {
+  localStorage.removeItem("token");
+  localStorage.removeItem("user");
+  location.reload();
+}
+
+// Book trip — redirect to login if not logged in
+function bookTrip(tripKey) {
+  if (!token) {
+    if (confirm("You need to login to book a trip. Go to login page?")) {
+      localStorage.setItem("pendingTrip", tripKey);
+      window.location.href = "login.html";
+    }
+    return;
+  }
+  window.location.href = `booking.html?trip=${tripKey}`;
+}
+
+// Filter trips
+function filterTrips(type, btn) {
+  document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  document.querySelectorAll(".trip-card").forEach(card => {
+    card.style.display = (type === "all" || card.dataset.type === type) ? "block" : "none";
+  });
+}
+
+// Load community trips
+async function loadCommunityTrips() {
+  try {
+    const res = await fetch("http://localhost:5000/trips");
+    const data = await res.json();
+    const grid = document.getElementById("communityGrid");
+
+    if (!data.trips || data.trips.length === 0) {
+      grid.innerHTML = `<p style="color:var(--muted)">No community trips yet. <a href="create-trip.html" style="color:var(--gold)">Be the first!</a></p>`;
+      return;
+    }
+
+    grid.innerHTML = data.trips.map(t => `
+      <div class="trip-card" data-type="custom">
+        <img class="trip-img" src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=600" alt="${t.destination}">
+        <div class="trip-info">
+          <h3>${t.destination}</h3>
+          <div class="trip-meta">
+            <span class="tag">📅 ${t.start_date} → ${t.end_date}</span>
+            <span class="tag gold">Community</span>
+          </div>
+          <div class="price">₹${Number(t.budget).toLocaleString()} <span>/ budget</span></div>
+          <p style="font-size:13px;color:var(--muted);margin-bottom:14px">${t.description || "A community trip"}</p>
+          <button class="book-btn" onclick="alert('Contact the trip organizer to join this trip!')">Express Interest</button>
+        </div>
+      </div>
+    `).join("");
+  } catch (err) {
+    document.getElementById("communityGrid").innerHTML = `<p style="color:var(--muted)">Could not load community trips.</p>`;
+  }
+}
+
+// Redirect back after login
+if (token) {
+  const pending = localStorage.getItem("pendingTrip");
+  if (pending) {
+    localStorage.removeItem("pendingTrip");
+    window.location.href = `booking.html?trip=${pending}`;
+  }
+}
+
+loadCommunityTrips();
+</script>
+</body>
+</html>

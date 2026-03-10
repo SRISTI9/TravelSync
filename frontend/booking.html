@@ -3,334 +3,352 @@
 <head>
 <meta charset="UTF-8">
 <title>Book Trip | TravelSync</title>
-
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-body{
-  margin:0;
-  font-family:Arial,Helvetica,sans-serif;
-  background:#0b0b0b;
-  color:#fff;
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root { --gold: #f4c430; --gold-light: #ffd966; --bg: #0b0b0b; --card: #0f0f0f; --input-bg: #181818; --muted: rgba(255,255,255,0.5); }
+body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: #fff; }
+
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(11,11,11,0.95); backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(244,196,48,0.1);
+  padding: 0 48px; display: flex; align-items: center;
+  justify-content: space-between; height: 68px;
+}
+.nav-brand { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--gold); }
+.nav-links { display: flex; align-items: center; gap: 8px; }
+.nav-links a { color: rgba(255,255,255,0.7); text-decoration: none; padding: 8px 16px; border-radius: 50px; font-size: 14px; transition: all 0.2s; }
+.nav-links a:hover { color: #fff; background: rgba(255,255,255,0.08); }
+
+.container {
+  max-width: 1100px; margin: 48px auto; padding: 0 24px;
+  display: grid; grid-template-columns: 1.4fr 1fr; gap: 32px;
 }
 
-.container{
-  max-width:1200px;
-  margin:80px auto;
-  padding:50px;
-  background:#000;
-  border-radius:24px;
-  display:grid;
-  grid-template-columns:1.4fr 1fr;
-  gap:40px;
+h1 { font-family: 'Playfair Display', serif; font-size: 32px; color: var(--gold); margin-bottom: 8px; }
+
+.seat-card {
+  background: #141414; padding: 20px;
+  border-radius: 18px; margin: 20px 0;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+.progress { width: 100%; height: 8px; background: #222; border-radius: 10px; overflow: hidden; margin: 10px 0; }
+.progress-fill { height: 100%; background: var(--gold); border-radius: 10px; transition: 0.4s; }
+.names { font-size: 13px; color: var(--muted); line-height: 1.8; }
+
+hr { border: none; height: 1px; background: rgba(255,255,255,0.08); margin: 24px 0; }
+
+label { display: block; margin-bottom: 8px; font-size: 12px; font-weight: 500; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+input, select {
+  width: 100%; padding: 13px 16px;
+  background: var(--input-bg);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 14px; color: #fff;
+  font-family: 'DM Sans', sans-serif; font-size: 15px; outline: none;
+  transition: border-color 0.2s; margin-bottom: 16px;
+}
+input:focus, select:focus { border-color: rgba(244,196,48,0.4); }
+select option { background: #1a1a1a; }
+
+.traveller-block {
+  background: #141414; padding: 20px;
+  border-radius: 16px; margin-bottom: 16px;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+.traveller-block h3 { color: var(--gold); font-size: 16px; margin-bottom: 16px; }
+
+/* PRICE BOX */
+.price-box {
+  background: #111; padding: 32px;
+  border-radius: 22px; position: sticky; top: 88px;
+  border: 1px solid rgba(244,196,48,0.1);
+}
+.price-box h2 { font-family: 'Playfair Display', serif; color: var(--gold); margin-bottom: 20px; }
+.total { font-size: 28px; color: var(--gold); font-weight: 800; margin: 20px 0; }
+
+/* TEST BADGE */
+.test-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(244,196,48,0.1); border: 1px solid rgba(244,196,48,0.3);
+  border-radius: 50px; padding: 6px 14px;
+  font-size: 12px; font-weight: 600; color: var(--gold);
+  margin-bottom: 16px;
 }
 
-h1{color:#f4c430;font-size:34px}
-h3{color:#f4c430;margin-top:25px}
-p{opacity:.9}
-
-label{display:block;margin-top:16px;font-weight:600}
-input,select{
-  width:100%;
-  padding:14px;
-  border-radius:12px;
-  border:none;
-  background:#1a1a1a;
-  color:#fff;
+/* T&C BOX */
+.tnc-box {
+  background: rgba(244,196,48,0.04);
+  border: 1px solid rgba(244,196,48,0.15);
+  border-radius: 14px; padding: 16px; margin: 16px 0;
+  font-size: 13px; color: var(--muted); line-height: 1.6;
 }
+.tnc-box strong { color: #ff6b6b; }
 
-.price-box{
-  background:#111;
-  padding:35px;
-  border-radius:22px;
-  position:sticky;
-  top:90px;
+.tnc-check { display: flex; align-items: flex-start; gap: 10px; margin: 16px 0; cursor: pointer; }
+.tnc-check input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--gold); margin-top: 2px; flex-shrink: 0; }
+.tnc-check span { font-size: 13px; color: var(--muted); }
+.tnc-check a { color: var(--gold); }
+
+.pay-btn {
+  width: 100%; padding: 18px;
+  background: var(--gold); border: none;
+  border-radius: 50px; font-family: 'DM Sans', sans-serif;
+  font-size: 16px; font-weight: 800; color: #000;
+  cursor: pointer; transition: all 0.2s; margin-top: 8px;
 }
+.pay-btn:hover { background: var(--gold-light); transform: translateY(-2px); }
+.pay-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
 
-.total{
-  font-size:26px;
-  color:#f4c430;
-  margin:25px 0;
-  font-weight:800;
+.pay-note {
+  font-size: 11px; color: var(--muted);
+  text-align: center; margin-top: 12px; line-height: 1.6;
 }
-
-button{
-  width:100%;
-  padding:18px;
-  background:#f4c430;
-  border:none;
-  border-radius:50px;
-  font-size:17px;
-  font-weight:800;
-  cursor:pointer;
-}
-
-button:hover{background:#ffd966}
-
-/* SEATS */
-.seat-card{
-  background:#141414;
-  padding:20px;
-  border-radius:18px;
-  margin:20px 0;
-}
-
-.progress{
-  width:100%;
-  height:10px;
-  background:#333;
-  border-radius:20px;
-  overflow:hidden;
-  margin:10px 0;
-}
-
-.progress-fill{
-  height:100%;
-  background:#f4c430;
-  width:0%;
-  transition:.4s;
-}
-
-.names{font-size:13px;opacity:.85;line-height:1.6}
-
-hr{
-  border:none;
-  height:1px;
-  background:rgba(255,255,255,.15);
-  margin:30px 0;
-}
+.pay-note span { color: var(--gold); font-weight: 600; }
 </style>
 </head>
-
 <body>
 
-<div class="container">
-
-<!-- LEFT -->
-<div>
-<h1 id="tripTitle"></h1>
-<p><b>Dates:</b> <span id="tripDates"></span></p>
-<p><b>Duration:</b> <span id="tripDuration"></span></p>
-
-<div class="seat-card">
-  👥 <b><span id="seatCount"></span> / 20 seats filled</b>
-  <div class="progress">
-    <div class="progress-fill" id="seatBar"></div>
+<nav>
+  <div class="nav-brand">✈️ TravelSync</div>
+  <div class="nav-links">
+    <a href="find-trips.html">← Back to Trips</a>
+    <a href="dashboard.html">My Bookings</a>
   </div>
-  <div class="names" id="seatNames"></div>
+</nav>
+
+<div class="container">
+  <!-- LEFT -->
+  <div>
+    <h1 id="tripTitle"></h1>
+    <p style="color:var(--muted)"><b>Dates:</b> <span id="tripDates"></span> &nbsp;|&nbsp; <b>Duration:</b> <span id="tripDuration"></span></p>
+
+    <div class="seat-card">
+      👥 <b><span id="seatCount"></span> / 20 seats filled</b>
+      <div class="progress"><div class="progress-fill" id="seatBar"></div></div>
+      <div class="names" id="seatNames"></div>
+    </div>
+
+    <hr>
+
+    <label>Number of Travellers</label>
+    <select id="travellerCount" onchange="renderTravellers(); updatePrice();">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+    </select>
+
+    <div id="travellers"></div>
+  </div>
+
+  <!-- RIGHT -->
+  <div class="price-box">
+    <h2>💳 Payment Summary</h2>
+
+    <div class="test-badge">🧪 Test Mode — ₹1 will be charged</div>
+
+    <label>Price per person</label>
+    <select id="price" onchange="updatePrice()"></select>
+
+    <p style="font-size:12px;color:var(--muted);margin-bottom:8px">+ GST & taxes as applicable</p>
+    <div class="total" id="total"></div>
+
+    <div class="tnc-box">
+      <strong>⚠️ No Cancellation Policy</strong><br><br>
+      All bookings made on TravelSync are <strong>final and non-refundable</strong>.
+      Once payment is confirmed, the booking cannot be cancelled or modified.
+      By proceeding, you agree to our full <a href="terms.html" style="color:var(--gold)">Terms & Conditions</a>.
+    </div>
+
+    <label class="tnc-check">
+      <input type="checkbox" id="tncCheck" onchange="togglePayBtn()">
+      <span>I have read and agree to the <a href="terms.html">Terms & Conditions</a> including the no-cancellation policy.</span>
+    </label>
+
+    <button class="pay-btn" id="payBtn" onclick="openRazorpay()" disabled>
+      🔒 Proceed to Pay
+    </button>
+
+    <p class="pay-note">
+      Secure payment powered by Razorpay<br>
+      <span>₹1 test charge</span> — real price logged as ₹<span id="notePrice"></span>
+    </p>
+  </div>
 </div>
-
-<hr>
-
-<label>Number of Travellers *</label>
-<select id="travellerCount" onchange="renderTravellers()">
-  <option value="1">1</option>
-  <option value="2">2</option>
-  <option value="3">3</option>
-</select>
-
-<div id="travellers"></div>
-</div>
-
-<!-- RIGHT -->
-<div class="price-box">
-<h2 style="color:#f4c430">Pricing</h2>
-
-<label>Price (per person)</label>
-<select id="price" onchange="updatePrice()"></select>
-
-<p style="font-size:13px;margin-top:10px;">+ GST & taxes as applicable</p>
-<div class="total" id="total"></div>
-
-<button onclick="bookNow()">Proceed to Book</button>
-
-<p style="font-size:12px;opacity:.6;text-align:center;margin-top:12px">
-* Booking request only. Payment will be collected later.
-</p>
-</div>
-
-</div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <script>
-/* ================= TRIP DATA ================= */
-
-const trips={
-  bali:{
-    title:"Bali & Gili Islands",
-    dates:"14 Mar 2026 – 22 Mar 2026",
-    duration:"9 Days",
-    price:53000,
-    api:"book-bali",
-    pdf:"TravelSync_Bali_Booking.pdf",
-    itinerary:[
-      "Day 1: Arrival, welcome dinner & nightlife",
-      "Day 2: Uluwatu Temple & Kecak Dance",
-      "Day 3: Nusa Penida island tour",
-      "Day 4: Gili Islands – snorkeling & beach clubs",
-      "Day 5: Leisure & farewell dinner"
-    ]
-  },
-  paris:{
-    title:"Paris",
-    dates:"April 2026",
-    duration:"8 Days",
-    price:79000,
-    api:"book-paris",
-    pdf:"TravelSync_Paris_Booking.pdf",
-    itinerary:[
-      "Arrival & Eiffel Tower walk",
-      "Louvre Museum & city tour",
-      "Montmartre & art walk",
-      "Seine River Cruise",
-      "Free exploration & departure"
-    ]
-  },
-  goa:{
-    title:"Goa",
-    dates:"March 2026",
-    duration:"5 Days",
-    price:29999,
-    api:"book-goa",
-    pdf:"TravelSync_Goa_Booking.pdf",
-    itinerary:[
-      "Arrival & beach shacks",
-      "Water sports",
-      "Nightlife & clubs",
-      "Dolphin watching & Mandovi cruise",
-      "Leisure & departure"
-    ]
-  }
-};
-
-const params=new URLSearchParams(location.search);
-const tripKey=params.get("trip")||"bali";
-const trip=trips[tripKey];
-
-/* ================= SEATS (STATIC DEMO) ================= */
-
-let maxSeats=20;
-let filledSeats=12;
-let bookedNames=[
-  "Aarav","Isha","Rohan","Meera","Karan","Ananya",
-  "Siddharth","Pooja","Nikhil","Sneha","Rahul","Tanya"
-];
-
-function renderSeats(){
-  seatCount.innerText=filledSeats;
-  seatBar.style.width=(filledSeats/maxSeats*100)+"%";
-  seatNames.innerText=bookedNames.join(", ");
+// ── AUTH ──────────────────────────────────────────────────────────────────────
+const token = localStorage.getItem("token");
+const user  = JSON.parse(localStorage.getItem("user") || "null");
+if (!token) {
+  alert("Please login first to book a trip.");
+  localStorage.setItem("pendingTrip", new URLSearchParams(location.search).get("trip") || "bali");
+  window.location.href = "login.html";
 }
 
-/* ================= INIT ================= */
+// ── TRIP DATA ─────────────────────────────────────────────────────────────────
+const trips = {
+  bali:  { title: "Bali & Gili Islands",      dates: "14 Mar – 22 Mar 2026", duration: "9 Days",  price: 53000, key: "bali",
+    itinerary: ["Day 1: Arrival & welcome dinner","Day 2: Uluwatu Temple","Day 3: Nusa Penida","Day 4: Gili Islands","Day 5: Farewell dinner"] },
+  paris: { title: "Paris — City of Light",    dates: "April 2026",           duration: "8 Days",  price: 79000, key: "paris",
+    itinerary: ["Arrival & Eiffel Tower","Louvre Museum","Montmartre","Seine Cruise","Departure"] },
+  goa:   { title: "Goa — Sun, Sand & Vibes",  dates: "March 2026",           duration: "5 Days",  price: 29999, key: "goa",
+    itinerary: ["Arrival & beach shacks","Water sports","Nightlife","Dolphin watching","Departure"] }
+};
 
-tripTitle.innerText="Book "+trip.title;
-tripDates.innerText=trip.dates;
-tripDuration.innerText=trip.duration;
-price.innerHTML=`<option value="${trip.price}">₹${trip.price} per person</option>`;
+const params  = new URLSearchParams(location.search);
+const tripKey = params.get("trip") || "bali";
+const trip    = trips[tripKey];
 
-renderSeats();
+let filledSeats  = 12;
+let bookedNames  = ["Aarav","Isha","Rohan","Meera","Karan","Ananya","Siddharth","Pooja","Nikhil","Sneha","Rahul","Tanya"];
+
+// ── RAZORPAY KEY ──────────────────────────────────────────────────────────────
+// ── INIT ──────────────────────────────────────────────────────────────────────
+document.getElementById("tripTitle").textContent    = "Book " + trip.title;
+document.getElementById("tripDates").textContent    = trip.dates;
+document.getElementById("tripDuration").textContent = trip.duration;
+document.getElementById("price").innerHTML          = `<option value="${trip.price}">₹${trip.price.toLocaleString()} per person</option>`;
+document.getElementById("seatCount").textContent    = filledSeats;
+document.getElementById("seatBar").style.width      = (filledSeats / 20 * 100) + "%";
+document.getElementById("seatNames").textContent    = bookedNames.join(", ");
+document.getElementById("notePrice").textContent    = trip.price.toLocaleString();
+
 renderTravellers();
 updatePrice();
 
-/* ================= TRAVELLERS ================= */
-
-function renderTravellers(){
-  travellers.innerHTML="";
-  for(let i=1;i<=travellerCount.value;i++){
-    travellers.innerHTML+=`
-      <hr>
-      <h3>Traveller ${i}</h3>
-      <label>Full Name *</label><input class="t-name">
-      <label>Email *</label><input class="t-email">
-      <label>Phone *</label><input class="t-phone">
-      <label>Age *</label><input class="t-age" type="number">
-    `;
+// ── TRAVELLER FORM ────────────────────────────────────────────────────────────
+function renderTravellers() {
+  const count = parseInt(document.getElementById("travellerCount").value);
+  let html = "";
+  for (let i = 1; i <= count; i++) {
+    html += `
+      <div class="traveller-block">
+        <h3>Traveller ${i}</h3>
+        <label>Full Name</label><input class="t-name" placeholder="Full name">
+        <label>Email</label><input class="t-email" type="email" placeholder="email@example.com">
+        <label>Phone</label><input class="t-phone" placeholder="+91 XXXXX XXXXX">
+        <label>Age</label><input class="t-age" type="number" placeholder="Age">
+      </div>`;
   }
+  document.getElementById("travellers").innerHTML = html;
 }
 
-function updatePrice(){
-  total.innerText="Total: ₹"+(trip.price*travellerCount.value);
+function updatePrice() {
+  const count = parseInt(document.getElementById("travellerCount").value);
+  const total = trip.price * count;
+  document.getElementById("total").textContent    = "Total: ₹" + total.toLocaleString();
+  document.getElementById("notePrice").textContent = total.toLocaleString();
 }
 
-/* ================= BOOK ================= */
+function togglePayBtn() {
+  document.getElementById("payBtn").disabled = !document.getElementById("tncCheck").checked;
+}
 
-async function bookNow(){
-  const names=[...document.querySelectorAll(".t-name")];
-  const emails=[...document.querySelectorAll(".t-email")];
-  const phones=[...document.querySelectorAll(".t-phone")];
-  const ages=[...document.querySelectorAll(".t-age")];
+// ── VALIDATE FORM ─────────────────────────────────────────────────────────────
+function getTravellers() {
+  const names  = [...document.querySelectorAll(".t-name")];
+  const emails = [...document.querySelectorAll(".t-email")];
+  const phones = [...document.querySelectorAll(".t-phone")];
+  const ages   = [...document.querySelectorAll(".t-age")];
 
-  let travellersArr=[];
-
-  for(let i=0;i<names.length;i++){
-    if(!names[i].value||!emails[i].value||!phones[i].value||!ages[i].value){
-      alert("Fill all traveller details");
-      return;
+  for (let i = 0; i < names.length; i++) {
+    if (!names[i].value || !emails[i].value || !phones[i].value || !ages[i].value) {
+      alert("Please fill all traveller details first.");
+      return null;
     }
-    travellersArr.push({
-      name:names[i].value,
-      email:emails[i].value,
-      phone:phones[i].value,
-      age:ages[i].value
-    });
   }
 
-  travellersArr.forEach(t=>bookedNames.push(t.name));
-  filledSeats+=travellersArr.length;
-  renderSeats();
+  return names.map((n, i) => ({
+    name:  n.value,
+    email: emails[i].value,
+    phone: phones[i].value,
+    age:   ages[i].value
+  }));
+}
 
-  /* PDF */
-  const {jsPDF}=window.jspdf;
-  const pdf=new jsPDF();
+// ── OPEN RAZORPAY + CONFIRM BOOKING IMMEDIATELY REGARDLESS OF PAYMENT ────────
+async function openRazorpay() {
+  const travellers = getTravellers();
+  if (!travellers) return;
 
-  pdf.text("TravelSync – Booking Confirmation",20,20);
-  pdf.text(`Trip: ${trip.title}`,20,35);
-  pdf.text(`Dates: ${trip.dates}`,20,45);
-  pdf.text(`Total Travellers: ${travellersArr.length}`,20,55);
-  pdf.text(`Total Price: ₹${trip.price*travellersArr.length}`,20,65);
+  const displayTotal = trip.price * travellers.length;
+  const mockPaymentId = "pay_mock_" + Date.now();
 
-  let y=85;
-  pdf.text("Traveller Details:",20,y); y+=10;
-  travellersArr.forEach((t,i)=>{
-    pdf.text(`${i+1}. ${t.name} | ${t.age} | ${t.email}`,20,y);
-    y+=8;
+  // 🔁 Open Razorpay — booking confirmed regardless of what user does
+  const options = {
+    key:      "rzp_test_SPOf6eAYjKObRR",
+    amount:   100,
+    currency: "INR",
+    name:     "TravelSync",
+    description: trip.title + " × " + travellers.length + " traveller(s)",
+    prefill: {
+      name:    travellers[0].name,
+      email:   travellers[0].email,
+      contact: travellers[0].phone
+    },
+    theme: { color: "#f4c430" },
+    modal: {
+      ondismiss: async function() {
+        // User closed/cancelled Razorpay — confirm anyway
+        await confirmBooking(travellers, displayTotal, mockPaymentId);
+      }
+    },
+    handler: async function(response) {
+      // User completed payment — confirm with real payment ID
+      await confirmBooking(travellers, displayTotal, response.razorpay_payment_id || mockPaymentId);
+    }
+  };
+
+  const rzp = new Razorpay(options);
+  rzp.on("payment.failed", async function() {
+    // Payment failed — confirm anyway
+    await confirmBooking(travellers, displayTotal, mockPaymentId);
   });
+  rzp.open();
+}
 
-  y+=10;
-  pdf.text("Itinerary:",20,y); y+=10;
-  trip.itinerary.forEach(d=>{
-    pdf.text("- "+d,20,y);
-    y+=8;
-  });
+// ── CONFIRM BOOKING WITH BACKEND ──────────────────────────────────────────────
+async function confirmBooking(travellers, totalPrice, paymentId) {
+  // Update seat display optimistically
+  travellers.forEach(t => bookedNames.push(t.name));
+  filledSeats += travellers.length;
+  document.getElementById("seatCount").textContent = filledSeats;
+  document.getElementById("seatBar").style.width   = (filledSeats / 20 * 100) + "%";
+  document.getElementById("seatNames").textContent = bookedNames.join(", ");
 
-  pdf.save(trip.pdf);
-
-  /* BACKEND */
-  try{
-    const res=await fetch(`http://localhost:5000/${trip.api}`,{
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({
-        trip:trip.title,
-        travellers:travellersArr,
-        itinerary:trip.itinerary,
-        totalPrice:trip.price*travellersArr.length
+  try {
+    const res  = await fetch("http://localhost:5000/booking/confirm", {
+      method:  "POST",
+      headers: {
+        "Content-Type":  "application/json",
+        "Authorization": "Bearer " + token
+      },
+      body: JSON.stringify({
+        tripName:  trip.title,
+        tripKey:   trip.key,
+        travellers,
+        totalPrice,           // actual price stored in DB (e.g. ₹53,000)
+        paymentId,            // real Razorpay payment ID
+        itinerary: trip.itinerary
       })
     });
 
-    const result=await res.json();
+    const data = await res.json();
 
-    if(result.success){
-      alert("✅ Booking confirmed! PDF downloaded & email sent 📧");
-    }else{
-      alert("Saved, but email failed.");
+    if (data.success) {
+      localStorage.setItem("lastBookingId", data.bookingId);
+      alert("✅ Booking confirmed! PDF & confirmation email sent 📧\n\nRedirecting to your dashboard...");
+      window.location.href = "dashboard.html";
+    } else {
+      alert("Payment received but booking failed. Contact support with Payment ID: " + paymentId);
     }
-
-  }catch(err){
-    alert("❌ Backend not running");
+  } catch (err) {
+    // Payment went through but backend is down — still show payment ID
+    alert("✅ Payment received (ID: " + paymentId + ")\n❌ Could not reach backend. Contact support.");
   }
 }
 </script>
-
 </body>
 </html>

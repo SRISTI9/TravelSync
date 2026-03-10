@@ -12,27 +12,97 @@
     body { margin: 0; font-family: "Segoe UI", sans-serif; background:#fff; }
 
     /* NAVBAR */
-    header{
+    header {
       position: fixed;
-      top:0; left:0;
-      width:100%;
-      background:#000;
-      color:#fff;
-      z-index:1000;
-      padding:18px 60px;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
+      top: 0; left: 0;
+      width: 100%;
+      background: #000;
+      color: #fff;
+      z-index: 1000;
+      padding: 0 60px;
+      height: 68px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(244,196,48,0.15);
     }
-    nav a{
-      color:#fff;
-      margin-left:30px;
-      text-decoration:none;
-      font-weight:500;
+
+    .nav-brand {
+      font-family: Georgia, serif;
+      font-size: 22px;
+      color: #f4c430;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
     }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .nav-links a {
+      color: rgba(255,255,255,0.75);
+      text-decoration: none;
+      padding: 8px 16px;
+      border-radius: 50px;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: #fff;
+      background: rgba(255,255,255,0.08);
+    }
+
+    .nav-links a.nav-highlight {
+      color: #f4c430;
+      border: 1px solid rgba(244,196,48,0.3);
+    }
+
+    .nav-links a.nav-highlight:hover {
+      background: rgba(244,196,48,0.08);
+    }
+
+    .nav-links a.nav-btn {
+      background: #f4c430;
+      color: #000;
+      font-weight: 700;
+      padding: 8px 20px;
+    }
+
+    .nav-links a.nav-btn:hover {
+      background: #ffd966;
+    }
+
+    /* Nav user info (shown when logged in) */
+    .nav-user {
+      display: none;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      color: rgba(255,255,255,0.6);
+    }
+
+    .nav-user span {
+      color: #f4c430;
+      font-weight: 600;
+    }
+
+    .nav-user a {
+      color: rgba(255,255,255,0.5);
+      text-decoration: none;
+      font-size: 13px;
+      transition: color 0.2s;
+    }
+
+    .nav-user a:hover { color: #fff; }
 
     section{ padding:100px 70px; }
-
     h2{ text-align:center; font-size:36px; margin-bottom:20px; }
 
     /* HERO */
@@ -153,13 +223,24 @@
 
 <body>
 
+<!-- UPDATED NAVBAR -->
 <header>
-  <strong>TravelSync</strong>
-  <nav>
+  <a class="nav-brand" href="index.html">✈️ TravelSync</a>
+
+  <div class="nav-links">
     <a href="#top">Home</a>
-    <a href="#trips">Trips</a>
+    <a href="#trips" class="nav-highlight">🌍 Join Trips</a>
+    <a href="create-trip.html" class="nav-highlight">➕ Create Trip</a>
+    <a href="dashboard.html">My Bookings</a>
     <a href="#contact">Contact</a>
-  </nav>
+    <a href="login.html" class="nav-btn" id="authBtn">Login</a>
+  </div>
+
+  <div class="nav-user" id="navUser">
+    👋 <span id="navName"></span>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="#" onclick="logout()">Logout</a>
+  </div>
 </header>
 
 <!-- HERO -->
@@ -195,7 +276,7 @@
   <div class="grid">
     <div class="card"><img src="assets/images/bali.jpeg"><h4>Bali</h4><a href="bali.html" class="btn">View Trip</a></div>
     <div class="card"><img src="assets/images/paris.jpeg"><h4>Paris</h4><a href="paris.html" class="btn">View Trip</a></div>
-    <div class="card"><img src="assets/images/dubai.jpeg"><h4>Dubai</h4><a href="trip-details.html" class="btn">View Trip</a></div>
+    <div class="card"><img src="assets/images/goa.jpeg"><h4>Goa</h4><a href="goa.html" class="btn">View Trip</a></div>
     <div class="card"><img src="assets/images/japan.jpeg"><h4>Japan</h4><a href="trip-details.html" class="btn">View Trip</a></div>
     <div class="card"><img src="assets/images/london.jpeg"><h4>London</h4><a href="trip-details.html" class="btn">View Trip</a></div>
     <div class="card"><img src="assets/images/newyork.jpeg"><h4>New York</h4><a href="trip-details.html" class="btn">View Trip</a></div>
@@ -232,7 +313,7 @@
     <div class="dark-card">
       <img src="assets/images/travel2.jpg">
       <h4>We Make Travel Unique</h4>
-      <p>Travel isn’t just about where you go, it’s about what you do when you get there.</p>
+      <p>Travel isn't just about where you go, it's about what you do when you get there.</p>
     </div>
     <div class="dark-card">
       <img src="assets/images/travel3.jpg">
@@ -289,6 +370,24 @@
     <a class="btn">Send</a>
   </div>
 </section>
+
+<script>
+// Show/hide login button based on auth state
+const token = localStorage.getItem("token");
+const user = JSON.parse(localStorage.getItem("user") || "null");
+
+if (token && user) {
+  document.getElementById("authBtn").style.display = "none";
+  document.getElementById("navUser").style.display = "flex";
+  document.getElementById("navName").textContent = user.name;
+}
+
+function logout() {
+  localStorage.removeItem("token");
+  localStorage.removeItem("user");
+  location.reload();
+}
+</script>
 
 </body>
 </html>
