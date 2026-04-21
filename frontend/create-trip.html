@@ -22,152 +22,107 @@ nav {
 .nav-links a:hover { color: #fff; background: rgba(255,255,255,0.08); }
 
 .page { max-width: 760px; margin: 60px auto; padding: 0 24px 80px; }
-
 .page-header { margin-bottom: 40px; }
 .page-header h1 { font-family: 'Playfair Display', serif; font-size: 38px; margin-bottom: 8px; }
 .page-header h1 span { color: var(--gold); }
 .page-header p { color: var(--muted); font-size: 16px; }
 
-.card {
-  background: var(--card); border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 24px; padding: 36px; margin-bottom: 24px;
-}
+.card { background: var(--card); border: 1px solid rgba(255,255,255,0.06); border-radius: 24px; padding: 36px; margin-bottom: 24px; }
 .card h2 { font-size: 18px; color: var(--gold); margin-bottom: 24px; }
 
 .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 .form-grid .full { grid-column: span 2; }
-
 .field { display: flex; flex-direction: column; gap: 8px; }
 .field label { font-size: 12px; font-weight: 500; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
-
 .field input, .field select, .field textarea {
-  padding: 13px 16px;
-  background: var(--input-bg);
-  border: 1px solid rgba(255,255,255,0.07);
-  border-radius: 14px; color: #fff;
+  padding: 13px 16px; background: var(--input-bg);
+  border: 1px solid rgba(255,255,255,0.07); border-radius: 14px; color: #fff;
   font-family: 'DM Sans', sans-serif; font-size: 15px; outline: none;
-  transition: border-color 0.2s;
-  appearance: none;
-  -webkit-appearance: none;
+  transition: border-color 0.2s; appearance: none; -webkit-appearance: none;
 }
-.field input:focus, .field select:focus, .field textarea:focus {
-  border-color: rgba(244,196,48,0.4); background: #1e1e1e;
-}
+.field input:focus, .field select:focus, .field textarea:focus { border-color: rgba(244,196,48,0.4); background: #1e1e1e; }
 .field input::placeholder, .field textarea::placeholder { color: rgba(255,255,255,0.2); }
 .field select option { background: #1a1a1a; color: #fff; }
 .field textarea { resize: vertical; min-height: 100px; }
-
 .select-wrap { position: relative; }
-.select-wrap::after {
-  content: '▾'; position: absolute; right: 16px; top: 50%;
-  transform: translateY(-50%); color: var(--muted);
-  pointer-events: none; font-size: 14px;
-}
+.select-wrap::after { content: '▾'; position: absolute; right: 16px; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; font-size: 14px; }
 
-.ai-header {
-  display: flex; justify-content: space-between;
-  align-items: center; margin-bottom: 20px;
-}
+/* AI HEADER */
+.ai-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
 .ai-header h2 { margin-bottom: 0; }
+.ai-btn-group { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
 
 .ai-btn {
   display: flex; align-items: center; gap: 8px;
   padding: 10px 20px; background: rgba(244,196,48,0.1);
   border: 1px solid rgba(244,196,48,0.3); border-radius: 50px;
   color: var(--gold); font-family: 'DM Sans', sans-serif;
-  font-size: 13px; font-weight: 600; cursor: pointer;
-  transition: all 0.2s; white-space: nowrap;
+  font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; white-space: nowrap;
 }
 .ai-btn:hover { background: var(--gold); color: #000; }
 .ai-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-.ai-btn .spinner {
-  width: 14px; height: 14px; border: 2px solid rgba(244,196,48,0.3);
-  border-top-color: var(--gold); border-radius: 50%;
-  animation: spin 0.7s linear infinite; display: none;
-}
+.ai-btn .spinner { width: 14px; height: 14px; border: 2px solid rgba(244,196,48,0.3); border-top-color: var(--gold); border-radius: 50%; animation: spin 0.7s linear infinite; display: none; }
 .ai-btn.loading .spinner { display: block; }
 .ai-btn.loading .btn-text { opacity: 0.6; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-.ai-hint {
-  font-size: 12px; color: var(--muted);
-  margin-bottom: 16px; padding: 10px 14px;
-  background: rgba(244,196,48,0.04);
-  border: 1px solid rgba(244,196,48,0.1);
-  border-radius: 10px;
+/* PRESET BUTTON + DROPDOWN */
+.preset-wrap { position: relative; }
+.preset-btn {
+  display: flex; align-items: center; gap: 6px;
+  padding: 10px 18px; background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.12); border-radius: 50px;
+  color: rgba(255,255,255,0.75); font-family: 'DM Sans', sans-serif;
+  font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.2s; white-space: nowrap;
 }
+.preset-btn:hover { background: rgba(255,255,255,0.1); color: #fff; }
+.preset-dropdown {
+  display: none; position: absolute; right: 0; top: calc(100% + 8px);
+  background: #1c1c1c; border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 18px; padding: 10px; min-width: 270px;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.7); z-index: 999;
+  max-height: 340px; overflow-y: auto;
+}
+.preset-dropdown.open { display: block; animation: fadeUp 0.18s ease; }
+@keyframes fadeUp { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
+.preset-search {
+  width: 100%; padding: 9px 13px; background: #111;
+  border: 1px solid rgba(255,255,255,0.07); border-radius: 10px;
+  color: #fff; font-family: 'DM Sans', sans-serif; font-size: 13px; outline: none; margin-bottom: 8px;
+}
+.preset-search::placeholder { color: rgba(255,255,255,0.3); }
+.preset-group-label { font-size: 10px; color: rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: 1.2px; padding: 6px 10px 3px; font-weight: 600; }
+.preset-option {
+  padding: 9px 12px; border-radius: 10px; cursor: pointer;
+  font-size: 13px; color: rgba(255,255,255,0.8); transition: all 0.15s;
+  display: flex; align-items: center; gap: 8px;
+}
+.preset-option:hover { background: rgba(244,196,48,0.1); color: var(--gold); }
 
+/* HINT */
+.ai-hint { font-size: 12px; color: var(--muted); margin-bottom: 16px; padding: 10px 14px; background: rgba(244,196,48,0.04); border: 1px solid rgba(244,196,48,0.1); border-radius: 10px; }
+
+/* ITINERARY */
 .itinerary-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
-
-.itinerary-item {
-  display: flex; align-items: flex-start; gap: 12px;
-  background: #181818; padding: 14px 16px;
-  border-radius: 14px;
-  border: 1px solid rgba(255,255,255,0.05);
-  transition: border-color 0.2s;
-}
+.itinerary-item { display: flex; align-items: flex-start; gap: 12px; background: #181818; padding: 14px 16px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.05); transition: border-color 0.2s; }
 .itinerary-item:focus-within { border-color: rgba(244,196,48,0.3); }
-
-.day-num {
-  color: var(--gold); font-weight: 700;
-  font-size: 13px; min-width: 52px; padding-top: 3px;
-}
-
-.itinerary-item textarea {
-  flex: 1; background: transparent; border: none;
-  color: #fff; font-family: 'DM Sans', sans-serif;
-  font-size: 14px; outline: none; resize: none;
-  min-height: 40px; line-height: 1.5;
-}
-
-.itinerary-item .del-btn {
-  background: none; border: none;
-  color: rgba(255,100,100,0.5); cursor: pointer;
-  font-size: 16px; padding: 2px; flex-shrink: 0;
-  transition: color 0.2s;
-}
+.day-num { color: var(--gold); font-weight: 700; font-size: 13px; min-width: 52px; padding-top: 3px; }
+.itinerary-item textarea { flex: 1; background: transparent; border: none; color: #fff; font-family: 'DM Sans', sans-serif; font-size: 14px; outline: none; resize: none; min-height: 40px; line-height: 1.5; }
+.itinerary-item .del-btn { background: none; border: none; color: rgba(255,100,100,0.5); cursor: pointer; font-size: 16px; padding: 2px; flex-shrink: 0; transition: color 0.2s; }
 .itinerary-item .del-btn:hover { color: #ff6b6b; }
 
 .add-day-row { display: flex; gap: 10px; }
-.add-day-row input {
-  flex: 1; padding: 12px 16px;
-  background: #181818; border: 1px solid rgba(255,255,255,0.07);
-  border-radius: 12px; color: #fff;
-  font-family: 'DM Sans', sans-serif; font-size: 14px; outline: none;
-}
+.add-day-row input { flex: 1; padding: 12px 16px; background: #181818; border: 1px solid rgba(255,255,255,0.07); border-radius: 12px; color: #fff; font-family: 'DM Sans', sans-serif; font-size: 14px; outline: none; }
 .add-day-row input:focus { border-color: rgba(244,196,48,0.4); }
-.add-day-row button {
-  padding: 12px 20px; background: rgba(244,196,48,0.1);
-  border: 1px solid rgba(244,196,48,0.3); border-radius: 12px;
-  color: var(--gold); font-size: 13px; font-weight: 600;
-  cursor: pointer; font-family: 'DM Sans', sans-serif;
-  transition: all 0.2s; white-space: nowrap;
-}
+.add-day-row button { padding: 12px 20px; background: rgba(244,196,48,0.1); border: 1px solid rgba(244,196,48,0.3); border-radius: 12px; color: var(--gold); font-size: 13px; font-weight: 600; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.2s; white-space: nowrap; }
 .add-day-row button:hover { background: var(--gold); color: #000; }
 
-.error-msg {
-  display: none; background: rgba(255,80,80,0.1);
-  border: 1px solid rgba(255,80,80,0.3); border-radius: 12px;
-  padding: 12px 16px; font-size: 13px; color: #ff6b6b;
-  margin-bottom: 16px; align-items: center; gap: 8px;
-}
+.error-msg { display: none; background: rgba(255,80,80,0.1); border: 1px solid rgba(255,80,80,0.3); border-radius: 12px; padding: 12px 16px; font-size: 13px; color: #ff6b6b; margin-bottom: 16px; align-items: center; gap: 8px; }
 .error-msg.show { display: flex; }
-
-.success-msg {
-  display: none; background: rgba(34,197,94,0.1);
-  border: 1px solid rgba(34,197,94,0.3); border-radius: 12px;
-  padding: 12px 16px; font-size: 13px; color: #4ade80;
-  margin-bottom: 16px; align-items: center; gap: 8px;
-}
+.success-msg { display: none; background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.3); border-radius: 12px; padding: 12px 16px; font-size: 13px; color: #4ade80; margin-bottom: 16px; align-items: center; gap: 8px; }
 .success-msg.show { display: flex; }
 
-.submit-btn {
-  width: 100%; padding: 18px;
-  background: var(--gold); border: none;
-  border-radius: 50px; font-family: 'DM Sans', sans-serif;
-  font-size: 17px; font-weight: 700; color: #000;
-  cursor: pointer; transition: all 0.2s; margin-top: 8px;
-}
+.submit-btn { width: 100%; padding: 18px; background: var(--gold); border: none; border-radius: 50px; font-family: 'DM Sans', sans-serif; font-size: 17px; font-weight: 700; color: #000; cursor: pointer; transition: all 0.2s; margin-top: 8px; }
 .submit-btn:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(244,196,48,0.3); }
 .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
 </style>
@@ -180,12 +135,11 @@ nav {
     <a href="index.html">Home</a>
     <a href="index.html#trips">Trips</a>
     <a href="dashboard.html">My Dashboard</a>
-    <a href="#" onclick="logout()">Logout</a>
+    <a href="#" onclick="logout(); return false;">Logout</a>
   </div>
 </nav>
 
 <div class="page">
-
   <div class="page-header">
     <h1>Create a <span>Trip</span></h1>
     <p>Plan your own group trip and invite others to join.</p>
@@ -198,77 +152,38 @@ nav {
   <div class="card">
     <h2>🗺️ Trip Details</h2>
     <div class="form-grid">
-
       <div class="field full">
         <label>Destination</label>
         <div class="select-wrap">
           <select id="destination">
             <option value="" disabled selected>Select a destination...</option>
             <optgroup label="🇮🇳 Indian Destinations">
-              <option>Goa</option>
-              <option>Manali</option>
-              <option>Ladakh</option>
-              <option>Kerala</option>
-              <option>Jaipur</option>
-              <option>Rishikesh</option>
-              <option>Andaman & Nicobar</option>
-              <option>Ooty</option>
-              <option>Udaipur</option>
-              <option>Varanasi</option>
-              <option>Coorg</option>
-              <option>Munnar</option>
-              <option>Darjeeling</option>
-              <option>Spiti Valley</option>
-              <option>Hampi</option>
-              <option>Meghalaya</option>
-              <option>Kashmir Valley</option>
-              <option>Pushkar</option>
+              <option>Goa</option><option>Manali</option><option>Ladakh</option>
+              <option>Kerala</option><option>Jaipur</option><option>Rishikesh</option>
+              <option>Andaman &amp; Nicobar</option><option>Ooty</option><option>Udaipur</option>
+              <option>Varanasi</option><option>Coorg</option><option>Munnar</option>
+              <option>Darjeeling</option><option>Spiti Valley</option><option>Hampi</option>
+              <option>Meghalaya</option><option>Kashmir Valley</option><option>Pushkar</option>
             </optgroup>
             <optgroup label="🌍 International Destinations">
-              <option>Bali, Indonesia</option>
-              <option>Paris, France</option>
-              <option>Dubai, UAE</option>
-              <option>Japan</option>
-              <option>Thailand</option>
-              <option>Maldives</option>
-              <option>Switzerland</option>
-              <option>London, UK</option>
-              <option>New York, USA</option>
-              <option>Rome, Italy</option>
-              <option>Singapore</option>
-              <option>Vietnam</option>
-              <option>Nepal</option>
-              <option>Sri Lanka</option>
-              <option>Portugal</option>
-              <option>Greece</option>
-              <option>Morocco</option>
-              <option>New Zealand</option>
+              <option>Bali, Indonesia</option><option>Paris, France</option><option>Dubai, UAE</option>
+              <option>Japan</option><option>Thailand</option><option>Maldives</option>
+              <option>Switzerland</option><option>London, UK</option><option>New York, USA</option>
+              <option>Rome, Italy</option><option>Singapore</option><option>Vietnam</option>
+              <option>Nepal</option><option>Sri Lanka</option><option>Portugal</option>
+              <option>Greece</option><option>Morocco</option><option>New Zealand</option>
             </optgroup>
             <optgroup label="✏️ Other">
               <option value="__custom__">Type my own destination...</option>
             </optgroup>
           </select>
         </div>
-        <input type="text" id="customDestination" placeholder="Enter destination name..."
-          style="display:none; margin-top:10px;">
+        <input type="text" id="customDestination" placeholder="Enter destination name..." style="display:none; margin-top:10px;">
       </div>
-
-      <div class="field">
-        <label>Start Date</label>
-        <input type="date" id="start_date">
-      </div>
-      <div class="field">
-        <label>End Date</label>
-        <input type="date" id="end_date">
-      </div>
-      <div class="field">
-        <label>Budget per person (₹)</label>
-        <input type="number" id="budget" placeholder="e.g. 15000">
-      </div>
-      <div class="field">
-        <label>Max Seats</label>
-        <input type="number" id="max_seats" placeholder="e.g. 20" value="20">
-      </div>
+      <div class="field"><label>Start Date</label><input type="date" id="start_date"></div>
+      <div class="field"><label>End Date</label><input type="date" id="end_date"></div>
+      <div class="field"><label>Budget per person (₹)</label><input type="number" id="budget" placeholder="e.g. 15000"></div>
+      <div class="field"><label>Max Seats</label><input type="number" id="max_seats" placeholder="e.g. 20" value="20"></div>
       <div class="field full">
         <label>Description</label>
         <textarea id="description" placeholder="Describe the trip vibe, what's included, highlights..."></textarea>
@@ -280,18 +195,25 @@ nav {
   <div class="card">
     <div class="ai-header">
       <h2>📅 Itinerary</h2>
-      <button class="ai-btn" id="aiBtn" onclick="generateAIItinerary()">
-        <div class="spinner"></div>
-        <span class="btn-text">✨ Generate with AI</span>
-      </button>
+      <div class="ai-btn-group">
+        <!-- Preset dropdown -->
+        <div class="preset-wrap" id="presetWrap">
+          <button class="preset-btn" onclick="togglePreset(event)">📋 Use Preset ▾</button>
+          <div class="preset-dropdown" id="presetDropdown">
+            <input class="preset-search" id="presetSearch" placeholder="🔍 Search destination..." oninput="filterPresets(this.value)">
+            <div id="presetList"></div>
+          </div>
+        </div>
+        <!-- AI button -->
+        
+      </div>
     </div>
 
     <div class="ai-hint" id="aiHint">
-      Select a destination and dates first, then click <b>Generate with AI</b> to auto-create a day-by-day itinerary. You can edit it after!
+      Pick a destination &amp; dates, then hit <b>✨ Generate with AI</b> — or grab a quick starter with <b>📋 Use Preset</b>!
     </div>
 
     <div class="itinerary-list" id="itineraryList"></div>
-
     <div class="add-day-row">
       <input type="text" id="newDay" placeholder="Or manually add a day activity...">
       <button onclick="addDay()">+ Add Day</button>
@@ -299,17 +221,13 @@ nav {
   </div>
 
   <button class="submit-btn" id="submitBtn" onclick="createTrip()">🚀 Publish Trip</button>
-
 </div>
 
 <script>
+/* ─── AUTH ─────────────────────────────────────────── */
 const token = localStorage.getItem("token");
-const user = JSON.parse(localStorage.getItem("user") || "null");
-
-if (!token || !user) {
-  alert("You need to login to create a trip.");
-  window.location.href = "login.html";
-}
+const user  = JSON.parse(localStorage.getItem("user") || "null");
+if (!token || !user) { alert("You need to login to create a trip."); window.location.href = "login.html"; }
 
 function logout() {
   localStorage.removeItem("token");
@@ -317,35 +235,24 @@ function logout() {
   window.location.href = "login.html";
 }
 
+/* ─── DESTINATION ───────────────────────────────────── */
 document.getElementById("destination").addEventListener("change", function() {
-  const custom = document.getElementById("customDestination");
-  custom.style.display = this.value === "__custom__" ? "block" : "none";
+  document.getElementById("customDestination").style.display = this.value === "__custom__" ? "block" : "none";
 });
+document.getElementById("newDay").addEventListener("keydown", e => { if (e.key === "Enter") addDay(); });
 
-document.getElementById("newDay").addEventListener("keydown", e => {
-  if (e.key === "Enter") addDay();
-});
-
+/* ─── ITINERARY STATE ───────────────────────────────── */
 let itinerary = [];
-
-function addDay(text = null) {
+function addDay(text) {
   const input = document.getElementById("newDay");
-  const val = text || input.value.trim();
+  const val   = text !== undefined ? text : input.value.trim();
   if (!val) return;
   itinerary.push(val);
-  if (!text) input.value = "";
+  if (text === undefined) input.value = "";
   renderItinerary();
 }
-
-function removeDay(i) {
-  itinerary.splice(i, 1);
-  renderItinerary();
-}
-
-function updateDay(i, val) {
-  itinerary[i] = val;
-}
-
+function removeDay(i) { itinerary.splice(i, 1); renderItinerary(); }
+function updateDay(i, val) { itinerary[i] = val; }
 function renderItinerary() {
   document.getElementById("itineraryList").innerHTML = itinerary.map((day, i) => `
     <div class="itinerary-item">
@@ -355,177 +262,481 @@ function renderItinerary() {
     </div>`).join("");
 }
 
-/* ===== AI ITINERARY — GEMINI ===== */
+/* ─── PRESET ITINERARIES ────────────────────────────── */
+const PRESETS = {
+  "🇮🇳 Indian": {
+    "Goa": [
+      "Arrive in Goa, check in & chill at Baga or Calangute beach, sunset cocktails 🌅",
+      "North Goa tour: Anjuna flea market, Vagator beach & Chapora Fort views 🏰",
+      "Water sports day: parasailing, jet skiing & banana boat at Calangute 🤿",
+      "South Goa: Palolem & Agonda beaches, dolphin spotting boat trip 🐬",
+      "Old Goa churches, spice plantation tour & authentic Goan fish curry 🍛",
+      "Club hopping at Tito's Lane, beach parties & souvenir shopping 🎉",
+      "Brunch, last beach walk & farewell 🛫"
+    ],
+    "Manali": [
+      "Arrive Manali, explore Mall Road & Hadimba Temple in the deodar forest 🏔️",
+      "Solang Valley: snow activities, zorbing, cable car & mountain views 🎿",
+      "Rohtang Pass: glaciers, snow fights & breathtaking landscapes ❄️",
+      "Old Manali village, cafés & white water rafting on Beas river 🚣",
+      "Kasol day trip, hot springs at Manikaran & Parvati Valley views 🌊",
+      "Naggar Castle, Roerich Art Gallery & sunset photography 📸",
+      "Local market shopping & departure 🎒"
+    ],
+    "Ladakh": [
+      "Arrive Leh (3500m), acclimatise, Shanti Stupa & local market walk 🙏",
+      "Leh Palace, Thiksey & Hemis Monastery — ancient Buddhist art 🏯",
+      "Nubra Valley via Khardung La (world's highest motorable road 5359m) 🏍️",
+      "Hunder sand dunes, double-hump Bactrian camel ride & stargazing 🐪",
+      "Pangong Tso Lake — electric blue waters & 3 Idiots filming spot 💙",
+      "Tso Moriri Lake, wild yaks & migratory birds — utterly magical 🦅",
+      "Magnetic Hill, Sangam river confluence & final monastery visit 🚌"
+    ],
+    "Kerala": [
+      "Arrive Kochi, Fort Kochi Chinese fishing nets & spice market walk 🐟",
+      "Munnar: tea gardens & Eravikulam National Park (Nilgiri Tahr) 🍃",
+      "Alleppey houseboat cruise through the backwaters & coconut lagoons 🛶",
+      "Kumarakom bird sanctuary & sunset over Vembanad Lake 🦜",
+      "Varkala cliff beach, Papanasam & traditional Kerala ayurvedic massage 🌊",
+      "Kovalam & Cape Comorin — where three seas meet 🌅",
+      "Trivandrum Padmanabhaswamy Temple & departure 🛕"
+    ],
+    "Jaipur": [
+      "Arrive Pink City, Chokhi Dhani cultural show & Rajasthani thali dinner 🎪",
+      "Amber Fort camel ride, Sheesh Mahal mirror palace & Jaigarh Fort 🦚",
+      "City Palace, Jantar Mantar observatory & Hawa Mahal photo stop 🏰",
+      "Nahargarh Fort sunset trek & rooftop dinner over the city 🌇",
+      "Bazaar day: Johari Bazaar gems, Bapu Bazaar textiles & block printing 💎",
+      "Day trip to Abhaneri stepwell & Fatehpur Sikri ghost city 🏛️",
+      "Albert Hall Museum, local lassi & departure 🥛"
+    ],
+    "Rishikesh": [
+      "Arrive spiritual capital, evening Ganga Aarti at Triveni Ghat 🪔",
+      "River rafting Grade 3–4 rapids, cliff jumping & body surfing 🚣",
+      "Sunrise yoga class, Beatles Ashram & Lakshman Jhula suspension walk 🎸",
+      "Neelkanth Mahadev Temple forest trek (11 km) & waterfall dip 🌿",
+      "Bungee jumping 83m (India's highest), flying fox & giant swing 😱",
+      "Camping by the Ganges, bonfire & acoustic music night 🔥",
+      "Morning meditation, local café & departure 🧘"
+    ],
+    "Andaman & Nicobar": [
+      "Arrive Port Blair, Cellular Jail light & sound show 🏛️",
+      "Ross Island & North Bay: glass bottom boat & snorkelling 🐠",
+      "Ferry to Havelock: Radhanagar Beach — Asia's finest white sand 🏖️",
+      "Elephant Beach: beginner scuba diving in coral gardens 🤿",
+      "Neil Island: natural rock bridge, Laxmanpur & Bharatpur beaches 🌴",
+      "Sea walk, mangrove kayaking & bioluminescent beach at night 🌙",
+      "Last Havelock sunset, fresh seafood & return to Port Blair 🦞"
+    ],
+    "Udaipur": [
+      "Arrive City of Lakes, evening boat ride to Jag Mandir on Pichola 🚤",
+      "City Palace complex, crystal gallery & lake views 👑",
+      "Vintage Car Museum, Saheliyon Ki Bari & Fateh Sagar Lake 🚗",
+      "Kumbhalgarh Fort (world's 2nd longest wall) & Ranakpur Jain Temples 🏯",
+      "Shilpgram crafts village & sunset at Dudh Talai garden 🎨",
+      "Rajasthani cooking class: dal baati churma & rooftop lake dinner 🍛",
+      "Morning market, blue pottery shopping & departure 💙"
+    ],
+    "Coorg": [
+      "Arrive Scotland of India, coffee estate walk & Raja's Seat sunset ☕",
+      "Abbey Falls, Namdroling Golden Temple & Tibetan monastery 🌊",
+      "White water rafting on Barapole river & Dubare elephant camp 🐘",
+      "Talakaveri (Kaveri origin), Brahmagiri hill trek & misty views 🌿",
+      "Mandalpatti peak jeep safari & sunrise above the clouds 🌄",
+      "Coffee & spice plantation tour & honey extraction organic lunch 🍯",
+      "Akki Roti breakfast, local shopping & departure 🛍️"
+    ],
+    "Spiti Valley": [
+      "Arrive Kaza via Shimla, stunning mountain highway drive 🚌",
+      "Key Monastery (1000-year-old) & Kibber village exploration 🏯",
+      "Hikkim (world's highest post office) & Komic village 📮",
+      "Pin Valley National Park: snow leopard territory & wildlife 🦊",
+      "Dhankar Lake hike & ancient cliff monastery panorama 🥾",
+      "Chandratal crescent moon lake at 4300m, overnight camping ⛺",
+      "Return via Rohtang Pass — epic mountain farewell 🏔️"
+    ],
+    "Hampi": [
+      "Arrive Hampi, boulder landscape & sunset at Hemakuta Hill 🪨",
+      "Virupaksha Temple & Vijayanagara ruins royal enclosure 🏛️",
+      "Vittala Temple with musical pillars & stone chariot — UNESCO wonder ✨",
+      "Matanga Hill sunrise hike & Achyutaraya Temple 🌅",
+      "Coracle boat ride & hippie island (Virupapur Gadde) chill day 🛶",
+      "Elephant Stables, Lotus Mahal & Queens' Bath 👑",
+      "Tungabhadra dam, bouldering session & departure 🧗"
+    ],
+    "Meghalaya": [
+      "Arrive Shillong, Police Bazaar, Ward's Lake & Don Bosco Museum 🌧️",
+      "Cherrapunji: Nohkalikai Falls (India's highest) & Seven Sisters Falls 💧",
+      "Living Root Bridges trek to Nongriat — 3500 steps & natural pools 🌿",
+      "Dawki: crystal clear Umngot river boat & Bangladesh border 🚣",
+      "Mawlynnong (Asia's cleanest village) & sky walk over forest 🌳",
+      "Mawsmai Cave & Eco Park viewpoint over Bangladesh plains 🕳️",
+      "Local Khasi food, bamboo crafts & departure ✈️"
+    ],
+    "Kashmir Valley": [
+      "Arrive Srinagar, check into Dal Lake houseboat & shikara ride 🛶",
+      "Mughal Gardens: Shalimar, Nishat & Chashme Shahi floating gardens 🌺",
+      "Gulmarg gondola to 4000m Apharwat peak & Himalayan snow ❄️",
+      "Pahalgam: Betaab Valley, Aru Valley & Lidder river meadows 🌾",
+      "Sonamarg: Thajiwas glacier & alpine meadow shepherd trails 🗻",
+      "Old City: Hazratbal Mosque, Jama Masjid & pashmina shopping 🧣",
+      "Floating Vegetable Market & final shikara breakfast 🥬"
+    ],
+    "Varanasi": [
+      "Arrive oldest city, evening Ganga Aarti at Dashashwamedh Ghat 🪔",
+      "Sunrise boat ride past all 88 ghats — life, cremation & yoga 🌅",
+      "Kashi Vishwanath corridor & narrow old city lane exploration 🛕",
+      "Sarnath: where Buddha gave first sermon & Dhamek Stupa 🙏",
+      "Manikarnika cremation ghat — profound philosophy of life 🔥",
+      "Banarasi chaat cooking class, paan & silk weaving workshop 🥤",
+      "Early morning boat, Ramnagar Fort & departure with blessings 🚢"
+    ],
+    "Munnar": [
+      "Arrive Munnar, Tata Tea Museum & rolling tea garden check-in 🍵",
+      "Eravikulam National Park (Nilgiri Tahr) & Rajamala peaks 🦌",
+      "Top Station (highest in Kerala) & Meesapulimala sunrise trek 🌄",
+      "Mattupetty Dam, Echo Point & Indo-Swiss Farm 🐄",
+      "Anamudi Peak base trek & Chinnakanal waterfall walk 🌊",
+      "Lockhart Gap viewpoint & tea tasting at estate 📸",
+      "Spice garden, fresh cardamom & tea shopping 🛍️"
+    ],
+    "Darjeeling": [
+      "Arrive Queen of Hills, Tiger Hill pre-dawn for Kanchenjunga sunrise 🌄",
+      "Toy Train UNESCO ride, Batasia Loop & war memorial 🚂",
+      "Padmaja Naidu Zoo (red panda!) & Himalayan Mountaineering Institute 🦔",
+      "Happy Valley Tea Estate tour — plucking & tasting session 🍵",
+      "Rock Garden, Ganga Maya Park & riverside bamboo grove walk 🌿",
+      "Peace Pagoda hike & Temi Tea Garden day trip 🏯",
+      "Chowrasta Mall, momos breakfast & departure 🥟"
+    ],
+    "Pushkar": [
+      "Arrive holy town, evening aarti at Brahma Temple & sacred lake 🌊",
+      "Sunrise hot air balloon over the Thar Desert 🎈",
+      "Savitri Mata ropeway hike & panoramic desert views 🏔️",
+      "Camel safari into the desert, sunset & village cultural night 🐪",
+      "Pushkar fair grounds, market stalls & Rajasthani folk music 🎶",
+      "Ajmer day trip: Dargah Sharif Sufi shrine & Ana Sagar Lake 🕌",
+      "Last Brahma Temple blessing, rose products shopping & departure 🌹"
+    ]
+  },
+  "🌍 International": {
+    "Bali, Indonesia": [
+      "Arrive Bali, check into Ubud, sunset at Tanah Lot sea temple 🌅",
+      "Sacred Monkey Forest, Tegallalang rice terraces & Kecak fire dance 🐒",
+      "Mount Batur volcano sunrise trek (4 AM!) & hot springs reward 🌋",
+      "Uluwatu clifftop temple, surf lesson at Kuta & sunset cliff bar 🏄",
+      "Nusa Penida island: Kelingking cliff & Angel's Billabong snorkelling 🐠",
+      "Cooking class, spa & Tirta Empul holy water purification ritual 🙏",
+      "Seminyak beach club & Denpasar night market farewell 🍹"
+    ],
+    "Japan": [
+      "Arrive Tokyo: Shibuya crossing, Shinjuku neon night & ramen 🍜",
+      "Senso-ji Temple, Akihabara anime district & teamLab digital art 🎮",
+      "Day trip to Nikko ornate shrines & forested mountains ⛩️",
+      "Shinkansen to Kyoto: Arashiyama bamboo grove & Fushimi Inari gates 🎋",
+      "Nishiki Market, Gion geisha district & Kinkaku-ji golden pavilion 👘",
+      "Osaka: Dotonbori food street, takoyaki & Osaka Castle 🐙",
+      "Nara deer park, sake & farewell 🦌"
+    ],
+    "Thailand": [
+      "Arrive Bangkok: Grand Palace, Wat Pho reclining Buddha & tuk tuk 🛺",
+      "Chatuchak weekend market, rooftop bar & Chao Phraya river cruise 🌆",
+      "Fly Chiang Mai: night bazaar & Doi Inthanon national park 🌿",
+      "Ethical elephant sanctuary & cooking class in the jungle 🐘",
+      "Fly Phuket: Phi Phi Islands speedboat & Maya Bay swimming 🏝️",
+      "Snorkelling, mangrove kayaking & beachside Thai massage 🧘",
+      "Patong night market, Muay Thai show & farewell pad thai 🥊"
+    ],
+    "Maldives": [
+      "Arrive Malé, speedboat to resort, first swim in turquoise lagoon 💎",
+      "Snorkelling with manta rays & reef sharks at the house reef 🦈",
+      "Sandbank picnic, dolphin sunset cruise & bioluminescent beach 🐬",
+      "Scuba diving: coral gardens, sea turtles & tropical fish 🐢",
+      "Seaplane excursion to outer atoll & deserted island 🛩️",
+      "Underwater restaurant dinner & water villa sunset kayaking 🍽️",
+      "Last snorkel, spa & reluctant departure from paradise 🌺"
+    ],
+    "Paris, France": [
+      "Arrive Paris, Eiffel Tower at night & Seine river walk 🗼",
+      "Louvre Museum (Mona Lisa!), Tuileries Garden & Palais Royal 🎨",
+      "Montmartre: Sacré-Cœur, artist quarter & Moulin Rouge 💃",
+      "Versailles Palace & gardens day trip — absolute royal excess 👑",
+      "Musée d'Orsay, Saint-Germain cafés & Seine boat cruise 🛶",
+      "Le Marais district: falafel, galleries & rooftop sunset 🥙",
+      "Final croissant at a boulangerie & CDG departure 🥐"
+    ],
+    "Dubai, UAE": [
+      "Arrive Dubai, Burj Khalifa 148th floor At The Top & fountain show 🏙️",
+      "Desert safari: dune bashing, camel ride & BBQ dinner 🐪",
+      "Dubai Mall, Ski Dubai, Gold Souk & Spice Souk 🛍️",
+      "Palm Jumeirah monorail & Atlantis Aquaventure waterpark 🌊",
+      "Old Dubai: Al Fahidi fort, abra to Deira & shawarma 🕌",
+      "Miracle Garden & Marina JBR beach sunset 🌺",
+      "Luxury brunch & Abu Dhabi Sheikh Zayed Mosque trip 🕌"
+    ],
+    "Singapore": [
+      "Arrive, Gardens by the Bay & Marina Bay Sands skypark 🌿",
+      "Sentosa Island: Universal Studios & cable car 🎢",
+      "Chinatown, Little India & Arab Street cultural food crawl 🍜",
+      "Singapore Zoo & Night Safari — world's best wildlife experience 🦁",
+      "Hawker marathon: chicken rice, laksa, chilli crab & kaya toast 🦀",
+      "Orchard Road shopping & Clarke Quay nightlife 🛍️",
+      "Botanic Gardens walk & Changi Airport exploration 🌸"
+    ],
+    "Vietnam": [
+      "Arrive Hanoi: Hoan Kiem Lake, Old Quarter & pho breakfast 🍜",
+      "Ha Long Bay overnight cruise & kayaking through karsts 🚣",
+      "Ha Long sunrise swim & cave exploration 🌊",
+      "Fly to Hoi An: Ancient Town lanterns & tailor-made clothes 🏮",
+      "My Son Cham temples & cooking class with market visit 🛕",
+      "Fly Ho Chi Minh City: War Museum & Ben Thanh Market 🏍️",
+      "Cu Chi Tunnels & Mekong Delta boat tour farewell 🚢"
+    ],
+    "Nepal": [
+      "Arrive Kathmandu, Pashupatinath & Boudhanath Stupa 🙏",
+      "Bhaktapur Durbar Square & Patan golden temple 🏛️",
+      "Fly to Pokhara: Phewa Lake boat & Tibetan Camp visit 🛶",
+      "Sarangkot Himalayan sunrise hike & paragliding over the valley 🪂",
+      "Annapurna Base Camp trek day 1 or Poon Hill trek 🥾",
+      "Rhododendron forest, tea houses & Himalayan panoramas 🌸",
+      "Return Kathmandu: Swayambhunath monkey temple & farewell momos 🐒"
+    ],
+    "Greece": [
+      "Arrive Athens: Acropolis & Parthenon sunset, Monastiraki market 🏛️",
+      "Plaka neighbourhood, National Museum & ferry to Santorini 🚢",
+      "Santorini: Oia blue domes, crater views & cliffside walking 💙",
+      "Volcano boat tour, hot springs & black sand beach 🌋",
+      "Venetsanos winery tasting & iconic Oia sunset 🍷",
+      "Ferry to Mykonos: Little Venice, windmills & beach clubs 🎉",
+      "Delos island (birthplace of Apollo) & farewell seafood mezze 🐙"
+    ],
+    "Morocco": [
+      "Arrive Marrakech: Jemaa el-Fna square, snake charmers & tagine 🐍",
+      "Medina souks, leather tanneries & hammam spa experience 🧖",
+      "Day trip to Atlas Mountains: Berber villages & valley hike 🏔️",
+      "Sahara Desert: camel trek & overnight dune camp stargazing ⭐",
+      "Desert sunrise & return via Todra Gorge canyon 🌅",
+      "Fes: medieval medina & Al Qarawiyyin — world's oldest university 🏺",
+      "Chefchaouen Blue City! Photogenic alleys & farewell mint tea 💙"
+    ],
+    "Switzerland": [
+      "Arrive Zurich, old town, Lake Zurich & Swiss fondue dinner 🧀",
+      "Interlaken: paragliding over the Alps & Harder Kulm viewpoint 🪂",
+      "Jungfraujoch — Top of Europe 3454m: glaciers & ice palace ❄️",
+      "Grindelwald glacier hike & scenic Bernese Alps train 🚂",
+      "Lucerne: Chapel Bridge, Lion Monument & lake cruise 🦁",
+      "Zermatt: Matterhorn views & Alpine hiking 🏔️",
+      "Geneva: UN Palace, Jet d'Eau & final Swiss chocolate run 🍫"
+    ],
+    "Portugal": [
+      "Arrive Lisbon: Belém Tower, Jerónimos Monastery & pastéis de nata 🥐",
+      "Sintra fairy tale palaces: Pena & Moorish Castle day trip 🏰",
+      "Alfama district, São Jorge Castle & Fado music night 🎸",
+      "Tram 28, LX Factory market & Miradouro da Graça sunset 🚃",
+      "Lagos Algarve: golden sea caves, Ponta da Piedade & cliff swim 🌊",
+      "Sagres, Cape St Vincent (SW tip of Europe) & surf lessons 🏄",
+      "Porto: Douro Valley wine cruise, Ribeira & francesinha 🍷"
+    ],
+    "New Zealand": [
+      "Arrive Auckland: Sky Tower bungee & Waiheke Island wine tour 🍷",
+      "Hobbiton movie set & Waitomo glowworm caves 🌟",
+      "Rotorua: Māori haka, hāngī feast & geothermal hot pools ♨️",
+      "Fly Queenstown: bungee jumping, jet boat & Remarkables views 😱",
+      "Milford Sound cruise: waterfalls, dolphins & glaciers 🐬",
+      "Franz Josef Glacier helicopter tour & West Coast rainforest 🚁",
+      "Abel Tasman kayaking & golden beaches farewell 🚣"
+    ],
+    "Sri Lanka": [
+      "Arrive Colombo, Gangaramaya Temple & Pettah market food tour 🦞",
+      "Sigiriya Lion Rock fortress — 5th century citadel in the sky 🦁",
+      "Dambulla Cave Temples & Kandy Temple of the Sacred Tooth 🦷",
+      "Ella train ride (world's most scenic) through tea country 🚂",
+      "Nine Arch Bridge, Little Adam's Peak & waterfall hike 🌊",
+      "Yala National Park safari: leopards, elephants & peacocks 🐆",
+      "Mirissa whale watching & Galle Dutch fort farewell 🐋"
+    ]
+  }
+};
+
+const ALL_PRESETS = [];
+Object.entries(PRESETS).forEach(([group, dests]) => {
+  Object.entries(dests).forEach(([dest, days]) => ALL_PRESETS.push({ group, dest, days }));
+});
+
+function buildPresetList(filter) {
+  filter = (filter || "").toLowerCase();
+  const list     = document.getElementById("presetList");
+  const filtered = filter ? ALL_PRESETS.filter(p => p.dest.toLowerCase().includes(filter)) : ALL_PRESETS;
+
+  if (!filtered.length) {
+    list.innerHTML = `<div style="padding:12px;color:var(--muted);font-size:13px;text-align:center">No match found</div>`;
+    return;
+  }
+  const grouped = {};
+  filtered.forEach(p => { (grouped[p.group] = grouped[p.group] || []).push(p); });
+  list.innerHTML = Object.entries(grouped).map(([grp, items]) => `
+    <div class="preset-group-label">${grp}</div>
+    ${items.map(p => `
+      <div class="preset-option" onclick="applyPreset('${p.dest.replace(/'/g,"\\'")}')">
+        <span>${p.dest}</span>
+        <span style="margin-left:auto;font-size:11px;color:var(--muted)">${p.days.length} days</span>
+      </div>`).join("")}
+  `).join("");
+}
+function filterPresets(val) { buildPresetList(val); }
+
+function togglePreset(e) {
+  e.stopPropagation();
+  const dd = document.getElementById("presetDropdown");
+  const opening = !dd.classList.contains("open");
+  if (opening) { buildPresetList(); dd.classList.add("open"); setTimeout(() => document.getElementById("presetSearch").focus(), 50); }
+  else dd.classList.remove("open");
+}
+
+function applyPreset(dest) {
+  const preset = ALL_PRESETS.find(p => p.dest === dest);
+  if (!preset) return;
+  let days = [...preset.days];
+  const s = document.getElementById("start_date").value;
+  const e = document.getElementById("end_date").value;
+  if (s && e) {
+    const n = Math.ceil((new Date(e) - new Date(s)) / 86400000) + 1;
+    if (n > 0 && n <= 30) {
+      while (days.length < n) days.push(`Day ${days.length + 1}: Free day — explore at your own pace 🗺️`);
+      days = days.slice(0, n);
+    }
+  }
+  itinerary = days;
+  renderItinerary();
+  document.getElementById("presetDropdown").classList.remove("open");
+  document.getElementById("aiHint").innerHTML = `✅ Preset for <b>${dest}</b> loaded (${days.length} days). Click any day to edit!`;
+  showSuccess(`${days.length}-day preset itinerary for ${dest} applied! Customize as needed.`);
+}
+
+document.addEventListener("click", e => {
+  if (!document.getElementById("presetWrap").contains(e.target))
+    document.getElementById("presetDropdown").classList.remove("open");
+});
+
+/* ─── GROQ AI ITINERARY ─────────────────────────────── */
+
+
 async function generateAIItinerary() {
-  const destSelect = document.getElementById("destination");
-  const customDest = document.getElementById("customDestination").value.trim();
+  const destSelect  = document.getElementById("destination");
+  const customDest  = document.getElementById("customDestination").value.trim();
   const destination = destSelect.value === "__custom__" ? customDest : destSelect.value;
-  const startDate = document.getElementById("start_date").value;
-  const endDate = document.getElementById("end_date").value;
+  const startDate   = document.getElementById("start_date").value;
+  const endDate     = document.getElementById("end_date").value;
 
-  if (!destination || destination === "") {
-    showError("Please select a destination first."); return;
-  }
-  if (!startDate || !endDate) {
-    showError("Please select start and end dates first."); return;
-  }
+  if (!destination) { showError("Please select a destination first."); return; }
+  if (!startDate || !endDate) { showError("Please select start and end dates first."); return; }
 
-  const start = new Date(startDate);
-  const end = new Date(endDate);
-  const days = Math.ceil((end - start) / (1000 * 60 * 60 * 24)) + 1;
-
-  if (days <= 0 || days > 30) {
-    showError("Please select valid dates (max 30 days)."); return;
-  }
-
-  const GEMINI_API_KEY = "AIzaSyBSyl00p-RszwqQQS2kuxJteyVJNJ0VD18"; // 👈 paste your new key here
+  const days = Math.ceil((new Date(endDate) - new Date(startDate)) / 86400000) + 1;
+  if (days <= 0 || days > 30) { showError("Please select valid dates (max 30 days)."); return; }
 
   const btn = document.getElementById("aiBtn");
-  btn.disabled = true;
-  btn.classList.add("loading");
+  btn.disabled = true; btn.classList.add("loading");
   btn.querySelector(".btn-text").textContent = "Generating...";
   document.getElementById("aiHint").textContent = `✨ AI is crafting a ${days}-day itinerary for ${destination}...`;
   hideMessages();
 
   try {
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          contents: [{
-            parts: [{
-              text: `Create a ${days}-day group travel itinerary for ${destination}.
-Return ONLY a JSON array, no markdown, no backticks, no extra text whatsoever.
-Each item = one short exciting sentence describing that day's activities.
-Example format: ["Day 1: Arrive and explore the beaches", "Day 2: Visit temples and local markets"]
-Make it fun, specific to ${destination}, for young travelers aged 18-35.`
-            }]
-          }]
-        })
-      }
-    );
+    const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Authorization": `Bearer ${GROQ_API_KEY}` },
+      body: JSON.stringify({
+        model: "llama3-8b-8192",
+        messages: [
+          {
+            role: "system",
+            content: "You are a travel expert. Respond ONLY with a raw JSON array of strings. No markdown, no backticks, no explanation whatsoever."
+          },
+          {
+            role: "user",
+            content: `Create a ${days}-day group travel itinerary for ${destination}. Return ONLY a JSON array of exactly ${days} strings. Each string is one exciting sentence about that day. Example: ["Day 1: Arrive and explore the beaches","Day 2: Visit temples"]. Specific to ${destination}, for Indian travelers aged 18-35.`
+          }
+        ],
+        temperature: 0.8,
+        max_tokens: 1024
+      })
+    });
 
-    const data = await response.json();
+    const data = await res.json();
+    if (data.error) { showError("Groq API error: " + data.error.message); return; }
 
-    if (data.error) {
-      showError("Gemini API error: " + data.error.message);
-      btn.disabled = false;
-      btn.classList.remove("loading");
-      btn.querySelector(".btn-text").textContent = "✨ Generate with AI";
-      return;
-    }
+    let text = data.choices?.[0]?.message?.content || "";
+    text = text.replace(/```json|```/gi, "").trim();
+    const match = text.match(/\[[\s\S]*\]/);
+    if (!match) throw new Error("No JSON array in response");
 
-    const text = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
-    const clean = text.replace(/```json|```/g, "").trim();
-    const parsed = JSON.parse(clean);
-
+    const parsed = JSON.parse(match[0]);
     if (Array.isArray(parsed) && parsed.length > 0) {
       itinerary = parsed;
       renderItinerary();
-      document.getElementById("aiHint").innerHTML = `✅ AI generated ${parsed.length} days! <b>Click on any day to edit it.</b>`;
-      showSuccess(`${parsed.length}-day itinerary generated for ${destination}! Edit as needed.`);
+      document.getElementById("aiHint").innerHTML = `✅ AI generated <b>${parsed.length} days</b> for ${destination}! Click any day to edit.`;
+      showSuccess(`${parsed.length}-day AI itinerary generated! Edit as needed.`);
     } else {
-      showError("Unexpected response. Try again or add days manually.");
+      showError("Unexpected AI response. Try the 📋 Preset option instead.");
     }
-
   } catch (err) {
-    console.error(err);
-    showError("AI generation failed. Add itinerary manually.");
-    document.getElementById("aiHint").textContent = "AI generation failed. Add days manually below.";
+    console.error("Groq error:", err);
+    showError("AI generation failed. Try the 📋 Preset option or add days manually.");
+    document.getElementById("aiHint").textContent = "AI failed. Use presets or add days manually below.";
+  } finally {
+    btn.disabled = false; btn.classList.remove("loading");
+    btn.querySelector(".btn-text").textContent = "✨ Regenerate with AI";
   }
-
-  btn.disabled = false;
-  btn.classList.remove("loading");
-  btn.querySelector(".btn-text").textContent = "✨ Regenerate with AI";
 }
 
-/* ===== CREATE TRIP ===== */
+/* ─── CREATE TRIP ───────────────────────────────────── */
 async function createTrip() {
-  const destSelect = document.getElementById("destination");
-  const customDest = document.getElementById("customDestination").value.trim();
+  const destSelect  = document.getElementById("destination");
+  const customDest  = document.getElementById("customDestination").value.trim();
   const destination = destSelect.value === "__custom__" ? customDest : destSelect.value;
   const start_date  = document.getElementById("start_date").value;
   const end_date    = document.getElementById("end_date").value;
   const budget      = document.getElementById("budget").value;
   const max_seats   = document.getElementById("max_seats").value || 20;
   const description = document.getElementById("description").value.trim();
-
   hideMessages();
 
-  if (!destination || destination === "" || destination === "__custom__") {
-    showError("Please select or enter a destination."); return;
-  }
-  if (!start_date || !end_date) {
-    showError("Please select start and end dates."); return;
-  }
-  if (!budget) {
-    showError("Please enter a budget per person."); return;
-  }
-  if (new Date(end_date) <= new Date(start_date)) {
-    showError("End date must be after start date."); return;
-  }
+  if (!destination || destination === "__custom__") { showError("Please select or enter a destination."); return; }
+  if (!start_date || !end_date) { showError("Please select start and end dates."); return; }
+  if (!budget) { showError("Please enter a budget per person."); return; }
+  if (new Date(end_date) <= new Date(start_date)) { showError("End date must be after start date."); return; }
 
   const btn = document.getElementById("submitBtn");
-  btn.disabled = true;
-  btn.textContent = "Publishing...";
+  btn.disabled = true; btn.textContent = "Publishing...";
 
   let fullDescription = description;
-  if (itinerary.length > 0) {
+  if (itinerary.length > 0)
     fullDescription += "\n\nItinerary:\n" + itinerary.map((d, i) => `Day ${i+1}: ${d}`).join("\n");
-  }
 
   try {
-    const res = await fetch("http://localhost:5000/trips/create", {
+    const res  = await fetch("http://localhost:5000/trips/create", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer " + token
-      },
-      body: JSON.stringify({
-        destination,
-        start_date,
-        end_date,
-        budget,
-        max_seats,
-        description: fullDescription
-      })
+      headers: { "Content-Type": "application/json", "Authorization": "Bearer " + token },
+      body: JSON.stringify({ destination, start_date, end_date, budget, max_seats, description: fullDescription })
     });
-
     const data = await res.json();
-
     if (data.success) {
       showSuccess("🎉 Trip published successfully!");
       btn.textContent = "✅ Published!";
+      localStorage.setItem("activeTab", "splits"); // open splits tab on dashboard
       setTimeout(() => window.location.href = "dashboard.html", 1500);
     } else {
       showError(data.message || "Failed to create trip.");
-      btn.disabled = false;
-      btn.textContent = "🚀 Publish Trip";
+      btn.disabled = false; btn.textContent = "🚀 Publish Trip";
     }
-
   } catch (err) {
     showError("❌ Cannot connect to server. Make sure backend is running.");
-    btn.disabled = false;
-    btn.textContent = "🚀 Publish Trip";
+    btn.disabled = false; btn.textContent = "🚀 Publish Trip";
   }
 }
 
-function showError(msg) {
-  document.getElementById("errText").textContent = msg;
-  document.getElementById("errMsg").classList.add("show");
-  document.getElementById("successMsg").classList.remove("show");
-}
-function showSuccess(msg) {
-  document.getElementById("successText").textContent = msg;
-  document.getElementById("successMsg").classList.add("show");
-  document.getElementById("errMsg").classList.remove("show");
-}
-function hideMessages() {
-  document.getElementById("errMsg").classList.remove("show");
-  document.getElementById("successMsg").classList.remove("show");
-}
+function showError(msg)   { document.getElementById("errText").textContent = msg; document.getElementById("errMsg").classList.add("show"); document.getElementById("successMsg").classList.remove("show"); }
+function showSuccess(msg) { document.getElementById("successText").textContent = msg; document.getElementById("successMsg").classList.add("show"); document.getElementById("errMsg").classList.remove("show"); }
+function hideMessages()   { document.getElementById("errMsg").classList.remove("show"); document.getElementById("successMsg").classList.remove("show"); }
 </script>
 </body>
 </html>

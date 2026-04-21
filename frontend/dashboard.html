@@ -46,19 +46,15 @@ nav {
 .split-btn:hover { background: var(--gold); color: #000; }
 
 /* SPLIT PANEL */
-.split-panel { display: none; margin-top: 4px; background: #0a0a0a; border: 1px solid rgba(244,196,48,0.15); border-radius: 18px; padding: 28px; animation: slideDown 0.3s ease; }
-.split-panel.show { display: block; }
+.split-panel { display: none; margin-top: 4px; background: #0a0a0a; border: 1px solid rgba(244,196,48,0.15); border-radius: 18px; padding: 28px; }
+.split-panel.show { display: block; animation: slideDown 0.3s ease; }
 @keyframes slideDown { from { opacity:0; transform:translateY(-8px); } to { opacity:1; transform:translateY(0); } }
 
 .split-panel-title { color: var(--gold); font-size: 18px; font-weight: 700; margin-bottom: 24px; display: flex; align-items: center; gap: 8px; }
 
-/* Two column layout */
 .split-cols { display: grid; grid-template-columns: 1fr 1.4fr; gap: 24px; margin-bottom: 24px; }
-
-/* Section headers */
 .sec-title { font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 12px; }
 
-/* Members */
 .member-chip { display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: #181818; border-radius: 12px; margin-bottom: 8px; }
 .member-avatar { width: 30px; height: 30px; border-radius: 50%; background: var(--gold); color: #000; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 12px; flex-shrink: 0; }
 .member-name { font-size: 14px; flex: 1; }
@@ -68,7 +64,6 @@ nav {
 .add-row input:focus { border-color: rgba(244,196,48,0.4); }
 .add-row button { padding: 10px 16px; background: var(--gold); border: none; border-radius: 11px; color: #000; font-weight: 700; cursor: pointer; font-size: 13px; font-family: 'DM Sans', sans-serif; white-space: nowrap; }
 
-/* Expense form */
 .exp-form { background: #141414; border: 1px solid rgba(255,255,255,0.05); border-radius: 14px; padding: 16px; margin-bottom: 16px; }
 .exp-form-row { display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
 .exp-form-row input, .exp-form-row select { flex: 1; min-width: 100px; padding: 10px 13px; background: #1e1e1e; border: 1px solid rgba(255,255,255,0.07); border-radius: 11px; color: #fff; font-family: 'DM Sans', sans-serif; font-size: 13px; outline: none; }
@@ -82,7 +77,6 @@ nav {
 .add-exp-btn { width: 100%; padding: 12px; background: var(--gold); border: none; border-radius: 11px; color: #000; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 700; cursor: pointer; transition: all 0.2s; }
 .add-exp-btn:hover { background: var(--gold-light); }
 
-/* Expense list */
 .exp-item { padding: 12px 14px; background: #181818; border-radius: 12px; margin-bottom: 8px; }
 .exp-item-top { display: flex; justify-content: space-between; align-items: center; }
 .exp-title { font-size: 14px; font-weight: 600; }
@@ -91,7 +85,6 @@ nav {
 .exp-del { background: none; border: none; color: rgba(255,100,100,0.5); cursor: pointer; font-size: 15px; margin-left: 10px; transition: color 0.2s; }
 .exp-del:hover { color: #ff6b6b; }
 
-/* Settlement */
 .settlement-box { background: #0f0f0f; border: 1px solid rgba(244,196,48,0.12); border-radius: 16px; padding: 20px; }
 .settlement-box-title { font-size: 15px; font-weight: 700; color: var(--gold); margin-bottom: 16px; }
 
@@ -100,7 +93,6 @@ nav {
 .stat-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
 .stat-value { font-size: 18px; font-weight: 700; color: var(--gold); }
 
-/* Balance table */
 .balance-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 13px; }
 .balance-table th { text-align: left; padding: 8px 12px; color: var(--muted); font-weight: 500; border-bottom: 1px solid rgba(255,255,255,0.06); font-size: 11px; text-transform: uppercase; letter-spacing: 1px; }
 .balance-table td { padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,0.04); }
@@ -109,7 +101,6 @@ nav {
 .bal-neg { color: #f87171; font-weight: 700; }
 .bal-zero { color: var(--muted); }
 
-/* Transaction cards */
 .txn-title { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; font-weight: 600; }
 .txn-card { display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: rgba(255,100,100,0.06); border: 1px solid rgba(255,100,100,0.15); border-radius: 14px; margin-bottom: 8px; }
 .txn-from { font-size: 14px; font-weight: 600; color: #f87171; }
@@ -131,7 +122,7 @@ nav {
     <a href="index.html">Home</a>
     <a href="create-trip.html">Create Trip</a>
     <a href="dashboard.html" class="gold">My Dashboard</a>
-    <a href="#" onclick="logout()">Logout</a>
+    <a href="#" onclick="logout(); return false;">Logout</a>
   </div>
 </nav>
 
@@ -161,103 +152,89 @@ nav {
 
 <script>
 const token = localStorage.getItem("token");
-const user = JSON.parse(localStorage.getItem("user") || "null");
+const user  = JSON.parse(localStorage.getItem("user") || "null");
 if (!token || !user) { alert("Please login first."); window.location.href = "login.html"; }
 document.getElementById("userName").textContent = user?.name || "Traveller";
 
 function logout() {
   localStorage.removeItem("token");
   localStorage.removeItem("user");
-  localStorage.removeItem("activeTab");          // ← clear saved tab on logout
+  localStorage.removeItem("activeTab");
+  localStorage.removeItem("openSplitId");
   window.location.href = "login.html";
 }
 
-// ── TAB SWITCHING — saves active tab to localStorage ──────────────────────────
+/* ─── TAB SWITCHING ─────────────────────────────────── */
 function showTab(tab, btn) {
   document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
   btn.classList.add("active");
   document.getElementById("tab-bookings").style.display = tab === "bookings" ? "block" : "none";
   document.getElementById("tab-splits").style.display   = tab === "splits"   ? "block" : "none";
-  localStorage.setItem("activeTab", tab);        // ← persist the active tab
+  localStorage.setItem("activeTab", tab);
 }
-
-// ── RESTORE TAB on page load ──────────────────────────────────────────────────
 function restoreTab() {
   const saved = localStorage.getItem("activeTab") || "bookings";
   const btn   = document.getElementById(`tab-btn-${saved}`);
   if (btn) showTab(saved, btn);
 }
 
-/* ============================================================
-   SPLITWISE ALGORITHM
-   ============================================================ */
+/* ─── OPEN SPLIT ID PERSISTENCE ─────────────────────── 
+   We remember which panel was open so after addMember /
+   addExpense / deleteExpense we can re-open it without
+   the user losing their place.
+   ───────────────────────────────────────────────────── */
+let openSplitId    = localStorage.getItem("openSplitId") || null;
+let openSplitTitle = localStorage.getItem("openSplitTitle") || "";
+
+/* ─── SPLITWISE ALGORITHM ───────────────────────────── */
 function computeSettlement(members, expenses) {
   const net = {};
   members.forEach(m => net[m.name] = 0);
 
   expenses.forEach(e => {
-    const splitAmong = e.split_among
+    const among = e.split_among
       ? e.split_among.split(",").map(s => s.trim()).filter(Boolean)
       : members.map(m => m.name);
-
-    const share = e.amount / splitAmong.length;
-
-    if (net[e.paid_by] !== undefined) net[e.paid_by] += e.amount;
-    else net[e.paid_by] = e.amount;
-
-    splitAmong.forEach(name => {
-      if (net[name] !== undefined) net[name] -= share;
-      else net[name] = -share;
-    });
+    const share = e.amount / among.length;
+    if (net[e.paid_by] !== undefined) net[e.paid_by] += e.amount; else net[e.paid_by] = e.amount;
+    among.forEach(name => { if (net[name] !== undefined) net[name] -= share; else net[name] = -share; });
   });
 
-  const creditors = [];
-  const debtors   = [];
-
-  Object.entries(net).forEach(([name, balance]) => {
-    if (balance > 0.01)  creditors.push({ name, amount: balance });
-    else if (balance < -0.01) debtors.push({ name, amount: -balance });
+  const creditors = [], debtors = [];
+  Object.entries(net).forEach(([name, bal]) => {
+    if (bal >  0.01) creditors.push({ name, amount: bal });
+    if (bal < -0.01) debtors.push({ name, amount: -bal });
   });
-
-  creditors.sort((a, b) => b.amount - a.amount);
-  debtors.sort((a, b)   => b.amount - a.amount);
+  creditors.sort((a,b) => b.amount - a.amount);
+  debtors.sort((a,b)   => b.amount - a.amount);
 
   const transactions = [];
   let i = 0, j = 0;
   while (i < debtors.length && j < creditors.length) {
-    const debtor   = debtors[i];
-    const creditor = creditors[j];
-    const amount   = Math.min(debtor.amount, creditor.amount);
-
-    transactions.push({ from: debtor.name, to: creditor.name, amount: parseFloat(amount.toFixed(2)) });
-
-    debtor.amount   -= amount;
-    creditor.amount -= amount;
-
-    if (debtor.amount   < 0.01) i++;
-    if (creditor.amount < 0.01) j++;
+    const amount = Math.min(debtors[i].amount, creditors[j].amount);
+    transactions.push({ from: debtors[i].name, to: creditors[j].name, amount: parseFloat(amount.toFixed(2)) });
+    debtors[i].amount   -= amount;
+    creditors[j].amount -= amount;
+    if (debtors[i].amount   < 0.01) i++;
+    if (creditors[j].amount < 0.01) j++;
   }
-
   return { net, transactions };
 }
 
-/* ============================================================
-   RENDER SPLITWISE PANEL
-   ============================================================ */
+/* ─── RENDER SPLIT PANEL ────────────────────────────── */
 function renderSplitPanel(id, title, members, expenses) {
-  const totalAmount = expenses.reduce((s, e) => s + e.amount, 0);
+  const total = expenses.reduce((s,e) => s + e.amount, 0);
   const { net, transactions } = computeSettlement(members, expenses);
 
   const checkboxes = members.length === 0
-    ? `<p style="color:var(--muted);font-size:13px">Add members first to split among them.</p>`
+    ? `<p style="color:var(--muted);font-size:13px">Add members first.</p>`
     : members.map(m => `
         <label class="cb-chip">
           <input type="checkbox" value="${m.name}" checked class="split-cb-${id}">
           ${m.name}
         </label>`).join("");
 
-  const paidByOptions = members.map(m =>
-    `<option value="${m.name}">${m.name}</option>`).join("");
+  const paidByOptions = members.map(m => `<option value="${m.name}">${m.name}</option>`).join("");
 
   const memberList = members.length === 0
     ? `<p style="color:var(--muted);font-size:13px">No members yet.</p>`
@@ -270,9 +247,7 @@ function renderSplitPanel(id, title, members, expenses) {
 
   const expList = expenses.length === 0
     ? `<p style="color:var(--muted);font-size:13px;margin-bottom:12px">No expenses yet.</p>`
-    : expenses.map(e => {
-        const among = e.split_among || "all";
-        return `
+    : expenses.map(e => `
         <div class="exp-item">
           <div class="exp-item-top">
             <span class="exp-title">${e.title}</span>
@@ -281,21 +256,14 @@ function renderSplitPanel(id, title, members, expenses) {
               <button class="exp-del" onclick="deleteExpense('${id}','${e.id}')">🗑</button>
             </div>
           </div>
-          <div class="exp-meta">
-            Paid by <b>${e.paid_by}</b> · Split among: ${among} · ${e.expense_date}
-          </div>
-        </div>`;
-      }).join("");
+          <div class="exp-meta">Paid by <b>${e.paid_by}</b> · Split among: ${e.split_among || "all"} · ${e.expense_date}</div>
+        </div>`).join("");
 
   const balanceRows = Object.entries(net).map(([name, bal]) => {
     const cls   = bal > 0.01 ? "bal-pos" : bal < -0.01 ? "bal-neg" : "bal-zero";
     const label = bal > 0.01 ? `+₹${bal.toFixed(2)} (receives)` : bal < -0.01 ? `-₹${Math.abs(bal).toFixed(2)} (owes)` : "✅ Settled";
-    const paid  = expenses.filter(e => e.paid_by === name).reduce((s, e) => s + e.amount, 0);
-    return `<tr>
-      <td>${name}</td>
-      <td>₹${paid.toFixed(2)}</td>
-      <td class="${cls}">${label}</td>
-    </tr>`;
+    const paid  = expenses.filter(e => e.paid_by === name).reduce((s,e) => s + e.amount, 0);
+    return `<tr><td>${name}</td><td>₹${paid.toFixed(2)}</td><td class="${cls}">${label}</td></tr>`;
   }).join("");
 
   const txnHtml = transactions.length === 0
@@ -309,8 +277,7 @@ function renderSplitPanel(id, title, members, expenses) {
         </div>`).join("");
 
   return `
-    <div class="split-panel-title">💸 Expense Splitter — ${title}</div>
-
+    <div class="split-panel-title" data-id="${id}" data-title="${title}">💸 Expense Splitter — ${title}</div>
     <div class="split-cols">
       <div>
         <div class="sec-title">👥 Group Members</div>
@@ -321,7 +288,6 @@ function renderSplitPanel(id, title, members, expenses) {
           <button onclick="addMember('${id}')">+ Add</button>
         </div>
       </div>
-
       <div>
         <div class="sec-title">💰 Add Expense</div>
         <div class="exp-form">
@@ -340,52 +306,32 @@ function renderSplitPanel(id, title, members, expenses) {
           <div class="checkboxes" id="splitAmong-${id}">${checkboxes}</div>
           <button class="add-exp-btn" onclick="addExpense('${id}')">+ Add Expense</button>
         </div>
-
         <div class="sec-title">📋 Expenses</div>
         <div id="expList-${id}">${expList}</div>
       </div>
     </div>
-
     <div class="settlement-box">
       <div class="settlement-box-title">📊 Settlement Summary</div>
-
       <div class="stats-row">
-        <div class="stat-box">
-          <div class="stat-label">Total Spent</div>
-          <div class="stat-value">₹${totalAmount.toLocaleString()}</div>
-        </div>
-        <div class="stat-box">
-          <div class="stat-label">Members</div>
-          <div class="stat-value">${members.length}</div>
-        </div>
-        <div class="stat-box">
-          <div class="stat-label">Transactions</div>
-          <div class="stat-value">${transactions.length}</div>
-        </div>
+        <div class="stat-box"><div class="stat-label">Total Spent</div><div class="stat-value">₹${total.toLocaleString()}</div></div>
+        <div class="stat-box"><div class="stat-label">Members</div><div class="stat-value">${members.length}</div></div>
+        <div class="stat-box"><div class="stat-label">Transactions</div><div class="stat-value">${transactions.length}</div></div>
       </div>
-
       ${members.length > 0 && expenses.length > 0 ? `
         <div class="sec-title" style="margin-bottom:10px">💰 Net Balances</div>
         <table class="balance-table">
           <thead><tr><th>Person</th><th>Total Paid</th><th>Net Balance</th></tr></thead>
           <tbody>${balanceRows}</tbody>
-        </table>
-      ` : ""}
-
+        </table>` : ""}
       <div class="txn-title">✅ Who Pays Whom</div>
       ${txnHtml}
-    </div>
-  `;
+    </div>`;
 }
 
-/* ============================================================
-   LOAD BOOKINGS
-   ============================================================ */
+/* ─── LOAD BOOKINGS ─────────────────────────────────── */
 async function loadBookings() {
   try {
-    const res  = await fetch("http://localhost:5000/bookings/mine", {
-      headers: { "Authorization": "Bearer " + token }
-    });
+    const res  = await fetch("http://localhost:5000/bookings/mine", { headers: { "Authorization": "Bearer " + token } });
     const data = await res.json();
     const grid = document.getElementById("bookingsGrid");
 
@@ -413,24 +359,26 @@ async function loadBookings() {
       <div class="split-panel" id="split-${b.id}"></div>
     `).join("");
 
+    // Re-open previously open panel after DOM rebuild
+    if (openSplitId) {
+      const panel = document.getElementById(`split-${openSplitId}`);
+      const btn   = document.getElementById(`splitbtn-${openSplitId}`);
+      if (panel && btn) await openPanel(openSplitId, openSplitTitle, btn, false);
+    }
   } catch (err) {
     document.getElementById("bookingsGrid").innerHTML = `<div class="empty-state"><p>❌ Could not load bookings. Is backend running?</p></div>`;
   }
 }
 
-/* ============================================================
-   LOAD TRIP EXPENSES TAB
-   ============================================================ */
+/* ─── LOAD TRIP EXPENSES ────────────────────────────── */
 async function loadTripExpenses() {
   try {
-    const res  = await fetch("http://localhost:5000/trips/mine", {
-      headers: { "Authorization": "Bearer " + token }
-    });
+    const res  = await fetch("http://localhost:5000/trips/mine", { headers: { "Authorization": "Bearer " + token } });
     const data = await res.json();
     const el   = document.getElementById("splitsContent");
 
     if (!data.trips || data.trips.length === 0) {
-      el.innerHTML = `<div class="empty-state"><div class="icon">🗺️</div><p>No trips created yet. <a href="create-trip.html">Create one!</a></p></div>`;
+      el.innerHTML = `<div class="empty-state"><div class="icon">🗺️</div><p>No trips yet. <a href="create-trip.html">Create one!</a></p></div>`;
       return;
     }
 
@@ -450,42 +398,77 @@ async function loadTripExpenses() {
       <div class="split-panel" id="split-${t.id}"></div>
     `).join("");
 
+    // Re-open previously open panel after DOM rebuild
+    if (openSplitId) {
+      const panel = document.getElementById(`split-${openSplitId}`);
+      const btn   = document.getElementById(`splitbtn-${openSplitId}`);
+      if (panel && btn) await openPanel(openSplitId, openSplitTitle, btn, false);
+    }
   } catch (err) {
     document.getElementById("splitsContent").innerHTML = `<div class="empty-state"><p>❌ Could not load trips.</p></div>`;
   }
 }
 
-/* ============================================================
-   TOGGLE SPLIT PANEL
-   ============================================================ */
+/* ─── OPEN PANEL (core helper) ──────────────────────── */
+async function openPanel(id, title, btn, scrollTo = true) {
+  const panel = document.getElementById(`split-${id}`);
+  if (!panel) return;
+
+  const scrollY = window.scrollY; // save before any DOM change
+
+  const [membersRes, expensesRes] = await Promise.all([
+    fetch(`http://localhost:5000/trips/${id}/members`,  { headers: { "Authorization": "Bearer " + token } }),
+    fetch(`http://localhost:5000/trips/${id}/expenses`, { headers: { "Authorization": "Bearer " + token } })
+  ]);
+  const members  = (await membersRes.json()).members   || [];
+  const expenses = (await expensesRes.json()).expenses || [];
+
+  panel.innerHTML = renderSplitPanel(id, title, members, expenses);
+  panel.classList.add("show");
+  if (btn) btn.textContent = "✕ Close";
+
+  // Save state so it survives loadBookings / loadTripExpenses DOM rebuilds
+  openSplitId    = id;
+  openSplitTitle = title;
+  localStorage.setItem("openSplitId",    id);
+  localStorage.setItem("openSplitTitle", title);
+
+  // Restore scroll — don't jump the user when we rebuild after add/delete
+  requestAnimationFrame(() => {
+    if (scrollTo) {
+      panel.scrollIntoView({ behavior: "smooth", block: "start" });
+    } else {
+      window.scrollTo({ top: scrollY, behavior: "instant" });
+    }
+  });
+}
+
+/* ─── TOGGLE SPLIT PANEL ────────────────────────────── */
 async function toggleSplit(id, title, btn) {
   const panel  = document.getElementById(`split-${id}`);
   const isOpen = panel.classList.contains("show");
 
+  // Close all panels
   document.querySelectorAll(".split-panel").forEach(p => p.classList.remove("show"));
   document.querySelectorAll(".split-btn").forEach(b => {
-    if (b.textContent.includes("Close"))
-      b.textContent = b.textContent.includes("Manage") ? "💸 Manage Expenses" : "💸 Split Expenses";
+    if (b.textContent.includes("✕")) b.textContent = b.dataset.defaultLabel || "💸 Split Expenses";
   });
 
-  if (!isOpen) {
-    const [membersRes, expensesRes] = await Promise.all([
-      fetch(`http://localhost:5000/trips/${id}/members`,  { headers: { "Authorization": "Bearer " + token } }),
-      fetch(`http://localhost:5000/trips/${id}/expenses`, { headers: { "Authorization": "Bearer " + token } })
-    ]);
-
-    const members  = (await membersRes.json()).members   || [];
-    const expenses = (await expensesRes.json()).expenses || [];
-
-    panel.innerHTML = renderSplitPanel(id, title, members, expenses);
-    panel.classList.add("show");
-    btn.textContent = "✕ Close";
+  if (isOpen) {
+    // Was open — just closed it, clear persistence
+    openSplitId    = null;
+    openSplitTitle = "";
+    localStorage.removeItem("openSplitId");
+    localStorage.removeItem("openSplitTitle");
+    return;
   }
+
+  // Store default label on button for later restore
+  btn.dataset.defaultLabel = btn.textContent;
+  await openPanel(id, title, btn, true);
 }
 
-/* ============================================================
-   ADD MEMBER
-   ============================================================ */
+/* ─── ADD MEMBER ────────────────────────────────────── */
 async function addMember(id) {
   const name  = document.getElementById(`mname-${id}`).value.trim();
   const email = document.getElementById(`memail-${id}`).value.trim();
@@ -497,15 +480,11 @@ async function addMember(id) {
     body: JSON.stringify({ name, email })
   });
 
-  const btn     = document.getElementById(`splitbtn-${id}`);
-  const titleEl = document.querySelector(`#split-${id} .split-panel-title`);
-  const title   = titleEl ? titleEl.textContent.replace("💸 Expense Splitter — ", "") : "";
-  await panel_refresh(id, title, btn);
+  const btn = document.getElementById(`splitbtn-${id}`);
+  await openPanel(id, openSplitTitle, btn, false);
 }
 
-/* ============================================================
-   ADD EXPENSE
-   ============================================================ */
+/* ─── ADD EXPENSE ───────────────────────────────────── */
 async function addExpense(id) {
   const title        = document.getElementById(`etitle-${id}`).value.trim();
   const amount       = parseFloat(document.getElementById(`eamount-${id}`).value);
@@ -522,42 +501,23 @@ async function addExpense(id) {
     body: JSON.stringify({ title, amount, paid_by, expense_date, split_among: checked.join(",") })
   });
 
-  const btn      = document.getElementById(`splitbtn-${id}`);
-  const titleEl  = document.querySelector(`#split-${id} .split-panel-title`);
-  const tripTitle = titleEl ? titleEl.textContent.replace("💸 Expense Splitter — ", "") : "";
-  await panel_refresh(id, tripTitle, btn);
+  const btn = document.getElementById(`splitbtn-${id}`);
+  await openPanel(id, openSplitTitle, btn, false);
 }
 
-async function panel_refresh(id, title, btn) {
-  const panel = document.getElementById(`split-${id}`);
-  const [membersRes, expensesRes] = await Promise.all([
-    fetch(`http://localhost:5000/trips/${id}/members`,  { headers: { "Authorization": "Bearer " + token } }),
-    fetch(`http://localhost:5000/trips/${id}/expenses`, { headers: { "Authorization": "Bearer " + token } })
-  ]);
-  const members  = (await membersRes.json()).members   || [];
-  const expenses = (await expensesRes.json()).expenses || [];
-  panel.innerHTML = renderSplitPanel(id, title, members, expenses);
-  panel.classList.add("show");
-  if (btn) btn.textContent = "✕ Close";
-}
-
-/* ============================================================
-   DELETE EXPENSE
-   ============================================================ */
+/* ─── DELETE EXPENSE ────────────────────────────────── */
 async function deleteExpense(id, expenseId) {
   await fetch(`http://localhost:5000/trips/${id}/expenses/${expenseId}`, {
     method: "DELETE",
     headers: { "Authorization": "Bearer " + token }
   });
 
-  const btn     = document.getElementById(`splitbtn-${id}`);
-  const titleEl = document.querySelector(`#split-${id} .split-panel-title`);
-  const title   = titleEl ? titleEl.textContent.replace("💸 Expense Splitter — ", "") : "";
-  await panel_refresh(id, title, btn);
+  const btn = document.getElementById(`splitbtn-${id}`);
+  await openPanel(id, openSplitTitle, btn, false);
 }
 
-// ── INIT ──────────────────────────────────────────────────────────────────────
-restoreTab();       // ← restore saved tab BEFORE loading data
+/* ─── INIT ──────────────────────────────────────────── */
+restoreTab();
 loadBookings();
 loadTripExpenses();
 </script>
